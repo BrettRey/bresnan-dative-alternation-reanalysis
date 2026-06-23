@@ -17,6 +17,8 @@
 .Rproj.user/
 __pycache__/
 *.pyc
+data/raw/
+data/external/
 
 # macOS
 .DS_Store

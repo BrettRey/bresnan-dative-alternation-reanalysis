@@ -1,13 +1,14 @@
 # STATUS
 
 **Last updated:** 2026-06-23
-**State:** Core source/data records verified; first reproducible `languageR::dative` inspection, baseline/null, and hierarchical partial-pooling scripts added and run; pivot memo accepted after Roughdraft review. No raw data committed.
-**Next action:** Inspect BNC2014 and build a harmonization note before fitting any transport model.
-**Blocker:** DAIS repository licensing and BNC2014 row-count discrepancy need closer checks before those data are reused directly.
+**State:** Core source/data records verified; reproducible `languageR::dative` inspection, baseline/null, hierarchical partial-pooling, BNC2014 inspection, harmonization, and first BNC2014 transport checks are now in place. No raw data committed.
+**Next action:** Turn the robustness and transport results into manuscript prose, then decide whether DAIS is needed as a narrow production/acceptability bridge.
+**Blocker:** DAIS repository licensing needs a closer check before those data are reused directly.
 
 ## Working Title
 
-*Predicting grammatical possibility: The dative alternation after probabilistic grammar, open data, and neural language models*
+*Production probability, transport, and grammatical possibility: Reanalysing the
+English dative alternation with open data*
 
 ## Working Thesis
 
@@ -41,5 +42,10 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Added `analysis/03_hierarchical_languageR_dative.R` using `lme4::glmer` for a varying-verb-intercept logistic model. Test log loss/AUC: hierarchical verb-intercept model 0.233/0.952, essentially matching the fixed-verb full model with far fewer effective parameters. Estimated verb random-intercept SD is 2.106. Scrambled and fake-null hierarchical fits collapse to singular zero-verb-variance models, while the fake verb-effect check recovers a nonzero verb SD (0.826).
 - Added `notes/pivot-after-languageR.md` after Roughdraft review. Decision: the `languageR` stage is a clean robustness result, not the paper's center of gravity. Stop same-data refinement and move to BNC2014 transport plus an explicit production/possibility distinction.
 - Added `notes/next-steps-after-pivot.md` after Roughdraft review. It sets the immediate sequence: inspect BNC2014, write a harmonization note, write the production/possibility-gap note, and only then fit a transport model.
+- Softened the title after Roughdraft review: removed the neural-language-model promise and recentered production probability, transport, and grammatical possibility.
+- Added `analysis/04_inspect_bnc2014_dative.R`, which validates the public Figshare BNC2014 dative CSV by MD5, parses it from a temporary file, and writes small derived source-file, schema, key-count, and verb-by-pattern summaries. It resolves the apparent row-count issue: the CSV has 1,839 parsed data rows and 44 columns; the raw file has 1,839 newline characters because it lacks a terminal newline.
+- Added `notes/bnc2014-harmonization.md`. Decision: BNC `VNN` maps to `languageR` `NP`, BNC `VNPP` maps to `languageR` `PP`; transport should use the six shared verbs, derive word-length proxies in memory, and drop discourse accessibility.
+- Added `notes/production-possibility-gap.md` to keep the paper's claims separated across production choice, acceptability preference, and grammatical possibility. DAIS/NLMs remain a possible bridge, not a promised title-level result.
+- Added `analysis/05_bnc2014_transport.R` and `notes/bnc2014-transport-results.md`. First result: the spoken six-verb `languageR` core model transports to BNC2014 well above marginal baseline (log loss 0.308 vs 0.473; AUC 0.906 vs 0.500), collapses against a scrambled BNC outcome (log loss 0.885; AUC 0.515), and is still weaker than a BNC-native holdout model (log loss 0.202; AUC 0.960). The recipient-definiteness proxy worsens transport log loss and should remain a sensitivity check.
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.

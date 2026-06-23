@@ -8,13 +8,13 @@
 \ifdefined\blindbuild \blindtrue \else \blindfalse \fi
 
 \hypersetup{
-  pdftitle={Predicting grammatical possibility: The dative alternation after probabilistic grammar, open data, and neural language models},
-  pdfkeywords={dative alternation, probabilistic grammar, grammaticality, corpus linguistics, acceptability}
+  pdftitle={Production probability, transport, and grammatical possibility: Reanalysing the English dative alternation with open data},
+  pdfkeywords={dative alternation, production probability, transport, grammaticality, corpus linguistics, acceptability}
 }
 \ifblind\hypersetup{pdfauthor={}}\fi
 
-\title{Predicting grammatical possibility\\
-{\large The dative alternation after probabilistic grammar, open data, and neural language models}}
+\title{Production probability, transport, and grammatical possibility\\
+{\large Reanalysing the English dative alternation with open data}}
 \ifblind
   \author{[Author name, ORCID, and affiliation removed for double-blind review]}
 \else
@@ -28,11 +28,14 @@
 \maketitle
 
 \begin{abstract}
-TODO: Draft after the data situation is verified. The likely contribution is a
-no-new-data reassessment of \textcite{bresnan2007}: reproduce the classic
-dative-alternation result, update the modelling and validation strategy, test
-cross-corpus generalization, and use the case to clarify the difference between
-rare, dispreferred, probabilistically conditioned, and ungrammatical forms.
+This draft develops a no-new-data reassessment of \textcite{bresnan2007}. The
+current analyses reproduce the production-choice target from
+\texttt{languageR::dative}, add explicit null and partial-pooling checks, and
+test whether the resulting conditioning profile transports to the Spoken
+BNC2014 dative dataset. The working result is that modern modelling preserves
+the classic production conclusion, while BNC2014 provides positive but partial
+cross-corpus transport evidence. The manuscript uses that result to keep apart
+production probability, acceptability preference, and grammatical possibility.
 \end{abstract}
 
 \noindent\textbf{Keywords:} dative alternation; probabilistic grammar; grammaticality; corpus linguistics; acceptability
@@ -47,10 +50,10 @@ rare, dispreferred, probabilistically conditioned, and ungrammatical forms.
 
 \section*{Data and code availability}
 
-No data has been downloaded or analysed in this setup draft. The intended
-project uses reusable public datasets where licensing and documentation permit
-it; source and dataset verification are tracked in
-\texttt{notes/source-verification.md}.
+The analysis scripts fetch public datasets to temporary locations and do not
+commit raw corpus data. Derived summaries, diagnostics, and model outputs are
+stored under \texttt{data/derived/}. Source, licence, and dataset-verification
+notes are tracked in \texttt{notes/source-verification.md}.
 
 \section*{Acknowledgements}
 

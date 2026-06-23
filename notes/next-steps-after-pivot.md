@@ -14,12 +14,12 @@ problem appears.
 
 ### 1. Inspect BNC2014
 
-Create `analysis/04_inspect_bnc2014_dative.R`.
+Done: `analysis/04_inspect_bnc2014_dative.R`.
 
-Tasks:
+Completed tasks:
 
 - stream or fetch the Figshare CSV without committing raw data;
-- verify row count and reconcile the 1,838/1,840 issue;
+- verify row count and reconcile the line-count issue;
 - write schema, missingness, value-level, verb-count, and pattern-count tables
   to `data/derived/`;
 - confirm citation/licensing expectations from Figshare and JOHD.
@@ -28,22 +28,21 @@ This is still inspection, not modelling.
 
 ### 2. Harmonize Predictors
 
-Create `notes/bnc2014-harmonization.md`.
+Done: `notes/bnc2014-harmonization.md`.
 
-Map every `languageR::dative` predictor to BNC2014:
+Mapped every `languageR::dative` predictor to BNC2014:
 
 - direct match
 - proxy match
 - unavailable
 - incompatible
 
-Also map the outcome: `RealizationOfRecipient` versus BNC2014 `Pattern`
-(`VNN`/`VNPP`). The harmonization note should say what gets lost before any
-transport model is fit.
+Also mapped the outcome: `RealizationOfRecipient` versus BNC2014 `Pattern`
+(`VNN`/`VNPP`). The harmonization note states what gets lost in transport.
 
 ### 3. State The Production/Possibility Gap
 
-Create `notes/production-possibility-gap.md`.
+Done: `notes/production-possibility-gap.md`.
 
 Core point:
 
@@ -55,19 +54,34 @@ Core point:
 
 This note protects the paper from sliding from frequency to grammaticality.
 
-### 4. Then Fit Transport
+### 4. Fit Transport
 
-Only after steps 1-3:
+Done: `analysis/05_bnc2014_transport.R`.
 
-Create `analysis/05_bnc2014_transport.R`.
+The first transport model follows the feature restrictions in
+`notes/bnc2014-harmonization.md`: shared six-verb subset, comparable outcome,
+in-memory word-length proxies for BNC phrase lengths, animacy, pronominality,
+theme definiteness, and a labelled recipient-definiteness sensitivity check.
 
-Minimal transport tests:
+Completed transport tests:
 
 - train on `languageR`, evaluate on harmonized BNC2014 where possible;
 - fit BNC2014-native model and compare the conditioning profile;
 - test whether verb, length, animacy, definiteness, pronominality, and modality
   analogues behave similarly;
 - report failure as informative, not as an embarrassment.
+
+Result note: `notes/bnc2014-transport-results.md`.
+
+### 5. Write Results Prose
+
+Next:
+
+- turn the `languageR` robustness result into a short first results section;
+- turn the BNC2014 transport result into the second results section;
+- keep the recipient-definiteness proxy as sensitivity, not the headline;
+- state explicitly that transport supports production-profile projectibility,
+  not direct grammatical possibility.
 
 ## Manuscript Spine
 
@@ -82,9 +96,9 @@ The paper should probably become:
 5. DAIS/NLMs enter, if at all, as probes of the boundary between production
    preference and acceptability/possibility.
 
-## Decision Needed Soon
+## Title Decision
 
-Decide whether "neural language models" stays in the title.
+Decision made: "neural language models" is out of the title for now.
 
-Keep it only if the next stage includes a concrete DAIS/NLM probe. Otherwise,
-soften the title now so the analysis does not overpromise.
+Restore it only if a later stage includes a concrete DAIS/NLM probe. The current
+title should not overpromise while the empirical spine is BNC2014 transport.

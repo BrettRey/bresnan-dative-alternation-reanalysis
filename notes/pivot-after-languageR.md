@@ -52,15 +52,18 @@ BNC2014 is the first genuinely new empirical test. It asks whether the
 conditioning profile travels across corpus design, variety, register, time, and
 metadata structure.
 
-The next analysis stage should therefore be:
+The next analysis stage was:
 
 1. Reconcile the BNC2014 row-count issue.
-2. Inspect BNC2014 schema and licensing without committing raw data unless
-   clearly permitted.
+2. Inspect BNC2014 schema and licensing without committing raw data.
 3. Build a harmonization table between `languageR::dative` and BNC2014 fields.
 4. Define what can be transported directly, what must be proxied, and what must
    be dropped.
-5. Fit a transport test only after the harmonization decisions are documented.
+
+Those gates now exist in `analysis/04_inspect_bnc2014_dative.R` and
+`notes/bnc2014-harmonization.md`. The first transport test now exists in
+`analysis/05_bnc2014_transport.R`, with results summarized in
+`notes/bnc2014-transport-results.md`.
 
 The transport question is not "can we get a good AUC on another dataset?" It is:
 which parts of the conditioning profile remain projectible when the corpus and
@@ -86,30 +89,32 @@ probability.
 
 ## NLM Scope Decision
 
-The current title promises neural language models. That promise needs a scoped
-decision before analysis continues.
+Decision made: remove the neural-language-model promise from the title unless
+and until a concrete DAIS/NLM probe becomes part of the analysis.
 
-Options:
+Possible later routes:
 
 1. Minimal probe: use DAIS/Hawkins et al. as the acceptability/preference bridge
    and report a narrow comparison to published NLM behavior or a small
    reproducible local probe.
-2. Deferred promise: remove or soften "neural language models" from the title
-   and keep DAIS/NLMs as future work.
+2. Deferred promise: keep DAIS/NLMs as future work.
 
-Do not leave the NLM phrase in the title unless the project will cash it with a
-concrete analysis.
+Do not restore the NLM phrase unless the project will cash it with a concrete
+analysis.
 
 ## Revised Next Step
 
 Replace "add Bayesian priors or more languageR models" with:
 
-1. `analysis/04_inspect_bnc2014_dative.R`: fetch or stream the BNC2014 CSV,
+1. Done: `analysis/04_inspect_bnc2014_dative.R`: fetch or stream the BNC2014 CSV,
    verify row count, schema, missingness, and variable levels, and write small
    derived metadata tables.
-2. `notes/bnc2014-harmonization.md`: map BNC2014 fields to the `languageR`
+2. Done: `notes/bnc2014-harmonization.md`: map BNC2014 fields to the `languageR`
    predictors and classify each as direct, proxy, unavailable, or incompatible.
-3. `notes/production-possibility-gap.md`: state exactly what production data
+3. Done: `notes/production-possibility-gap.md`: state exactly what production data
    can and cannot show about grammatical possibility, and what DAIS would add.
+4. Done: `analysis/05_bnc2014_transport.R`, fit the documented minimal
+   transport model.
 
-Only after those notes exist should the project fit a BNC2014 transport model.
+The project is now cleared to write the robustness and transport results as
+manuscript prose.

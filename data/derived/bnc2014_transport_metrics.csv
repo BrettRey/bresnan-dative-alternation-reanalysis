@@ -1,0 +1,13 @@
+"model","formula","train_corpus","test_corpus","train_rows","test_rows","test_log_loss","test_brier","test_accuracy","test_auc","df","aic"
+"languageR_spoken_shared_core_marginal_to_bnc2014","core","languageR_spoken_shared","BNC2014",1564,1621,0.472737175557895,0.148142990275434,0.819247378161629,0.5,1,NA
+"languageR_spoken_shared_core_to_bnc2014","core","languageR_spoken_shared","BNC2014",1564,1621,0.307962323123653,0.097294131776584,0.858729179518816,0.905933889140178,13,615.0822252333
+"languageR_spoken_shared_core_to_bnc2014_scrambled_bnc_outcome","core","languageR_spoken_shared","BNC2014_scrambled_outcome",1564,1621,0.884988122714001,0.232798294551889,0.70203578038248,0.515467587071837,13,615.0822252333
+"bnc2014_core_marginal_holdout","core","BNC2014","BNC2014",1299,322,0.48102864508023,0.151663055375899,0.813664596273292,0.5,1,NA
+"bnc2014_native_core_holdout","core","BNC2014","BNC2014",1299,322,0.202321037757905,0.0612977972621657,0.91304347826087,0.959732824427481,13,603.027184622418
+"bnc2014_native_core_scrambled_train","core","BNC2014_scrambled_train","BNC2014",1299,322,0.495327873546837,0.155239423995936,0.813664596273292,0.440139949109415,13,1243.30409490823
+"languageR_spoken_shared_plus_rec_def_proxy_marginal_to_bnc2014","plus_rec_def_proxy","languageR_spoken_shared","BNC2014",1564,1621,0.472737175557895,0.148142990275434,0.819247378161629,0.5,1,NA
+"languageR_spoken_shared_plus_rec_def_proxy_to_bnc2014","plus_rec_def_proxy","languageR_spoken_shared","BNC2014",1564,1621,0.346730089234019,0.107731968676889,0.83466995681678,0.90471827583371,14,612.154576131827
+"languageR_spoken_shared_plus_rec_def_proxy_to_bnc2014_scrambled_bnc_outcome","plus_rec_def_proxy","languageR_spoken_shared","BNC2014_scrambled_outcome",1564,1621,0.904849683128446,0.252506640994059,0.682911782850093,0.515502282166208,14,612.154576131827
+"bnc2014_plus_rec_def_proxy_marginal_holdout","plus_rec_def_proxy","BNC2014","BNC2014",1299,322,0.48102864508023,0.151663055375899,0.813664596273292,0.5,1,NA
+"bnc2014_native_plus_rec_def_proxy_holdout","plus_rec_def_proxy","BNC2014","BNC2014",1299,322,0.202568922252818,0.061397734272979,0.909937888198758,0.959351145038168,14,604.766032970285
+"bnc2014_native_plus_rec_def_proxy_scrambled_train","plus_rec_def_proxy","BNC2014_scrambled_train","BNC2014",1299,322,0.495327773872406,0.155239568820922,0.813664596273292,0.440139949109415,14,1245.30408514826

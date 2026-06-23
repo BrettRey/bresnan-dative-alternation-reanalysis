@@ -2,7 +2,8 @@
 
 Working title:
 
-*Predicting grammatical possibility: The dative alternation after probabilistic grammar, open data, and neural language models*
+*Production probability, transport, and grammatical possibility: Reanalysing the
+English dative alternation with open data*
 
 ## Aim
 

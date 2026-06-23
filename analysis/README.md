@@ -14,7 +14,8 @@ Analysis sequence:
 4. Treat the `languageR` result as robustness evidence, not the final
    contribution.
 5. Inspect and harmonize BNC2014 before any transport model.
-6. Test generalization to later datasets only after schema comparability is
+6. Fit the first BNC2014 transport model on documented shared features.
+7. Test generalization to later datasets only after schema comparability is
    documented.
 
 ## Scripts
@@ -32,5 +33,12 @@ Analysis sequence:
   model with varying verb intercepts using `lme4::glmer`; writes model metrics,
   fixed effects, verb effects, singular-fit diagnostics, predictive-check
   summaries, and diagnostic figures to `data/derived/`.
+- `04_inspect_bnc2014_dative.R`: downloads the public Figshare BNC2014 dative
+  CSV to a temporary file, validates the Figshare MD5, resolves the line-count
+  ambiguity, and writes source-file, schema, key-count, and verb-by-pattern
+  summaries to `data/derived/`.
+- `05_bnc2014_transport.R`: fits the first cross-corpus transport checks from
+  spoken six-verb `languageR::dative` data to harmonized BNC2014 data, with
+  BNC-native and scrambled-label comparisons.
 
 Run scripts from the repository root with `Rscript`.

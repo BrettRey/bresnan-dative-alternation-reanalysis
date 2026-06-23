@@ -52,13 +52,21 @@ been checked against authoritative records.
   British spoken data"; Figshare version 6, posted 2019-07-30.
 - DOI: dataset DOI `10.6084/m9.figshare.7353164.v6`; article DOI
   `10.5334/johd.11`. Figshare asks users to cite both.
+- Licence: Figshare API reports CC BY 4.0
+  (<https://creativecommons.org/licenses/by/4.0/>).
 - Provenance: derived from an early sample of the Spoken BNC2014 corpus of
   Spoken British English.
 - Files: `BNCspoken2014_dative_dataset_v1.csv`, plus supporting scripts/files
   (`animacy_recipient.txt`, `combine_data.py`, `r_cleaning_data_script.rmd`).
-- Streaming CSV check: 1,839 lines total, so 1,838 data rows plus header. Do
-  not state "1,840 observations" until that discrepancy is reconciled with the
-  article or file history.
+- CSV file metadata: Figshare file ID `16713434`, size 859,613 bytes, MD5
+  `1c041dbcb635855f3d8f4be9f3e1fced`.
+- Inspection by `analysis/04_inspect_bnc2014_dative.R`: parsed CSV has 1,839
+  data rows and 44 columns. The raw file has 1,839 newline characters but no
+  terminal newline, yielding 1,840 logical text lines including the header. So
+  the earlier `wc -l` result is not a data-row count.
+- Outcome counts: `Pattern == VNN` = 1,474; `Pattern == VNPP` = 365. Verb
+  counts: `give` = 829, `send` = 545, `show` = 265, `sell` = 96,
+  `offer` = 68, `lend` = 36.
 - CSV columns include verb, semantic tag, pattern, recipient/theme text and
   length, pronominality, animacy, definiteness for theme, and speaker metadata
   such as age, gender, nationality, dialect, education, occupation, and word

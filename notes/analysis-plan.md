@@ -165,9 +165,9 @@ The result is a robustness result: modern modelling and partial pooling preserve
 the original production-choice conclusion. Further `languageR` refinement is not
 the next contribution.
 
-## 10. Revised Next Implementation Step
+## 10. Completed BNC2014 Gate And Transport
 
-Move to transport and the production/possibility gap:
+The BNC2014 transport gate and first transport model now exist:
 
 1. `analysis/04_inspect_bnc2014_dative.R`: fetch or stream the BNC2014 CSV,
    verify row count, schema, missingness, and variable levels, and write small
@@ -176,5 +176,11 @@ Move to transport and the production/possibility gap:
    predictors and classify each as direct, proxy, unavailable, or incompatible.
 3. `notes/production-possibility-gap.md`: state what production data can and
    cannot show about grammatical possibility, and what DAIS would add.
+4. `analysis/05_bnc2014_transport.R`: fit the first documented cross-corpus
+   transport checks from spoken six-verb `languageR` data to harmonized
+   BNC2014.
+5. `notes/bnc2014-transport-results.md`: summarize the positive but partial
+   transport result.
 
-Only after those are in place should the project fit a BNC2014 transport model.
+The next implementation step is manuscript prose for the `languageR` robustness
+and BNC2014 transport sections.

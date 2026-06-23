@@ -1,0 +1,115 @@
+"column","value","n"
+"Verb","give",829
+"Verb","send",545
+"Verb","show",265
+"Verb","sell",96
+"Verb","offer",68
+"Verb","lend",36
+"VerbSemTag","A9",915
+"VerbSemTag","M2",543
+"VerbSemTag","A10",263
+"VerbSemTag","I2",96
+"VerbSemTag","Q1",8
+"VerbSemTag","S8",7
+"VerbSemTag","S7",3
+"VerbSemTag","S1",2
+"VerbSemTag","O4",1
+"VerbSemTag","Z5",1
+"Pattern","VNN",1474
+"Pattern","VNPP",365
+"RecPrn","TRUE",1503
+"RecPrn","FALSE",224
+"RecPrn",NA,112
+"AnimateRec","TRUE",1497
+"AnimateRec","FALSE",311
+"AnimateRec",NA,31
+"ThemePrn","FALSE",1340
+"ThemePrn","TRUE",360
+"ThemePrn",NA,139
+"DefTheme","FALSE",1394
+"DefTheme","TRUE",445
+"AnimateTheme","FALSE",1813
+"AnimateTheme","TRUE",26
+"NumSpeakers","Texts with 2 speakers",887
+"NumSpeakers","Texts with 3 speakers",499
+"NumSpeakers","Texts with 4 speakers",365
+"NumSpeakers","Texts with 5 speakers",78
+"NumSpeakers","Texts with 6 speakers",4
+"NumSpeakers","Texts with 7 speakers",3
+"NumSpeakers","Texts with 8 speakers",3
+"Relation","Close family, partners, very close friends",1171
+"Relation","Friends, wider family circle",538
+"Relation","Colleagues",95
+"Relation","Acquaintances",17
+"Relation","colleagues",15
+"Relation","Strangers",3
+"AgeRange","19_29",736
+"AgeRange","60_69",307
+"AgeRange","50_59",217
+"AgeRange","30_39",191
+"AgeRange","40_49",160
+"AgeRange","70_79",125
+"AgeRange","11_18",75
+"AgeRange","80_89",19
+"AgeRange",NA,8
+"AgeRange","90_99",1
+"Gender","F",1138
+"Gender","M",699
+"Gender",NA,2
+"Nationality","British",1785
+"Nationality","White British",8
+"Nationality","British/New Zealand",7
+"Nationality","Barbadian",6
+"Nationality","Welsh",6
+"Nationality","English",5
+"Nationality","Australian",4
+"Nationality","British & German",4
+"Nationality","British/Indian",4
+"Nationality",NA,4
+"Nationality","Irish",2
+"Nationality","WB",2
+"Nationality","American",1
+"Nationality","Scottish",1
+"L1","English",1792
+"L1","British",43
+"L1","England",2
+"L1",NA,2
+"LingOrigin","England",1551
+"LingOrigin","UK",148
+"LingOrigin","England, USA, Australia",37
+"LingOrigin","Austria",32
+"LingOrigin","Wales",13
+"LingOrigin","Great Britain (UK)",11
+"LingOrigin","England/US",10
+"LingOrigin",NA,8
+"LingOrigin","England/NZ",7
+"LingOrigin","Wales and England",6
+"LingOrigin","Australia",4
+"LingOrigin","Britain",2
+"LingOrigin","England/Wales",2
+"LingOrigin","English",2
+"LingOrigin","London",2
+"LingOrigin","Scotland",2
+"LingOrigin","Zambia",2
+"Level1Dialect","uk",1720
+"Level1Dialect","unspecified",106
+"Level1Dialect","non_uk",11
+"Level1Dialect",NA,2
+"Level2Dialect","english",1689
+"Level2Dialect","unspecified",112
+"Level2Dialect","welsh",23
+"Level2Dialect","non_uk",11
+"Level2Dialect","scottish",2
+"Level2Dialect",NA,2
+"SpeakerHighestQual","Graduate",663
+"SpeakerHighestQual","Postgraduate",563
+"SpeakerHighestQual","College/6th Form",373
+"SpeakerHighestQual","Secondary School",224
+"SpeakerHighestQual",NA,16
+"SpeakerSocGrade","E",624
+"SpeakerSocGrade","B",611
+"SpeakerSocGrade","A",308
+"SpeakerSocGrade","C1",203
+"SpeakerSocGrade","C2",57
+"SpeakerSocGrade","D",34
+"SpeakerSocGrade",NA,2
