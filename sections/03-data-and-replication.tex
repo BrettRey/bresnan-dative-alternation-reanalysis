@@ -1,7 +1,37 @@
 \section{Data and direct replication}
 
-This section will report the verified \texttt{languageR::dative} data path and
-the direct production-choice target. The initial inspection confirms 3,263 rows,
-15 columns, and the NP/PP outcome used for the first reproducible reanalysis.
-The baseline analysis should be presented as a disciplined reproduction step,
-not as the paper's final contribution.
+The analysis starts with \texttt{languageR::dative}, distributed with the CRAN
+\texttt{languageR} package \citep{BaayenShafaeiBajestan2025languageR}. The
+analysis scripts fetch the package source tarball, load the packaged
+\texttt{dative.rda} object, and write only derived summaries. No raw corpus
+material is committed.
+
+In the packaged dataset, there are 3,263 rows and 15 columns. The response
+records recipient realization, with 2,414 NP realizations and 849 PP
+realizations. The dataset contains 75 verb levels and two modalities: 2,360
+spoken tokens and 903 written tokens. Speaker identifiers are missing exactly
+for the written rows.
+
+For the first model sequence, the response stays binary: NP is coded as 1 and PP as
+0. The initial split is verb-stratified, with a fixed seed
+(\texttt{20260623}), so every verb observed in the test set is also represented
+in training. That split gives 2,637 training rows and 626 test rows.
+
+Initial analyses are deliberately plain. A marginal model sets the baseline.
+Structured models then add modality, length, verb, and the non-verb predictors.
+Two falsification checks accompany them: a scrambled-label check and fake-data
+checks. These tests ask whether the fitted structure beats chance, not whether
+it proves a grammatical theory.
+
+A second empirical source is the Spoken BNC2014 dative dataset
+\citep{JensetMcGillivray2018BNCData,JensetMcGillivray2019Dative}. The verified
+Figshare CSV has 1,839 parsed data rows and 44 columns under a CC BY 4.0
+licence. The apparent line-count discrepancy is mechanical: the file has 1,839
+newline characters but no terminal newline, giving 1,840 logical text lines
+including the header.
+
+BNC2014 is not a direct replication of \texttt{languageR::dative}. It's a
+transport target. Its outcome field is \texttt{Pattern}, where \texttt{VNN}
+maps to NP realization and \texttt{VNPP} maps to PP realization. The dataset
+contains six verbs: \texttt{give}, \texttt{send}, \texttt{show}, \texttt{sell},
+\texttt{offer}, and \texttt{lend}. All six occur in \texttt{languageR::dative}.

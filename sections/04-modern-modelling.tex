@@ -1,7 +1,44 @@
 \section{Modern modelling update}
 
-This section will report the baseline, null, and partial-pooling results. The
-important finding is conservative: the hierarchical verb-intercept model
-essentially matches the fixed-verb model and preserves Bresnan et al.'s
-production-choice conclusion. Modern modelling changes the statistical
-packaging more than the linguistic conclusion.
+The \texttt{languageR} result is a robustness result. The central question is
+whether modern modelling changes Bresnan et al.'s linguistic conclusion or
+mainly repackages it statistically. The answer, so far, is the second.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Model & Test log loss & Test AUC & df \\
+\midrule
+Marginal null & 0.554 & 0.500 & 1 \\
+Non-verb main model & 0.271 & 0.932 & 18 \\
+Fixed-verb full model & 0.234 & 0.951 & 92 \\
+Hierarchical verb-intercept model & 0.233 & 0.952 & 19 \\
+\bottomrule
+\end{tabular}
+\caption{Held-out \texttt{languageR::dative} results for the main model sequence.}
+\label{tab:languager-results}
+\end{table}
+
+The non-verb model already predicts held-out production choices well. Adding
+fixed verb effects improves test log loss from 0.271 to 0.234 and raises AUC
+from 0.932 to 0.951. The improvement confirms that lexical conditioning is not
+a minor residue after length, animacy, definiteness, pronominality, and
+accessibility are included.
+
+The hierarchical verb-intercept model reaches almost the same held-out
+performance with far fewer effective parameters. Its test log loss is 0.233 and
+its AUC is 0.952. The estimated verb random-intercept standard deviation is
+2.106, so the lexical signal remains large under partial pooling.
+
+The null checks behave as they should. Scrambled-label fits lose predictive
+value. Fake-data fits without a verb signal collapse toward singular
+zero-variance random-effects models, while a fake verb-effect check recovers a
+nonzero verb standard deviation. These checks make the production result more
+credible, but they do not change its explanatory level.
+
+The result supports Bresnan et al.'s production-choice conclusion. It does not
+create a new grammatical conclusion on its own. The same-data analysis shows
+that the classic profile is reproducible and statistically stable. The paper's
+new empirical pressure has to come from transport.
