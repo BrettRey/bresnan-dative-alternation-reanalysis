@@ -49,6 +49,15 @@ def percent_label(value: float) -> str:
     return f"{100 * value:.0f}%"
 
 
+def mention(verb: str) -> str:
+    """House-style mention: render a cited verb form in serif italic.
+
+    The figures are matplotlib, so \\mention maps to italic mathtext. Counts and
+    other roman text outside the math span stay upright.
+    """
+    return rf"$\mathit{{{verb}}}$"
+
+
 def make_transport_metrics(metrics: pd.DataFrame) -> None:
     labels = {
         "languageR_spoken_shared_core_marginal_to_bnc2014":
@@ -115,7 +124,7 @@ def make_observed_np_rate(verb_counts: pd.DataFrame) -> None:
     fig, ax = plt.subplots(figsize=(5.8, 3.5))
     y = range(len(data))
     ax.barh(y, data["np_rate"], color=COLORS["primary"], edgecolor="none")
-    ax.set_yticks(y, data["Verb"])
+    ax.set_yticks(y, [mention(v) for v in data["Verb"]])
     ax.set_xlim(0, 1)
     ax.set_xlabel("Observed noun phrase (NP) recipient rate")
     ax.set_ylabel("Verb")
@@ -129,7 +138,7 @@ def make_observed_np_rate(verb_counts: pd.DataFrame) -> None:
 def calibration_panel(ax, data: pd.DataFrame, colour: str, title: str) -> None:
     data = data.copy()
     x = list(range(len(data)))
-    tick_labels = [f"{row.group}\nn={row.n}" for row in data.itertuples()]
+    tick_labels = [f"{mention(row.group)}\nn={row.n}" for row in data.itertuples()]
 
     ax.vlines(x, data["observed"], data["predicted"], color="#9A9A9A", linewidth=0.7)
     ax.plot(x, data["observed"], color=COLORS["dark"], marker="o", label="observed")
@@ -200,7 +209,7 @@ def make_calibration_error(calibration: pd.DataFrame) -> None:
         ax.axvline(0, color=COLORS["dark"], linewidth=0.8)
         ax.hlines(y, 0, rows["error"], color="#9A9A9A", linewidth=0.8)
         ax.plot(rows["error"], y, marker="o", color=colour, linestyle="none")
-        ax.set_yticks(y, rows["group"])
+        ax.set_yticks(y, [mention(g) for g in rows["group"]])
         ax.invert_yaxis()
         ax.set_xlim(-lim, lim)
         ax.set_title(title)
@@ -341,6 +350,13 @@ def make_opportunity_sets() -> None:
 
 def main() -> None:
     setup(font_size=10, title_size=11, tick_size=9, legend_size=9)
+    # Serif mathtext so \mention-style italic verbs match the body font.
+    plt.rcParams.update({
+        "mathtext.fontset": "custom",
+        "mathtext.rm": "serif",
+        "mathtext.it": "serif:italic",
+        "mathtext.bf": "serif:bold",
+    })
     make_transport_metrics(read_derived("bnc2014_transport_metrics.csv"))
     make_observed_np_rate(read_derived("bnc2014_dative_verb_pattern_counts.csv"))
     calibration = read_derived("bnc2014_transport_calibration_by_verb.csv")

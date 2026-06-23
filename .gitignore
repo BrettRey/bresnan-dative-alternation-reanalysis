@@ -22,3 +22,6 @@ data/external/
 
 # macOS
 .DS_Store
+
+# Local correspondence drafts (third-party emails: keep out of the public repo)
+notes/email-*.md

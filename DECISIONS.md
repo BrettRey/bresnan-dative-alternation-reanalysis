@@ -38,6 +38,10 @@
 
 2026-06-23 — Initialism policy: spell out initialisms at first use in manuscript prose, including table metrics, pattern codes, corpus names, licence names, and infrastructure labels. Reason: the paper should not assume that readers know project shorthand.
 
+2026-06-23 — Transport scope caveat: in section 05, flag the six shared verbs as a scope limit on the transport claim, not just a harmonization fact. Reason: give, send, show, sell, offer, and lend are the most frequent and canonical datives, so transport is tested where the conditioning profile is most likely to hold. Generality to marginal, contested, or idiosyncratic dative verbs is untested because the two datasets intersect only on the high-frequency core.
+
+2026-06-23 — Figure mention style: render cited verb forms in figure tick labels as serif italic (\mention equivalent) via a mention() helper and custom serif mathtext, leaving n= counts roman. Reason: house style sets mentioned forms in italic; matplotlib figures should match the body convention.
+
 2026-06-23 — Provenance interpretation: describe the BNC2014 comparison as out-of-domain transport from late-1980s/early-1990s American source data to 2012-2014 British spoken data. Reason: the comparison changes variety, period, collection design, annotation regime, and verb coverage, so success supports projectibility but mismatch does not isolate a single causal dimension.
 
 2026-06-23 — Grammaticality framing: separate target from evidence channel. Reason: Brett's grammaticality/homeostatic property cluster (HPC) writing treats acceptability judgements as noisy detector signals and grammaticality as maintained form-value coupling; the recent difference-in-differences (DiD) paper likewise warns against confusing the observed measure with the estimand. The manuscript should therefore distinguish corpus production choice, judgement preference, and grammatical possibility throughout.
