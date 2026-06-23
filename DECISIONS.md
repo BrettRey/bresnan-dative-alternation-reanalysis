@@ -33,3 +33,5 @@
 2026-06-23 — Manuscript drafting sequence: write the robustness-plus-transport results spine before adding any DAIS or neural-language-model material. Reason: the current evidence already supports a clean claim about production probability and transport, while acceptability data would answer a different question and should enter only as a deliberately scoped bridge.
 
 2026-06-23 — DAIS scope: cite Hawkins et al. 2020 as the acceptability/preference bridge, but do not fetch, analyze, or redistribute DAIS files in this repo. Reason: DAIS answers a judgement-preference question rather than a production-token question, and the public `taka-yamakoshi/neural_constructions` repository has no explicit licence file.
+
+2026-06-23 — Opportunity-set discipline: import the denominator lesson from the left-branch-extraction paper. Reason: `languageR::dative` and BNC2014 estimate conditional choice inside attested dative-alternation tokens; they do not sample all contexts where a transfer event could have been expressed, omitted, paraphrased, or judged acceptable.

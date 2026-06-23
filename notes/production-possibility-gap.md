@@ -23,6 +23,19 @@ production result becomes less corpus-local. If it fails, the failure is still
 informative because it locates where the classic profile depends on corpus,
 variety, period, verb inventory, or annotation regime.
 
+## Opportunity Set
+
+The `languageR::dative` and BNC2014 analyses define a narrow opportunity set:
+attested dative-alternation tokens already coded as NP or PP realization. This
+is enough for conditional production choice, but it is not the full set of
+contexts where a transfer event could have been expressed, omitted, paraphrased,
+or judged acceptable in more than one form.
+
+This imports the useful lesson from the left-branch-extraction paper: a corpus
+claim becomes interpretable only after the denominator is explicit. For this
+paper, the denominator is not "all possible dative meanings." It is "tokens that
+entered the corpus sample as dative-alternation observations."
+
 ## Boundary Cases Production Cannot See
 
 Production data is structurally weak for:

@@ -50,5 +50,6 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Replaced section stubs with first-pass manuscript prose for the problem, original target, data/replication, modern modelling, BNC2014 transport, grammatical possibility, and conclusion sections.
 - Added verified local bibliography entries for `languageR`, the Figshare BNC2014 dataset, and the Journal of Open Humanities Data article.
 - Added a source-grounding pass over the DAIS/acceptability bridge: Hawkins et al. 2020 is now cited, but DAIS is not fetched, analyzed, or redistributed because the public repository has no explicit licence file. DAIS remains background/future bridge evidence, not part of the current empirical result.
+- Imported the useful lesson from the left-branch-extraction paper: make the corpus denominator explicit. The dative models estimate conditional production choice inside attested dative-alternation tokens, not all possible contexts where a transfer event could have been expressed.
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.
