@@ -5,6 +5,23 @@ design, variety, period, and annotation regime. The transport model is trained
 on the spoken \texttt{languageR} rows restricted to the six BNC2014 verbs. It's
 then evaluated on harmonized BNC2014 rows.
 
+Cross-variety probabilistic grammar of the dative isn't new ground.
+\textcite{BresnanFord2010} compared American and Australian English and found
+that speakers' probabilistic choice knowledge is largely shared across
+varieties, but varies enough to surface in naturalness ratings and
+lexical-decision latencies. \textcite{RothlisbergerGrafmillerSzmrecsanyi2017}
+extended the comparison across nine post-colonial Englishes and found broad
+stability with local traces of indigenization. So the bare finding that dative
+conditioning largely travels wouldn't, on its own, be new.
+
+Two things here are different. First, it's a strict out-of-domain test: one
+model is fit on one corpus and scored on another against held-out log loss, area
+under the curve, and scrambled-label nulls, rather than fit separately within
+each variety. Second, the transport result feeds a distinction the variationist
+work doesn't draw, between production probability and grammatical possibility,
+developed in the next section. The contribution is that framing and the test, not
+the stability itself.
+
 The comparison is therefore an out-of-domain transport test. The first
 transport model holds modality close by training only on spoken
 \texttt{languageR} rows, but the corpus shift is still large: American
@@ -13,9 +30,16 @@ telephone conversation from 1990--1991 to spontaneous British conversation from
 
 Harmonization is lossy. The outcome maps cleanly: \texttt{VNN} becomes NP and
 \texttt{VNPP} becomes PP. Verb also maps cleanly after restricting the
-\texttt{languageR} data to the six shared verbs. Length is more delicate:
-BNC2014 releases character lengths, while \texttt{languageR} uses token-like
-lengths, so the transport script derives BNC2014 word-count proxies in memory.
+\texttt{languageR} data to the six shared verbs. Length needs more care. The
+released BNC2014 length fields are character counts: the data dictionary defines
+\texttt{RecLen} and \texttt{ThemeLen} as the number of characters in the
+recipient and theme \citep{JensetMcGillivray2019Dative}. Those aren't comparable
+to \texttt{languageR}'s token-like lengths, so the released fields can't enter
+the transport model directly. The script instead derives word counts from the
+recipient and theme strings. Two costs follow: the whitespace tokenization isn't
+guaranteed to match the convention behind \texttt{languageR}'s counts, and the
+few rows with empty phrase strings drop out, since a character count can't be
+turned back into a word count.
 
 Several predictors are available only as proxies. BNC2014 has recipient and
 theme animacy, theme definiteness, and recipient/theme pronominality, but some
@@ -45,8 +69,11 @@ BNC2014 native scrambled train & BNC2014 & 0.495 & 0.440 \\
 
 The transported core model beats the marginal baseline by a wide margin. Its
 test log loss is 0.308, compared with 0.473 for the \texttt{languageR} marginal
-baseline, and its AUC is 0.906. When the BNC2014 outcome is scrambled, the same
-predictions collapse to 0.885 log loss and 0.515 AUC.
+baseline, and its AUC is 0.906. A percentile bootstrap over the BNC2014 test
+rows (2,000 resamples) puts the log loss in [0.277, 0.337] and the AUC in
+[0.890, 0.922], so the result isn't an artefact of one lucky split. When the
+BNC2014 outcome is scrambled, the same predictions collapse to 0.885 log loss
+and 0.515 AUC.
 
 Raw accuracy is a weak lens here. The recipient is an NP in about four of five
 BNC2014 tokens, so a majority-class baseline already scores near 0.82, and the
@@ -78,12 +105,13 @@ result therefore licenses a claim about the core, not about the periphery, where
 projectibility is hardest to establish.
 
 The BNC2014-native model is still stronger. On a verb-stratified BNC2014
-holdout split,
-the native core model reaches 0.202 log loss and 0.960 AUC. The gap is not
-small: the transported model's log loss is about half again the native model's.
-The transported model has learned a profile that's genuinely useful in the new
-corpus, but the BNC2014 data also contains local structure that the
-\texttt{languageR} fit doesn't capture.
+holdout split, the native core model reaches 0.202 log loss (bootstrap
+[0.154, 0.254]) and 0.960 AUC (bootstrap [0.938, 0.979]). The gap is not small:
+the transported model's log loss is about half again the native model's, and the
+two bootstrap intervals don't overlap on either metric, so the difference isn't
+just split noise. The transported model has learned a profile that's genuinely
+useful in the new corpus, but the BNC2014 data also contains local structure
+that the \texttt{languageR} fit doesn't capture.
 
 Read the gap as a bounded downgrade rather than an apology. The transported
 model clears the marginal and scrambled-label comparisons, so the result is not
@@ -110,8 +138,8 @@ but it should not carry the headline result.
 
 Acceptability evidence answers a different question. The Dative Alternation and
 Information Structure (DAIS) dataset, introduced by
-\textcite{HawkinsYamakoshiGriffithsGoldberg2020VerbBias}, contains human
-judgements for 5,000 dative sentence pairs and systematically varies verb,
+\textcite{HawkinsYamakoshiGriffithsGoldberg2020VerbBias}, contains 50,000 human
+judgements over 5,000 dative sentence pairs and systematically varies verb,
 definiteness, and argument length. It's useful as a future bridge from
 production probability to acceptability preference. It's not analyzed here:
 the public repository has no explicit licence file, and the outcome is

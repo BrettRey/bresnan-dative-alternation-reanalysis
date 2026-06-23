@@ -232,6 +232,7 @@ warnings_list <- list()
 coef_list <- list()
 calibration_list <- list()
 coverage_list <- list()
+bootstrap_list <- list()
 
 for (formula_label in names(formula_specs)) {
   formula <- formula_specs[[formula_label]]
@@ -379,6 +380,23 @@ for (formula_label in names(formula_specs)) {
     formula_label,
     bnc_full_fit
   )
+
+  # Bootstrap test-set intervals for the two headline core comparisons:
+  # the languageR-trained transport model and the BNC2014-native holdout.
+  if (formula_label == "core") {
+    bootstrap_list[[lang_model_name]] <- cbind(
+      model = lang_model_name,
+      test_corpus = "BNC2014",
+      bootstrap_metric_ci(bnc_cc$y_np, lang_pred, B = 2000L, seed = 20260627L),
+      stringsAsFactors = FALSE
+    )
+    bootstrap_list[[bnc_model_name]] <- cbind(
+      model = bnc_model_name,
+      test_corpus = "BNC2014",
+      bootstrap_metric_ci(split$test$y_np, bnc_pred, B = 2000L, seed = 20260628L),
+      stringsAsFactors = FALSE
+    )
+  }
 }
 
 metrics <- do.call(rbind, metrics_list)
@@ -412,6 +430,15 @@ utils::write.csv(
   file.path(derived_dir, "bnc2014_transport_feature_coverage.csv"),
   row.names = FALSE
 )
+if (length(bootstrap_list) > 0L) {
+  bootstrap <- do.call(rbind, bootstrap_list)
+  utils::write.csv(
+    bootstrap,
+    file.path(derived_dir, "bnc2014_transport_bootstrap.csv"),
+    row.names = FALSE
+  )
+  print(bootstrap, row.names = FALSE)
+}
 
 print(metrics, row.names = FALSE)
 print(coverage[coverage$variable == "y_np", ], row.names = FALSE)

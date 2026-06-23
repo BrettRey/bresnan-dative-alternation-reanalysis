@@ -101,6 +101,35 @@ classification_metrics <- function(y, p) {
   )
 }
 
+# Percentile-bootstrap confidence interval for held-out log loss and AUC.
+# Resamples the test rows (the fitted model is fixed), so the interval reflects
+# test-set sampling variability around a single train/test split.
+bootstrap_metric_ci <- function(y, p, B = 2000L, seed = 20260623L,
+                                probs = c(0.025, 0.975)) {
+  set.seed(seed)
+  n <- length(y)
+  ll <- numeric(B)
+  au <- numeric(B)
+  for (b in seq_len(B)) {
+    idx <- sample.int(n, n, replace = TRUE)
+    m <- classification_metrics(y[idx], p[idx])
+    ll[b] <- m$log_loss
+    au[b] <- m$auc
+  }
+  point <- classification_metrics(y, p)
+  data.frame(
+    test_log_loss = point$log_loss,
+    log_loss_lo = stats::quantile(ll, probs[1], names = FALSE, na.rm = TRUE),
+    log_loss_hi = stats::quantile(ll, probs[2], names = FALSE, na.rm = TRUE),
+    test_auc = point$auc,
+    auc_lo = stats::quantile(au, probs[1], names = FALSE, na.rm = TRUE),
+    auc_hi = stats::quantile(au, probs[2], names = FALSE, na.rm = TRUE),
+    n = n,
+    B = B,
+    stringsAsFactors = FALSE
+  )
+}
+
 warning_rows <- function(model_name, warnings) {
   if (length(warnings) == 0L) {
     return(data.frame(model = character(), warning = character()))
