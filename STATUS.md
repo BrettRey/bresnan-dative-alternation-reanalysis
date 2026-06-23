@@ -1,8 +1,8 @@
 # STATUS
 
 **Last updated:** 2026-06-23
-**State:** Core source/data records verified; reproducible `languageR::dative` inspection, baseline/null, hierarchical partial-pooling, BNC2014 inspection, harmonization, first BNC2014 transport checks, and a source-grounded results-spine manuscript draft are now in place. No raw data committed.
-**Next action:** Do a prose-level polish pass over the draft, then decide whether the transport section needs one compact figure or whether the tables are enough for the first circulation draft.
+**State:** Core source/data records verified; reproducible `languageR::dative` inspection, baseline/null, hierarchical partial-pooling, BNC2014 inspection, harmonization, first BNC2014 transport checks, house-style figure candidates, and a source-grounded results-spine manuscript draft are now in place. No raw data committed.
+**Next action:** Prune the generated figure set after reading the PDF as a whole, then do a prose-level polish pass over the transport and grammaticality sections.
 **Blocker:** None for the current paper stage. DAIS data reuse remains out of scope unless its licensing is clarified.
 
 ## Working Title
@@ -54,3 +54,9 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.
 - Applied the first-use initialism policy across the manuscript draft: corpus names, table metrics, pattern codes, licensing shorthand, and project placeholders now spell out their terms before using abbreviated forms.
+- Clarified source provenance: `languageR::dative` is rooted in American Switchboard telephone data and Wall Street Journal Treebank data, while the BNC2014 dative target is British spoken Early-Access Subset data from 2012-2014. The manuscript now treats the comparison as out-of-domain transport, not direct replication.
+- Imported two framing lessons from Brett's grammaticality/homeostatic property cluster (HPC) and difference-in-differences (DiD) work: treat judgements as detector-channel evidence rather than grammaticality itself, and treat transport diagnostics as bounded disqualification checks rather than identification of a single variety, period, register, or annotation effect.
+- Filed Cai et al. (2026), Nature, as background only. Central note: `../../literature/cai_etal_2026_neuronal_language_models.notes.md`. It supports the broader cross-level projectibility vocabulary, but it should not enter the current dative draft unless a reviewer asks for neural/model-grounding context. This paper remains about production-choice probabilities, cross-corpus transport, and grammatical possibility, not neural encoding or acceptability.
+- Added `notes/denominator-recovery-and-figures.md` after Roughdraft review. Decision: the missing denominator is estimable only after nesting the denominators (released NP/PP rows, six-verb candidate tokens, transfer-event expressions, constructed judgement alternatives); the BNC2014 D1 denominator is probably recoverable only if source queries or prefiltered concordance files can be reconstructed.
+- Added `analysis/06_denominator_and_figure_candidates.py`, which imports the central house-style matplotlib settings and writes PDF/PNG candidate figures from existing derived summaries. Inserted the verb-level BNC2014 calibration figure and the nested opportunity-set figure into the manuscript.
+- Revised the grammaticality section to use Brett's current target definition: grammaticality is a community-conditioned licensing status for form-value/form-meaning relations, stabilized by cognitive and social mechanisms. Judgements are noisy, role-dependent instruments; corpus frequency and acceptability are evidence channels rather than the target.

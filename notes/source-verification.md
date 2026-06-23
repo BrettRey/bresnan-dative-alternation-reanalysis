@@ -28,6 +28,11 @@ been checked against authoritative records.
   using R*.
 - Dataset documentation: data describing NP/PP realization of the dative in
   Switchboard and the Treebank Wall Street Journal collection.
+- Variety/period: the source data is American English. Switchboard is
+  telephone conversation among speakers from across the United States,
+  developed in 1990-1991. The Treebank Wall Street Journal component contains
+  one million words of 1989 Wall Street Journal material; the larger Wall
+  Street Journal source collection spans 1987-1989.
 - Local tarball inspection: 3,263 rows, 15 columns, 75 verb levels. Outcome
   counts: NP = 2,414, PP = 849. Modality counts: spoken = 2,360, written = 903.
 - Columns: `Speaker`, `Modality`, `Verb`, `SemanticClass`,
@@ -41,7 +46,10 @@ been checked against authoritative records.
 - Do not use `languageR::verbs` as the main dataset: CRAN documents it as a
   903-row simplified data set for expository purposes.
 - Sources: <https://cran.r-project.org/web/packages/languageR/languageR.pdf>,
-  <https://cran.r-project.org/src/contrib/languageR_1.6.tar.gz>
+  <https://cran.r-project.org/src/contrib/languageR_1.6.tar.gz>,
+  <https://catalog.ldc.upenn.edu/LDC97S62>,
+  <https://catalog.ldc.upenn.edu/LDC99T42>,
+  <https://catalog.ldc.upenn.edu/LDC2000T43>
 
 ### Spoken BNC2014 Dative Dataset
 
@@ -54,8 +62,9 @@ been checked against authoritative records.
   `10.5334/johd.11`. Figshare asks users to cite both.
 - Licence: Figshare API reports CC BY 4.0
   (<https://creativecommons.org/licenses/by/4.0/>).
-- Provenance: derived from an early sample of the Spoken BNC2014 corpus of
-  Spoken British English.
+- Provenance: derived from the Early-Access Subset of the Spoken BNC2014
+  corpus of Spoken British English. The subset contains spontaneous
+  conversations recorded in 2012-2014 and over 4 million tokens.
 - Files: `BNCspoken2014_dative_dataset_v1.csv`, plus supporting scripts/files
   (`animacy_recipient.txt`, `combine_data.py`, `r_cleaning_data_script.rmd`).
 - CSV file metadata: Figshare file ID `16713434`, size 859,613 bytes, MD5

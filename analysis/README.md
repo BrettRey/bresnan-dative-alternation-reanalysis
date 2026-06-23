@@ -40,5 +40,9 @@ Analysis sequence:
 - `05_bnc2014_transport.R`: fits the first cross-corpus transport checks from
   spoken six-verb `languageR::dative` data to harmonized BNC2014 data, with
   BNC-native and scrambled-label comparisons.
+- `06_denominator_and_figure_candidates.py`: generates house-style candidate
+  figures for BNC2014 transport diagnostics and denominator framing from
+  existing derived summaries.
 
 Run scripts from the repository root with `Rscript`.
+Run the figure-candidate script from the repository root with `python3`.

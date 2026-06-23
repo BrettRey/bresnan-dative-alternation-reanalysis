@@ -37,3 +37,11 @@
 2026-06-23 — Opportunity-set discipline: import the denominator lesson from the left-branch-extraction paper. Reason: `languageR::dative` and BNC2014 estimate conditional choice inside attested dative-alternation tokens; they do not sample all contexts where a transfer event could have been expressed, omitted, paraphrased, or judged acceptable.
 
 2026-06-23 — Initialism policy: spell out initialisms at first use in manuscript prose, including table metrics, pattern codes, corpus names, licence names, and infrastructure labels. Reason: the paper should not assume that readers know project shorthand.
+
+2026-06-23 — Provenance interpretation: describe the BNC2014 comparison as out-of-domain transport from late-1980s/early-1990s American source data to 2012-2014 British spoken data. Reason: the comparison changes variety, period, collection design, annotation regime, and verb coverage, so success supports projectibility but mismatch does not isolate a single causal dimension.
+
+2026-06-23 — Grammaticality framing: separate target from evidence channel. Reason: Brett's grammaticality/homeostatic property cluster (HPC) writing treats acceptability judgements as noisy detector signals and grammaticality as maintained form-value coupling; the recent difference-in-differences (DiD) paper likewise warns against confusing the observed measure with the estimand. The manuscript should therefore distinguish corpus production choice, judgement preference, and grammatical possibility throughout.
+
+2026-06-23 — Current grammaticality target: define grammaticality as a community-conditioned licensing status for form-value/form-meaning relations, stabilized by cognitive and social mechanisms. Reason: acceptability preference, raw judgement, corpus frequency, formal generability, and standardness are neighbouring constructs or evidence channels, not the target itself.
+
+2026-06-23 — Figure workflow: generate candidate figures through a script that imports the central house-style matplotlib settings and writes both PDF and PNG outputs. Reason: figures should follow the central typography, palette, small-multiple, direct-label, and export guidance rather than ad hoc base plotting.

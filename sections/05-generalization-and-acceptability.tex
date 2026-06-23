@@ -5,6 +5,12 @@ design, variety, period, and annotation regime. The transport model is trained
 on the spoken \texttt{languageR} rows restricted to the six BNC2014 verbs. It's
 then evaluated on harmonized BNC2014 rows.
 
+The comparison is therefore an out-of-domain transport test. The first
+transport model holds modality close by training only on spoken
+\texttt{languageR} rows, but the corpus shift is still large: American
+telephone conversation from 1990--1991 to spontaneous British conversation from
+2012--2014, under a different annotation scheme and a six-verb target set.
+
 Harmonization is lossy. The outcome maps cleanly: \texttt{VNN} becomes NP and
 \texttt{VNPP} becomes PP. Verb also maps cleanly after restricting the
 \texttt{languageR} data to the six shared verbs. Length is more delicate:
@@ -42,12 +48,33 @@ test log loss is 0.308, compared with 0.473 for the \texttt{languageR} marginal
 baseline, and its AUC is 0.906. When the BNC2014 outcome is scrambled, the same
 predictions collapse to 0.885 log loss and 0.515 AUC.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{data/derived/figures/bnc2014_transport_calibration_by_verb.pdf}
+\caption{Verb-level calibration for the transported \texttt{languageR} model
+and the BNC2014-native holdout model. The vertical axis is the noun phrase
+(NP) recipient rate. Sample sizes are shown under each verb.}
+\label{fig:bnc-calibration}
+\end{figure}
+
+That framing changes the interpretation of the result. Success is evidence that
+the conditioning profile is projectible across macro-variety and period, not
+just refittable. Failure, if it had occurred, would not have identified a single
+cause: variety, date, register, verb restriction, and annotation all move
+together.
+
 The BNC2014-native model is still stronger. On a verb-stratified BNC2014
 holdout split,
 the native core model reaches 0.202 log loss and 0.960 AUC. This gap matters.
 The transported model has learned a profile that's genuinely useful in the
 new corpus, but the BNC2014 data also contains local structure that the
 \texttt{languageR} fit does not capture.
+
+Read the gap as a bounded downgrade rather than an apology. The transported
+model clears the marginal and scrambled-label comparisons, so the result is not
+just a same-corpus artefact. But the residual gap cannot be assigned to variety,
+period, register, annotation, or the six-verb restriction one by one. Those
+dimensions are bundled in this comparison.
 
 Several directions travel. Recipient length is negative for NP realization;
 theme length is positive; recipient pronominality is strongly positive; theme

@@ -6,6 +6,16 @@ Comprehensive R Archive Network (CRAN) \texttt{languageR} package
 packaged \texttt{dative.rda} object; the analysis scripts load it and write
 derived summaries.
 
+The package documentation identifies the sources as Switchboard and the
+Treebank Wall Street Journal collection. Those sources place the original data
+in American English: Switchboard is telephone conversation among speakers from
+the United States, developed in 1990--1991
+\citep{GodfreyHolliman1993Switchboard1}, and the Treebank Wall Street Journal
+component is late-1980s American news and financial writing, with one million
+words of 1989 material and a larger 1987--1989 Wall Street Journal source
+collection
+\citep{MarcusSantoriniMarcinkiewiczTaylor1999Treebank3,CharniakEtAl2000BLLIPWSJ}.
+
 In the packaged dataset, there are 3,263 rows and 15 columns. The response
 records recipient realization, with 2,414 NP realizations and 849 PP
 realizations. The dataset contains 75 verb levels and two modalities: 2,360
@@ -38,6 +48,10 @@ columns under a Creative Commons Attribution 4.0 International (CC BY 4.0)
 licence. The apparent line-count discrepancy is mechanical: the file has 1,839
 newline characters but no terminal newline, giving 1,840 logical text lines
 including the header.
+
+The BNC2014 dative file comes from the Early-Access Subset of the Spoken
+BNC2014, whose spontaneous conversations were recorded in 2012--2014 and
+contain speaker and context metadata.
 
 BNC2014 serves as a transport target rather than a direct replication of
 \texttt{languageR::dative}. Its outcome field is \texttt{Pattern}, where the
