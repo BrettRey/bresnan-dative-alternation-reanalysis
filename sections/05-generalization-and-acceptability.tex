@@ -48,6 +48,12 @@ test log loss is 0.308, compared with 0.473 for the \texttt{languageR} marginal
 baseline, and its AUC is 0.906. When the BNC2014 outcome is scrambled, the same
 predictions collapse to 0.885 log loss and 0.515 AUC.
 
+Raw accuracy is a weak lens here. The recipient is an NP in about four of five
+BNC2014 tokens, so a majority-class baseline already scores near 0.82, and the
+transported model reaches only about 0.86. The gain that matters shows up in
+discrimination and calibration, the AUC of 0.906 and the lower log loss, not in
+the accuracy headline.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{data/derived/figures/bnc2014_transport_calibration_by_verb.pdf}
@@ -73,10 +79,11 @@ projectibility is hardest to establish.
 
 The BNC2014-native model is still stronger. On a verb-stratified BNC2014
 holdout split,
-the native core model reaches 0.202 log loss and 0.960 AUC. This gap matters.
-The transported model has learned a profile that's genuinely useful in the
-new corpus, but the BNC2014 data also contains local structure that the
-\texttt{languageR} fit does not capture.
+the native core model reaches 0.202 log loss and 0.960 AUC. The gap is not
+small: the transported model's log loss is about half again the native model's.
+The transported model has learned a profile that's genuinely useful in the new
+corpus, but the BNC2014 data also contains local structure that the
+\texttt{languageR} fit doesn't capture.
 
 Read the gap as a bounded downgrade rather than an apology. The transported
 model clears the marginal and scrambled-label comparisons, so the result is not

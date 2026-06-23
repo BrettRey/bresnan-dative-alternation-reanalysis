@@ -26,13 +26,13 @@ Judgements are another channel: they provide detector responses calibrated to a
 speech community and task role. Grammaticality is the target those channels bear
 on indirectly.
 
-The opportunity set matters. This corpus evidence is conditioned on
-attested dative-alternation tokens: cases already annotated as NP or PP
+Everything here is conditioned on the opportunity set. This corpus evidence
+covers attested dative-alternation tokens: cases already annotated as NP or PP
 recipient realizations. It can support claims about which realization speakers
 chose inside that frame. A broader corpus design could estimate other
 opportunities: transfer events expressed by non-dative paraphrase, left implicit
 in context, or paired with an independent acceptability task. These released
-rows do not provide that broader denominator.
+rows don't provide that broader denominator.
 
 \begin{figure}[htbp]
 \centering
@@ -53,6 +53,15 @@ realization may be grammatical but dispreferred under the observed predictors.
 A prepositional realization may be likely because the theme is short and the
 recipient is long. A form may be absent because the corpus lacks the relevant
 verb, register, or discourse setting.
+
+No amount of additional production data closes this gap. A production model
+estimates choice among realizations that occurred, and it's silent by
+construction about realizations that are grammatical but unattested, or
+grammatical outside the sampled frame. More tokens enlarge the attested region
+without ever reaching the unattested-but-grammatical one. The boundary between
+production probability and grammatical possibility isn't a defect of
+\texttt{languageR::dative} or BNC2014; it's a general constraint on what usage
+frequency can show about grammar.
 
 The current analyses therefore license a cautious claim. Bresnan et al.'s
 production-conditioning profile is durable and partly transportable. That
