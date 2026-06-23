@@ -30,3 +30,5 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Renamed the project folder to lower-case hyphenated form: `papers/bresnan-dative-alternation-reanalysis/`.
 - Added section stubs, notes, data/analysis directories, Makefile, and project guidance.
 - Seeded a pressure-test note around the load-bearing no-new-data assumptions.
+- Ran the central LaTeX style linter with strict checks: no violations found.
+- Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.
