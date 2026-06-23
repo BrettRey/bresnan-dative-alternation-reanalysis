@@ -3,6 +3,9 @@
 This directory is for reproducible analysis scripts or notebooks after source
 verification.
 
+Modelling commitments and null comparisons are predeclared in
+`../notes/analysis-plan.md`.
+
 Likely analysis sequence:
 
 1. Load and audit `languageR::dative`.

@@ -1,8 +1,8 @@
 # STATUS
 
 **Last updated:** 2026-06-23
-**State:** Core source/data records verified; first reproducible `languageR::dative` inspection script added and run. No raw data committed.
-**Next action:** Fit the first baseline production-choice model for `RealizationOfRecipient`.
+**State:** Core source/data records verified; first reproducible `languageR::dative` inspection script added and run; pre-model analysis plan drafted and reviewed in Roughdraft. No raw data committed.
+**Next action:** Implement `analysis/02_baseline_languageR_dative.R` with the marginal null, structured baselines, scrambled-label null, and first logistic model.
 **Blocker:** DAIS repository licensing and BNC2014 row-count discrepancy need closer checks before those data are reused directly.
 
 ## Working Title
@@ -35,5 +35,6 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Chose `languageR::dative` as the first empirical target because it is the cleanest production-choice reanalysis path.
 - Added `analysis/01_inspect_languageR_dative.R`, which fetches the CRAN source tarball to a temporary directory, loads `dative.rda`, validates dimensions, and writes derived summary/schema CSVs under `data/derived/`.
 - First inspection output: 3,263 rows, 15 columns, 75 verb levels; NP = 2,414, PP = 849; spoken = 2,360, written = 903; `Speaker` is missing only for the 903 written rows.
+- Added `notes/analysis-plan.md` after Roughdraft review. It predeclares the primary outcome, model sequence, null comparisons, model checks, robustness grid, and falsification conditions before baseline fitting.
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.

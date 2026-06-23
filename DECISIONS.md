@@ -13,3 +13,5 @@
 2026-06-23 — Repository visibility: create a public GitHub repository at `BrettRey/bresnan-dative-alternation-reanalysis`. Reason: the project is intended as an open, reproducible no-new-data reanalysis.
 
 2026-06-23 — First empirical target: start with `languageR::dative`, not BNC2014 or DAIS. Reason: CRAN verifies a 3,263-row, 15-column production-choice dataset tied directly to Bresnan et al.; BNC2014 is a cross-corpus transport target with a row-count discrepancy to reconcile, and DAIS is an acceptability/preference benchmark rather than production-token evidence.
+
+2026-06-23 — Analysis discipline: write a pre-model analysis plan before baseline fitting. Reason: the project has enough plausible modelling forks that model sequence, null comparisons, robustness grid, and falsification conditions should be fixed before interpreting results. The plan includes marginal, structured, scrambled-label, noise-predictor, and fake-data null checks.
