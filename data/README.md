@@ -15,6 +15,7 @@ Current derived tables and figures, when generated, are created by:
 
 - `../analysis/01_inspect_languageR_dative.R`
 - `../analysis/02_baseline_languageR_dative.R`
+- `../analysis/03_hierarchical_languageR_dative.R`
 
 These are small summaries, diagnostics, and model outputs. They are not raw data
 downloads.

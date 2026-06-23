@@ -26,5 +26,9 @@ Likely analysis sequence:
   noise-predictor, and fake-data baseline checks for `RealizationOfRecipient`;
   writes metrics, coefficient, warning, calibration, and diagnostic-figure
   outputs to `data/derived/`.
+- `03_hierarchical_languageR_dative.R`: fits the first partial-pooling logistic
+  model with varying verb intercepts using `lme4::glmer`; writes model metrics,
+  fixed effects, verb effects, singular-fit diagnostics, predictive-check
+  summaries, and diagnostic figures to `data/derived/`.
 
 Run scripts from the repository root with `Rscript`.

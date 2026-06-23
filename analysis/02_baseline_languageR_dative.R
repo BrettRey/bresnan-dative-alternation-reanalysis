@@ -10,47 +10,20 @@ dir.create(derived_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(figure_dir, recursive = TRUE, showWarnings = FALSE)
 
 dative <- load_languageR_dative()
-validate_languageR_dative(dative)
+model_data <- prepare_languageR_dative_model_data(dative)
+dative <- model_data$data
+train <- model_data$train
+test <- model_data$test
 
-dative$y_np <- as.integer(dative$RealizationOfRecipient == "NP")
-dative$noise_z <- stats::rnorm(nrow(dative))
-
-train_indices_by_verb <- tapply(seq_len(nrow(dative)), dative$Verb, function(idx) {
-  if (length(idx) == 1L) {
-    idx
-  } else {
-    sample(idx, ceiling(0.8 * length(idx)))
-  }
-})
-
-train_idx <- sort(unlist(train_indices_by_verb, use.names = FALSE))
-test_idx <- setdiff(seq_len(nrow(dative)), train_idx)
-train <- droplevels(dative[train_idx, ])
-test <- droplevels(dative[test_idx, ])
-
-clip_prob <- function(p) {
-  pmin(pmax(p, 1e-6), 1 - 1e-6)
-}
-
-auc_score <- function(y, p) {
-  if (length(unique(y)) < 2L) {
-    return(NA_real_)
-  }
-  ranks <- rank(p, ties.method = "average")
-  n_pos <- sum(y == 1L)
-  n_neg <- sum(y == 0L)
-  (sum(ranks[y == 1L]) - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg)
-}
-
-classification_metrics <- function(y, p) {
-  p <- clip_prob(p)
-  data.frame(
-    log_loss = -mean(y * log(p) + (1 - y) * log(1 - p)),
-    brier = mean((p - y)^2),
-    accuracy = mean(as.integer(p >= 0.5) == y),
-    auc = auc_score(y, p)
-  )
-}
+split_rows <- data.frame(
+  row_id = seq_len(nrow(dative)),
+  split = ifelse(seq_len(nrow(dative)) %in% model_data$train_idx, "train", "test")
+)
+utils::write.csv(
+  split_rows,
+  file.path(derived_dir, "languageR_dative_split.csv"),
+  row.names = FALSE
+)
 
 fit_glm <- function(formula, data) {
   warnings <- character()
@@ -62,13 +35,6 @@ fit_glm <- function(formula, data) {
     }
   )
   list(model = model, warnings = unique(warnings))
-}
-
-warning_rows <- function(model_name, warnings) {
-  if (length(warnings) == 0L) {
-    return(data.frame(model = character(), warning = character()))
-  }
-  data.frame(model = model_name, warning = warnings, stringsAsFactors = FALSE)
 }
 
 predict_glm <- function(fit, newdata) {
@@ -254,20 +220,6 @@ utils::write.csv(
 
 nonverb_pred <- predict_glm(fits$nonverb_main, test)
 fixed_verb_pred <- predict_glm(fits$fixed_verb_full, test)
-
-calibration_by_group <- function(group, observed, model_name, pred) {
-  rows <- data.frame(
-    group = as.character(group),
-    observed = observed,
-    predicted = pred
-  )
-  rates <- stats::aggregate(cbind(observed, predicted) ~ group, rows, mean)
-  counts <- stats::aggregate(observed ~ group, rows, length)
-  names(counts)[2] <- "n"
-  merged <- merge(counts, rates, by = "group")
-  merged$model <- model_name
-  merged[, c("model", "group", "n", "observed", "predicted")]
-}
 
 modality_calibration <- rbind(
   calibration_by_group(test$Modality, test$y_np, "nonverb_main", nonverb_pred),

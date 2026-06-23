@@ -1,0 +1,5 @@
+"model","random_intercept_sd","singular","optimizer_message","log_lik","aic"
+"hierarchical_verb_intercept",2.10583777924551,FALSE,"",-580.99446783947,1199.98893567894
+"scrambled_hierarchical_verb_intercept",0,TRUE,"boundary (singular) fit: see help('isSingular')",-1513.33778398598,3064.67556797197
+"fake_null_hierarchical",0,TRUE,"boundary (singular) fit: see help('isSingular')",-1509.79271544997,3057.58543089994
+"fake_verb_hierarchical",0.825733095510924,FALSE,"",-1658.81190730159,3355.62381460318
