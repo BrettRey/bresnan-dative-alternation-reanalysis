@@ -1,0 +1,63 @@
+\documentclass[12pt]{article}
+
+% House style preamble: central symlink only.
+\input{.house-style/preamble.tex}
+
+% --- Anonymization toggle for double-blind review ---
+\newif\ifblind
+\ifdefined\blindbuild \blindtrue \else \blindfalse \fi
+
+\hypersetup{
+  pdftitle={Predicting grammatical possibility: The dative alternation after probabilistic grammar, open data, and neural language models},
+  pdfkeywords={dative alternation, probabilistic grammar, grammaticality, corpus linguistics, acceptability}
+}
+\ifblind\hypersetup{pdfauthor={}}\fi
+
+\title{Predicting grammatical possibility\\
+{\large The dative alternation after probabilistic grammar, open data, and neural language models}}
+\ifblind
+  \author{[\textit{Author name, ORCID, and affiliation removed for double-blind review}]}
+\else
+  \author{Brett Reynolds \orcidlink{0000-0003-0073-7195}%
+  \thanks{Contact: \href{mailto:brett.reynolds@humber.ca}{brett.reynolds@humber.ca}}\\
+  Humber Polytechnic \& University of Toronto}
+\fi
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+TODO: Draft after the data situation is verified. The likely contribution is a
+no-new-data reassessment of \textcite{bresnan2007}: reproduce the classic
+dative-alternation result, update the modelling and validation strategy, test
+cross-corpus generalization, and use the case to clarify the difference between
+rare, dispreferred, probabilistically conditioned, and ungrammatical forms.
+\end{abstract}
+
+\noindent\textbf{Keywords:} dative alternation; probabilistic grammar; grammaticality; corpus linguistics; acceptability
+
+\input{sections/01-problem}
+\input{sections/02-original-target}
+\input{sections/03-data-and-replication}
+\input{sections/04-modern-modelling}
+\input{sections/05-generalization-and-acceptability}
+\input{sections/06-grammatical-possibility}
+\input{sections/07-conclusion}
+
+\section*{Data and code availability}
+
+No data has been downloaded or analysed in this setup draft. The intended
+project uses reusable public datasets where licensing and documentation permit
+it; source and dataset verification are tracked in
+\texttt{notes/source-verification.md}.
+
+\section*{Acknowledgements}
+
+TODO: Add final AI-use disclosure with the actual model list used on the
+project.
+
+\clearpage
+\printbibliography
+
+\end{document}

@@ -1,0 +1,22 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.out
+*.run.xml
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# R / Python / analysis artifacts
+.Rhistory
+.RData
+.Rproj.user/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
