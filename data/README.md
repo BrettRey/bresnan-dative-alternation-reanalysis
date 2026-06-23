@@ -10,3 +10,6 @@ Expected workflow:
    reproducibility.
 
 Candidate sources are tracked in `../notes/source-verification.md`.
+
+Current derived tables, when generated, are created by
+`../analysis/01_inspect_languageR_dative.R`.

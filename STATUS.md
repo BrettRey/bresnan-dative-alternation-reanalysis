@@ -1,8 +1,8 @@
 # STATUS
 
 **Last updated:** 2026-06-23
-**State:** Core source/data records verified. No raw data committed and no analysis run.
-**Next action:** Build a minimal reproducible inspection script for `languageR::dative`, then fit the first baseline production-choice model.
+**State:** Core source/data records verified; first reproducible `languageR::dative` inspection script added and run. No raw data committed.
+**Next action:** Fit the first baseline production-choice model for `RealizationOfRecipient`.
 **Blocker:** DAIS repository licensing and BNC2014 row-count discrepancy need closer checks before those data are reused directly.
 
 ## Working Title
@@ -33,5 +33,7 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Created and pushed the public GitHub repository: <https://github.com/BrettRey/bresnan-dative-alternation-reanalysis>.
 - Verified the core source/data trail in `notes/source-verification.md`: Bresnan et al. 2007, `languageR::dative`, Spoken BNC2014 dative data, DAIS/Hawkins et al. 2020, Bard et al. 1996, and later acceptability benchmarks.
 - Chose `languageR::dative` as the first empirical target because it is the cleanest production-choice reanalysis path.
+- Added `analysis/01_inspect_languageR_dative.R`, which fetches the CRAN source tarball to a temporary directory, loads `dative.rda`, validates dimensions, and writes derived summary/schema CSVs under `data/derived/`.
+- First inspection output: 3,263 rows, 15 columns, 75 verb levels; NP = 2,414, PP = 849; spoken = 2,360, written = 903; `Speaker` is missing only for the 903 written rows.
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.

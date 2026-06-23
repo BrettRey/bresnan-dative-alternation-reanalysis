@@ -1,0 +1,16 @@
+"column","class","n_missing","n_distinct"
+"Speaker","factor",903,425
+"Modality","factor",0,2
+"Verb","factor",0,75
+"SemanticClass","factor",0,5
+"LengthOfRecipient","integer",0,20
+"AnimacyOfRec","factor",0,2
+"DefinOfRec","factor",0,2
+"PronomOfRec","factor",0,2
+"LengthOfTheme","integer",0,36
+"AnimacyOfTheme","factor",0,2
+"DefinOfTheme","factor",0,2
+"PronomOfTheme","factor",0,2
+"RealizationOfRecipient","factor",0,2
+"AccessOfRec","factor",0,3
+"AccessOfTheme","factor",0,3
