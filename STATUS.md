@@ -1,9 +1,9 @@
 # STATUS
 
 **Last updated:** 2026-06-23
-**State:** Core source/data records verified; reproducible `languageR::dative` inspection, baseline/null, hierarchical partial-pooling, BNC2014 inspection, harmonization, first BNC2014 transport checks, house-style figure candidates, and a source-grounded results-spine manuscript draft are now in place. No raw data committed.
-**Next action:** Prune the generated figure set after reading the PDF as a whole, then do a prose-level polish pass over the transport and grammaticality sections.
-**Blocker:** None for the current paper stage. DAIS data reuse remains out of scope unless its licensing is clarified.
+**State:** Results-spine draft complete and stress-tested. A 5-referee review board ran and its findings were actioned: transport now positioned against Bresnan & Ford 2010 and Röthlisberger et al. 2017, bootstrap test-set CIs added (transport 0.308 [0.277, 0.337]; native 0.202 [0.154, 0.254], non-overlapping), projectibility cashed out (Boyd "for a purpose"), grammaticality construct cited (Pullum, Nefdt) instead of stipulated, structural-blindness named against competence/performance (Chomsky 1965, Miller 1963). Full numbers audit: 60/60 PASS against source. Abstract reframed through projectibility. 8 pages built clean. No raw data committed.
+**Next action:** On Hawkins's DAIS licensing reply, add one production/acceptability divergence case (or reframe §6 explicitly as a position section); until then, polish only. Optional later: re-run the board on the revised draft.
+**Blocker:** DAIS acceptability leg blocked on Robert Hawkins's licensing reply (email sent 2026-06-23, cc Goldberg). The repo has no licence file, so DAIS stays uncited-for-reuse until clarified.
 
 ## Working Title
 
@@ -60,3 +60,14 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Added `notes/denominator-recovery-and-figures.md` after Roughdraft review. Decision: the missing denominator is estimable only after nesting the denominators (released NP/PP rows, six-verb candidate tokens, transfer-event expressions, constructed judgement alternatives); the BNC2014 D1 denominator is probably recoverable only if source queries or prefiltered concordance files can be reconstructed.
 - Added `analysis/06_denominator_and_figure_candidates.py`, which imports the central house-style matplotlib settings and writes PDF/PNG candidate figures from existing derived summaries. Inserted the verb-level BNC2014 calibration figure and the nested opportunity-set figure into the manuscript.
 - Revised the grammaticality section to use Brett's current target definition: grammaticality is a community-conditioned licensing status for form-value/form-meaning relations, stabilized by cognitive and social mechanisms. Judgements are noisy, role-dependent instruments; corpus frequency and acceptability are evidence channels rather than the target.
+
+### 2026-06-23 Session Notes (evening)
+
+- Ran an iteration checkpoint, then a 5-referee review board (Claude/Opus): cross-variety probabilistic-grammar, quantitative-methods, acceptability, projectibility, and contribution-sceptic seats. Outputs in `reviews/review-board-20260623-174025/`. Verdicts: 4 R&R, 1 reject-and-reframe. Brett chose "one paper, fix the spine."
+- Refuted the board's most confident finding by source-checking: Reviewer 2's "length harmonization bug" is not a bug. The Journal of Open Humanities Data data dictionary defines `RecLen`/`ThemeLen` as character counts, so re-tokenizing to words is the correct harmonization. Clarified section 05 prose and cited the data dictionary; left the working code unchanged.
+- Positioned the transport result against prior cross-variety work: added source-verified entries `BresnanFord2010` (Language 86(1):168--213; start page confirmed off the printed PDF, author's webpage 186--213 is a typo) and `RothlisbergerGrafmillerSzmrecsanyi2017` (Cognitive Linguistics 28(4):673--710). Section 05 now concedes the stability echoes them and locates the contribution in the transport test plus the production/possibility framing.
+- Added percentile-bootstrap test-set CIs (`bootstrap_metric_ci` in the loader; output `bnc2014_transport_bootstrap.csv`): transport 0.308 [0.277, 0.337] / AUC 0.906 [0.890, 0.922]; native 0.202 [0.154, 0.254] / AUC 0.960 [0.938, 0.979]. Non-overlapping, so the gap is beyond split noise. Point estimates reproduced exactly.
+- Made projectibility do real work in section 06 (Boyd's "projectible for a purpose"; cited Goodman 1955, boyd1999), cited the grammaticality construct (pullum2019-normativity, nefdt2023) instead of stipulating it, and named what "structural blindness" adds beyond competence/performance (chomsky1965, Miller1963: a measurable, channel-specific boundary). `/check-hpc` now GREEN where it was decorative. NB: the bib's Miller entries are George Miller (1963) and J.T.M. Miller (2021), not Philip Miller.
+- Corrected the DAIS figure to 50,000 judgements over 5,000 pairs. Reframed the abstract through projectibility-for-a-purpose and synced the keyword lines (added projectibility).
+- Independent numbers audit: 60/60 claims PASS against source CSVs, 0 mismatch, 0 unverifiable (`reviews/review-board-20260623-174025/numbers-audit.md`).
+- Sent the DAIS licensing email to Robert Hawkins (Stanford Linguistics), cc Goldberg; draft kept local and gitignored. The DAIS acceptability leg is now the sole open blocker.
