@@ -151,14 +151,30 @@ DAIS becomes relevant only after the production-choice story is clear. It tests
 whether preference/acceptability patterns align with production conditioning; it
 does not measure production frequency.
 
-## 9. First Implementation Step
+## 9. Completed `languageR` Implementation
 
-Add `analysis/02_baseline_languageR_dative.R` to:
+The initial `languageR::dative` implementation now exists:
 
-1. load `languageR::dative` from the CRAN source tarball;
-2. construct the marginal null and simple structured baselines;
-3. fit the first logistic model;
-4. write small derived model summaries under `data/derived/`;
-5. produce diagnostic plots under `analysis/figures/` or `data/derived/figures/`,
-   depending on whether the project keeps figures as analysis outputs or paper
-   assets.
+1. `analysis/01_inspect_languageR_dative.R` inspects the CRAN package data.
+2. `analysis/02_baseline_languageR_dative.R` fits marginal, structured,
+   scrambled-label, noise-predictor, and fake-data baselines.
+3. `analysis/03_hierarchical_languageR_dative.R` fits a varying-verb-intercept
+   model and predictive checks.
+
+The result is a robustness result: modern modelling and partial pooling preserve
+the original production-choice conclusion. Further `languageR` refinement is not
+the next contribution.
+
+## 10. Revised Next Implementation Step
+
+Move to transport and the production/possibility gap:
+
+1. `analysis/04_inspect_bnc2014_dative.R`: fetch or stream the BNC2014 CSV,
+   verify row count, schema, missingness, and variable levels, and write small
+   derived metadata tables.
+2. `notes/bnc2014-harmonization.md`: map BNC2014 fields to the `languageR`
+   predictors and classify each as direct, proxy, unavailable, or incompatible.
+3. `notes/production-possibility-gap.md`: state what production data can and
+   cannot show about grammatical possibility, and what DAIS would add.
+
+Only after those are in place should the project fit a BNC2014 transport model.

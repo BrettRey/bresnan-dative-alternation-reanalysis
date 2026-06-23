@@ -6,13 +6,15 @@ verification.
 Modelling commitments and null comparisons are predeclared in
 `../notes/analysis-plan.md`.
 
-Likely analysis sequence:
+Analysis sequence:
 
 1. Load and audit `languageR::dative`.
 2. Reproduce the original-style model.
-3. Fit modern comparison models.
-4. Run cross-validation / posterior predictive checks as appropriate.
-5. Test generalization to later datasets only after schema comparability is
+3. Fit modern comparison and hierarchical models.
+4. Treat the `languageR` result as robustness evidence, not the final
+   contribution.
+5. Inspect and harmonize BNC2014 before any transport model.
+6. Test generalization to later datasets only after schema comparability is
    documented.
 
 ## Scripts
