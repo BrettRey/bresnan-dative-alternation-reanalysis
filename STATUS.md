@@ -53,3 +53,4 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Imported the useful lesson from the left-branch-extraction paper: make the corpus denominator explicit. The dative models estimate conditional production choice inside attested dative-alternation tokens, not all possible contexts where a transfer event could have been expressed.
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.
+- Applied the first-use initialism policy across the manuscript draft: corpus names, table metrics, pattern codes, licensing shorthand, and project placeholders now spell out their terms before using abbreviated forms.

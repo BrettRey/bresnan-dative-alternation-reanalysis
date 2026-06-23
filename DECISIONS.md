@@ -35,3 +35,5 @@
 2026-06-23 — DAIS scope: cite Hawkins et al. 2020 as the acceptability/preference bridge, but do not fetch, analyze, or redistribute DAIS files in this repo. Reason: DAIS answers a judgement-preference question rather than a production-token question, and the public `taka-yamakoshi/neural_constructions` repository has no explicit licence file.
 
 2026-06-23 — Opportunity-set discipline: import the denominator lesson from the left-branch-extraction paper. Reason: `languageR::dative` and BNC2014 estimate conditional choice inside attested dative-alternation tokens; they do not sample all contexts where a transfer event could have been expressed, omitted, paraphrased, or judged acceptable.
+
+2026-06-23 — Initialism policy: spell out initialisms at first use in manuscript prose, including table metrics, pattern codes, corpus names, licence names, and infrastructure labels. Reason: the paper should not assume that readers know project shorthand.

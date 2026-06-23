@@ -2,14 +2,14 @@
 
 The BNC2014 analysis asks whether the production profile travels across corpus
 design, variety, period, and annotation regime. The transport model is trained
-on the spoken \texttt{languageR} rows restricted to the six BNC verbs. It's
+on the spoken \texttt{languageR} rows restricted to the six BNC2014 verbs. It's
 then evaluated on harmonized BNC2014 rows.
 
 Harmonization is lossy. The outcome maps cleanly: \texttt{VNN} becomes NP and
 \texttt{VNPP} becomes PP. Verb also maps cleanly after restricting the
 \texttt{languageR} data to the six shared verbs. Length is more delicate:
 BNC2014 releases character lengths, while \texttt{languageR} uses token-like
-lengths, so the transport script derives BNC word-count proxies in memory.
+lengths, so the transport script derives BNC2014 word-count proxies in memory.
 
 Several predictors are available only as proxies. BNC2014 has recipient and
 theme animacy, theme definiteness, and recipient/theme pronominality, but some
@@ -39,13 +39,14 @@ BNC2014 native scrambled train & BNC2014 & 0.495 & 0.440 \\
 
 The transported core model beats the marginal baseline by a wide margin. Its
 test log loss is 0.308, compared with 0.473 for the \texttt{languageR} marginal
-baseline, and its AUC is 0.906. When the BNC outcome is scrambled, the same
+baseline, and its AUC is 0.906. When the BNC2014 outcome is scrambled, the same
 predictions collapse to 0.885 log loss and 0.515 AUC.
 
-The BNC-native model is still stronger. On a verb-stratified BNC holdout split,
+The BNC2014-native model is still stronger. On a verb-stratified BNC2014
+holdout split,
 the native core model reaches 0.202 log loss and 0.960 AUC. This gap matters.
 The transported model has learned a profile that's genuinely useful in the
-new corpus, but the BNC data also contains local structure that the
+new corpus, but the BNC2014 data also contains local structure that the
 \texttt{languageR} fit does not capture.
 
 Several directions travel. Recipient length is negative for NP realization;
@@ -58,14 +59,15 @@ Some details do not travel cleanly. The transported model underpredicts NP
 realization for \texttt{send}, \texttt{offer}, and \texttt{lend}, and
 overpredicts it for \texttt{sell}. Theme definiteness is the clearest
 coefficient mismatch: negative in the \texttt{languageR}-trained model, positive
-and weak in the BNC-native model.
+and weak in the BNC2014-native model.
 
 The recipient-definiteness proxy should stay a sensitivity check. Adding it
 worsens transport log loss from 0.308 to 0.347 while leaving AUC essentially
 unchanged. That pattern fits the harmonization note: the proxy is interpretable,
 but it should not carry the headline result.
 
-Acceptability evidence answers a different question. DAIS, introduced by
+Acceptability evidence answers a different question. The Dative Alternation and
+Information Structure (DAIS) dataset, introduced by
 \textcite{HawkinsYamakoshiGriffithsGoldberg2020VerbBias}, contains human
 judgements for 5,000 dative sentence pairs and systematically varies verb,
 definiteness, and argument length. It's useful as a future bridge from

@@ -1,9 +1,10 @@
 \section{Data and direct replication}
 
-The analysis starts with \texttt{languageR::dative}, distributed with the CRAN
-\texttt{languageR} package \citep{BaayenShafaeiBajestan2025languageR}. The
-analysis scripts fetch the package source tarball, load the packaged
-\texttt{dative.rda} object, and write derived summaries.
+The analysis starts with \texttt{languageR::dative}, distributed with the
+Comprehensive R Archive Network (CRAN) \texttt{languageR} package
+\citep{BaayenShafaeiBajestan2025languageR}. The source tarball supplies the
+packaged \texttt{dative.rda} object; the analysis scripts load it and write
+derived summaries.
 
 In the packaged dataset, there are 3,263 rows and 15 columns. The response
 records recipient realization, with 2,414 NP realizations and 849 PP
@@ -29,16 +30,19 @@ Two falsification checks accompany them: a scrambled-label check and fake-data
 checks. These tests ask whether the fitted structure beats chance, not whether
 it proves a grammatical theory.
 
-A second empirical source is the Spoken BNC2014 dative dataset
+A second empirical source is the Spoken British National Corpus 2014 (BNC2014)
+dative dataset
 \citep{JensetMcGillivray2018BNCData,JensetMcGillivray2019Dative}. The verified
-Figshare CSV has 1,839 parsed data rows and 44 columns under a CC BY 4.0
+Figshare comma-separated values (CSV) file has 1,839 parsed data rows and 44
+columns under a Creative Commons Attribution 4.0 International (CC BY 4.0)
 licence. The apparent line-count discrepancy is mechanical: the file has 1,839
 newline characters but no terminal newline, giving 1,840 logical text lines
 including the header.
 
 BNC2014 serves as a transport target rather than a direct replication of
-\texttt{languageR::dative}. Its outcome field is \texttt{Pattern}, where
-\texttt{VNN} maps to NP realization and \texttt{VNPP} maps to PP realization.
+\texttt{languageR::dative}. Its outcome field is \texttt{Pattern}, where the
+verb--noun--noun code \texttt{VNN} maps to NP realization and the
+verb--noun--prepositional-phrase code \texttt{VNPP} maps to PP realization.
 The six shared verbs are \mention{give}, \mention{send}, \mention{show},
 \mention{sell}, \mention{offer}, and \mention{lend}. All six occur in the
 packaged \texttt{languageR} dataset.
