@@ -1,9 +1,9 @@
 # STATUS
 
 **Last updated:** 2026-06-23
-**State:** Core source/data records verified; reproducible `languageR::dative` inspection, baseline/null, hierarchical partial-pooling, BNC2014 inspection, harmonization, first BNC2014 transport checks, and a first results-spine manuscript draft are now in place. No raw data committed.
-**Next action:** Do a source-grounding/content pass over the new prose, then decide whether DAIS is needed as a narrow production/acceptability bridge.
-**Blocker:** DAIS repository licensing needs a closer check before those data are reused directly.
+**State:** Core source/data records verified; reproducible `languageR::dative` inspection, baseline/null, hierarchical partial-pooling, BNC2014 inspection, harmonization, first BNC2014 transport checks, and a source-grounded results-spine manuscript draft are now in place. No raw data committed.
+**Next action:** Do a prose-level polish pass over the draft, then decide whether the transport section needs one compact figure or whether the tables are enough for the first circulation draft.
+**Blocker:** None for the current paper stage. DAIS data reuse remains out of scope unless its licensing is clarified.
 
 ## Working Title
 
@@ -49,5 +49,6 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Added `analysis/05_bnc2014_transport.R` and `notes/bnc2014-transport-results.md`. First result: the spoken six-verb `languageR` core model transports to BNC2014 well above marginal baseline (log loss 0.308 vs 0.473; AUC 0.906 vs 0.500), collapses against a scrambled BNC outcome (log loss 0.885; AUC 0.515), and is still weaker than a BNC-native holdout model (log loss 0.202; AUC 0.960). The recipient-definiteness proxy worsens transport log loss and should remain a sensitivity check.
 - Replaced section stubs with first-pass manuscript prose for the problem, original target, data/replication, modern modelling, BNC2014 transport, grammatical possibility, and conclusion sections.
 - Added verified local bibliography entries for `languageR`, the Figshare BNC2014 dataset, and the Journal of Open Humanities Data article.
+- Added a source-grounding pass over the DAIS/acceptability bridge: Hawkins et al. 2020 is now cited, but DAIS is not fetched, analyzed, or redistributed because the public repository has no explicit licence file. DAIS remains background/future bridge evidence, not part of the current empirical result.
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.

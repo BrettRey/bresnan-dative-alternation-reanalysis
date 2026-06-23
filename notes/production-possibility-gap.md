@@ -49,6 +49,9 @@ between production and acceptability:
 
 Until that probe is implemented, DAIS/NLMs should remain background or future
 work. They should not be advertised as part of the title or the core result.
+Because the DAIS repository has no explicit licence file, this project should
+cite DAIS but not fetch, analyze, or redistribute the DAIS files without further
+permission or a clearer licence record.
 
 ## Manuscript Language
 

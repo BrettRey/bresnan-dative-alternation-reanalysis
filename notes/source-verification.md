@@ -79,21 +79,27 @@ been checked against authoritative records.
 
 ### DAIS / Hawkins et al. 2020
 
-- Status: paper and repository verified; licensing still needs a closer check
-  before copying or redistributing data.
+- Status: paper and repository verified; no explicit repository licence found
+  as of 2026-06-23, so do not copy, redistribute, or analyze the DAIS files in
+  this public repo without further permission or a clearer licence record.
 - Paper record: Robert Hawkins, Takateru Yamakoshi, Thomas Griffiths, and Adele
   Goldberg, "Investigating representations of verb bias in neural language
   models," EMNLP 2020, pp. 4653-4663, DOI `10.18653/v1/2020.emnlp-main.376`.
 - Dataset claim verified from ACL abstract: DAIS contains 50K human judgments
   for 5K distinct sentence pairs in the English dative alternation, with 200
   verbs and systematic variation in definiteness and argument length.
-- Repository: `taka-yamakoshi/neural_constructions`; README says `DAIS`
-  contains the 50K human judgments and code for human data collection and
-  analyses, and `SWBD` contains materials for reanalysis of naturally occurring
-  datives annotated by Bresnan and Nikitina.
-- Use in paper: acceptability/preference bridge and neural-LM comparison. It is
-  not production-token evidence and should not be merged with `languageR` or
-  BNC2014 as if it measured the same outcome.
+- Repository: `taka-yamakoshi/neural_constructions`; README says the dative
+  judgement dataset contains 50K human judgments and code for human data
+  collection and analyses, and `SWBD` contains materials for reanalysis of
+  naturally occurring datives annotated by Bresnan and Nikitina. The top-level
+  README calls the directory `DATIVE`, while the live repository directory is
+  `DAIS`.
+- Licence check: the GitHub repository page and a fresh shallow clone show no
+  top-level `LICENSE` or `COPYING` file. The GitHub licence API also returns no
+  licence record for the repository.
+- Use in paper: cite as an acceptability/preference bridge and neural-LM
+  comparison. It is not production-token evidence and should not be merged with
+  `languageR` or BNC2014 as if it measured the same outcome.
 - Sources: <https://aclanthology.org/2020.emnlp-main.376/>,
   <https://github.com/taka-yamakoshi/neural_constructions>
 
