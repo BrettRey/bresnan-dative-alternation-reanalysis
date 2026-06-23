@@ -1,0 +1,5 @@
+"model","group","n","observed","predicted"
+"nonverb_main","spoken",440,0.806818181818182,0.798515991462018
+"nonverb_main","written",186,0.64516129032258,0.639886751682028
+"fixed_verb_full","spoken",440,0.806818181818182,0.794424240719112
+"fixed_verb_full","written",186,0.64516129032258,0.651994462828688

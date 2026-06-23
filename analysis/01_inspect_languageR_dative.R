@@ -1,49 +1,9 @@
 # Inspect the CRAN languageR::dative dataset without committing raw data.
 
-package_version <- "1.6"
-cran_url <- sprintf(
-  "https://cran.r-project.org/src/contrib/languageR_%s.tar.gz",
-  package_version
-)
-archive_url <- sprintf(
-  "https://cran.r-project.org/src/contrib/Archive/languageR/languageR_%s.tar.gz",
-  package_version
-)
+source(file.path("analysis", "lib_languageR_dative.R"))
 
-fetch_languageR_tarball <- function(destfile) {
-  ok <- tryCatch({
-    utils::download.file(cran_url, destfile, quiet = TRUE, mode = "wb")
-    TRUE
-  }, error = function(e) FALSE, warning = function(w) FALSE)
-
-  if (!ok) {
-    utils::download.file(archive_url, destfile, quiet = TRUE, mode = "wb")
-  }
-}
-
-load_dative <- function() {
-  tarball <- tempfile(fileext = ".tar.gz")
-  unpack_dir <- tempfile()
-  dir.create(unpack_dir)
-
-  fetch_languageR_tarball(tarball)
-  utils::untar(tarball, exdir = unpack_dir)
-
-  data_env <- new.env(parent = emptyenv())
-  data_path <- file.path(unpack_dir, "languageR", "data", "dative.rda")
-  load(data_path, envir = data_env)
-  data_env$dative
-}
-
-dative <- load_dative()
-
-stopifnot(
-  is.data.frame(dative),
-  identical(dim(dative), c(3263L, 15L)),
-  "RealizationOfRecipient" %in% names(dative),
-  "Modality" %in% names(dative),
-  "Verb" %in% names(dative)
-)
+dative <- load_languageR_dative()
+validate_languageR_dative(dative)
 
 derived_dir <- file.path("data", "derived")
 dir.create(derived_dir, recursive = TRUE, showWarnings = FALSE)
@@ -61,8 +21,8 @@ summary_rows <- data.frame(
     "modality_written"
   ),
   value = c(
-    package_version,
-    cran_url,
+    languageR_version,
+    languageR_cran_url,
     nrow(dative),
     ncol(dative),
     length(levels(dative$Verb)),

@@ -17,6 +17,14 @@ Likely analysis sequence:
 
 ## Scripts
 
+- `lib_languageR_dative.R`: shared helper for fetching the CRAN `languageR`
+  source tarball and loading `dative.rda`.
 - `01_inspect_languageR_dative.R`: downloads the CRAN `languageR` source
   tarball to a temporary directory, loads `dative.rda`, validates the expected
   dimensions, and writes small derived summary/schema tables to `data/derived/`.
+- `02_baseline_languageR_dative.R`: fits marginal, structured, scrambled-label,
+  noise-predictor, and fake-data baseline checks for `RealizationOfRecipient`;
+  writes metrics, coefficient, warning, calibration, and diagnostic-figure
+  outputs to `data/derived/`.
+
+Run scripts from the repository root with `Rscript`.

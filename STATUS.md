@@ -1,8 +1,8 @@
 # STATUS
 
 **Last updated:** 2026-06-23
-**State:** Core source/data records verified; first reproducible `languageR::dative` inspection script added and run; pre-model analysis plan drafted and reviewed in Roughdraft. No raw data committed.
-**Next action:** Implement `analysis/02_baseline_languageR_dative.R` with the marginal null, structured baselines, scrambled-label null, and first logistic model.
+**State:** Core source/data records verified; first reproducible `languageR::dative` inspection and baseline/null scripts added and run. No raw data committed.
+**Next action:** Add the first hierarchical/varying-verb model and stronger generative checks, then decide which baseline contrasts belong in the manuscript.
 **Blocker:** DAIS repository licensing and BNC2014 row-count discrepancy need closer checks before those data are reused directly.
 
 ## Working Title
@@ -36,5 +36,7 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Added `analysis/01_inspect_languageR_dative.R`, which fetches the CRAN source tarball to a temporary directory, loads `dative.rda`, validates dimensions, and writes derived summary/schema CSVs under `data/derived/`.
 - First inspection output: 3,263 rows, 15 columns, 75 verb levels; NP = 2,414, PP = 849; spoken = 2,360, written = 903; `Speaker` is missing only for the 903 written rows.
 - Added `notes/analysis-plan.md` after Roughdraft review. It predeclares the primary outcome, model sequence, null comparisons, model checks, robustness grid, and falsification conditions before baseline fitting.
+- Added shared loader `analysis/lib_languageR_dative.R` and baseline script `analysis/02_baseline_languageR_dative.R`.
+- First baseline run uses a fixed seed (`20260623`) and verb-stratified train/test split (2,637 train, 626 test). Test log loss/AUC: marginal null 0.554/0.500; length-only 0.436/0.829; verb-only 0.413/0.791; non-verb main model 0.271/0.932; fixed-verb full model 0.234/0.951. Scrambled fixed-verb null falls to 0.581/0.488. Noise predictor does not improve the non-verb model on held-out log loss.
 - Ran the central LaTeX style linter with strict checks: no violations found.
 - Built successfully with XeLaTeX/Biber/XeLaTeX/XeLaTeX; final log scan found no undefined citations, no overfull boxes, and no empty bibliography warnings.
