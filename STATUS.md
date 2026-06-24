@@ -1,7 +1,7 @@
 # STATUS
 
-**Last updated:** 2026-06-23
-**State:** Results-spine draft complete and stress-tested. A 5-referee review board ran and its findings were actioned: transport now positioned against Bresnan & Ford 2010 and Röthlisberger et al. 2017, bootstrap test-set CIs added (transport 0.308 [0.277, 0.337]; native 0.202 [0.154, 0.254], non-overlapping), projectibility cashed out (Boyd "for a purpose"), grammaticality construct cited (Pullum, Nefdt) instead of stipulated, structural-blindness named against competence/performance (Chomsky 1965, Miller 1963). Full numbers audit: 60/60 PASS against source. Abstract reframed through projectibility. 8 pages built clean. No raw data committed.
+**Last updated:** 2026-06-24
+**State:** Results-spine draft complete and stress-tested. A 5-referee review board ran and its findings were actioned: transport now positioned against Bresnan & Ford 2010 and Röthlisberger et al. 2017, bootstrap test-set CIs added (transport complete-case 0.308 [0.277, 0.337]; native complete-case 0.202 [0.154, 0.254], non-overlapping), projectibility cashed out (Boyd "for a purpose"), grammaticality construct cited (Pullum, Nefdt) instead of stipulated, structural-blindness named against competence/performance (Chomsky 1965, Miller 1963). Full numbers audit: 60/60 PASS against source. Sampling-scope audit now narrows the transport claim to the six-verb high-frequency core and labels the BNC2014 headline metrics as complete-case rows; all-row imputation sensitivity is reproducible in `analysis/07_sampling_tilt_sensitivity.R`. Abstract reframed through scoped projectibility. No raw data committed.
 **Next action:** On Hawkins's DAIS licensing reply, add one production/acceptability divergence case (or reframe §6 explicitly as a position section); until then, polish only. Optional later: re-run the board on the revised draft.
 **Blocker:** DAIS acceptability leg blocked on Robert Hawkins's licensing reply (email sent 2026-06-23, cc Goldberg). The repo has no licence file, so DAIS stays uncited-for-reuse until clarified.
 
@@ -71,3 +71,10 @@ Bresnan et al. made a durable methodological claim: probabilistic usage data can
 - Corrected the DAIS figure to 50,000 judgements over 5,000 pairs. Reframed the abstract through projectibility-for-a-purpose and synced the keyword lines (added projectibility).
 - Independent numbers audit: 60/60 claims PASS against source CSVs, 0 mismatch, 0 unverifiable (`reviews/review-board-20260623-174025/numbers-audit.md`).
 - Sent the DAIS licensing email to Robert Hawkins (Stanford Linguistics), cc Goldberg; draft kept local and gitignored. The DAIS acceptability leg is now the sole open blocker.
+
+### 2026-06-24
+
+- Added `notes/sampling-tilt-audit-2026-06-24.md` after Roughdraft review. Finding: the result should be treated as a complete-case high-frequency-core transport result, not an all-row BNC2014 or whole-alternation result.
+- Added `analysis/07_sampling_tilt_sensitivity.R`, writing `data/derived/sampling_tilt_scope_summary.csv` and `data/derived/sampling_tilt_sensitivity_metrics.csv`. The script fetches public data to temp files only.
+- Revised the abstract, Section 05, Section 06, and conclusion to state the six-verb scope, the 1,621/1,839 BNC2014 complete-case frame, the PP-heavy missing-row imbalance, and all-row imputation sensitivity.
+- Verification: `Rscript analysis/07_sampling_tilt_sensitivity.R`, central `check-style.py main.tex`, and `make` all ran successfully. Final log scan found no overfull/underfull boxes or undefined references; only the pre-existing `fancyhdr` headheight warning remains.

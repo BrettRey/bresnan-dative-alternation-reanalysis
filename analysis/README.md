@@ -15,7 +15,9 @@ Analysis sequence:
    contribution.
 5. Inspect and harmonize BNC2014 before any transport model.
 6. Fit the first BNC2014 transport model on documented shared features.
-7. Test generalization to later datasets only after schema comparability is
+7. Audit sampling-scope and complete-case sensitivity before treating the
+   transport metrics as final.
+8. Test generalization to later datasets only after schema comparability is
    documented.
 
 ## Scripts
@@ -43,6 +45,9 @@ Analysis sequence:
 - `06_denominator_and_figure_candidates.py`: generates house-style candidate
   figures for BNC2014 transport diagnostics and denominator framing from
   existing derived summaries.
+- `07_sampling_tilt_sensitivity.R`: quantifies the six-verb sampling scope,
+  BNC2014 complete-case filtering, and simple all-row imputation sensitivities
+  for the transport result.
 
 Run scripts from the repository root with `Rscript`.
 Run the figure-candidate script from the repository root with `python3`.
