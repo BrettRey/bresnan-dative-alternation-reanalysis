@@ -348,6 +348,69 @@ def make_opportunity_sets() -> None:
     save(fig, "opportunity_sets_nested")
 
 
+def make_dais_bridge(scored_items: pd.DataFrame) -> None:
+    data = scored_items[scored_items["coding"] == "something_pronominal"].copy()
+    if data.empty:
+        raise ValueError("No DAIS scored items with coding == something_pronominal")
+
+    verb_order = ["give", "show", "offer", "lend", "send", "sell"]
+    verb_colours = {
+        "give": COLORS["primary"],
+        "show": TEXT_COLORS["tertiary"],
+        "offer": TEXT_COLORS["secondary"],
+        "lend": TEXT_COLORS["quaternary"],
+        "send": TEXT_COLORS["accent"],
+        "sell": TEXT_COLORS["quinary"],
+    }
+
+    fig, ax = plt.subplots(figsize=(5.9, 4.2))
+    ax.plot([0, 1], [0, 1], color="#9A9A9A", linewidth=0.9,
+            linestyle="--", zorder=1)
+
+    for verb in verb_order:
+        rows = data[data["Verb"] == verb]
+        is_offer = verb == "offer"
+        ax.scatter(
+            rows["production_np_prob"],
+            rows["human_do_preference"],
+            s=42 if is_offer else 30,
+            color=verb_colours[verb],
+            alpha=0.88 if is_offer else 0.68,
+            edgecolor=COLORS["dark"] if is_offer else "white",
+            linewidth=0.65 if is_offer else 0.35,
+            label=mention(verb),
+            zorder=3 if is_offer else 2,
+        )
+
+    offer_mean = data[data["Verb"] == "offer"][
+        ["production_np_prob", "human_do_preference"]
+    ].mean()
+    ax.annotate(
+        mention("offer"),
+        xy=(offer_mean["production_np_prob"], offer_mean["human_do_preference"]),
+        xytext=(0.24, 0.66),
+        arrowprops=dict(arrowstyle="->", color=TEXT_COLORS["secondary"],
+                        linewidth=1.0, shrinkA=3, shrinkB=3),
+        color=TEXT_COLORS["secondary"],
+        fontsize=10,
+    )
+
+    ax.set_xlim(-0.02, 1.02)
+    ax.set_ylim(-0.02, 1.02)
+    ax.set_xlabel("Production model NP probability")
+    ax.set_ylabel("DAIS double-object preference")
+    add_grid(ax, axis="both")
+    ax.legend(
+        title="Verb",
+        loc="lower right",
+        frameon=False,
+        ncol=2,
+        handletextpad=0.25,
+        columnspacing=0.8,
+    )
+    save(fig, "dais_production_preference_bridge")
+
+
 def main() -> None:
     setup(font_size=10, title_size=11, tick_size=9, legend_size=9)
     # Serif mathtext so \mention-style italic verbs match the body font.
@@ -362,6 +425,7 @@ def main() -> None:
     calibration = read_derived("bnc2014_transport_calibration_by_verb.csv")
     make_calibration(calibration)
     make_calibration_error(calibration)
+    make_dais_bridge(read_derived("dais_acceptability_bridge_scored_items.csv"))
     make_opportunity_sets()
 
 

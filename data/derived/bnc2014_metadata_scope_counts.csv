@@ -1,0 +1,95 @@
+"set","field","value","rows","np_rows","pp_rows","share","np_rate","rate_min_n","rate_reportable"
+"all_released","AgeRange","19_29",736,601,135,0.400217509516041,0.816576086956522,25,TRUE
+"all_released","AgeRange","60_69",307,248,59,0.166938553561718,0.807817589576547,25,TRUE
+"all_released","AgeRange","50_59",217,174,43,0.11799891245242,0.80184331797235,25,TRUE
+"all_released","AgeRange","30_39",191,146,45,0.103860793909734,0.764397905759162,25,TRUE
+"all_released","AgeRange","40_49",160,126,34,0.0870038064165307,0.7875,25,TRUE
+"all_released","AgeRange","70_79",125,96,29,0.0679717237629146,0.768,25,TRUE
+"all_released","AgeRange","11_18",75,62,13,0.0407830342577488,0.826666666666667,25,TRUE
+"all_released","AgeRange","80_89",19,12,7,0.010331702011963,NA,25,FALSE
+"all_released","AgeRange","(missing)",8,8,0,0.00435019032082654,NA,25,FALSE
+"all_released","AgeRange","90_99",1,1,0,0.000543773790103317,NA,25,FALSE
+"core_complete","AgeRange","19_29",644,538,106,0.397285626156693,0.835403726708075,25,TRUE
+"core_complete","AgeRange","60_69",271,224,47,0.167180752621838,0.826568265682657,25,TRUE
+"core_complete","AgeRange","50_59",191,156,35,0.117828500925355,0.816753926701571,25,TRUE
+"core_complete","AgeRange","30_39",176,138,38,0.108574953732264,0.784090909090909,25,TRUE
+"core_complete","AgeRange","40_49",136,109,27,0.0838988278840222,0.801470588235294,25,TRUE
+"core_complete","AgeRange","70_79",108,87,21,0.0666255397902529,0.805555555555556,25,TRUE
+"core_complete","AgeRange","11_18",71,58,13,0.0438001233806292,0.816901408450704,25,TRUE
+"core_complete","AgeRange","80_89",16,10,6,0.00987045033929673,NA,25,FALSE
+"core_complete","AgeRange","(missing)",7,7,0,0.00431832202344232,NA,25,FALSE
+"core_complete","AgeRange","90_99",1,1,0,0.000616903146206046,NA,25,FALSE
+"all_released","Gender","F",1138,923,215,0.618814573137575,0.811072056239016,25,TRUE
+"all_released","Gender","M",699,549,150,0.380097879282219,0.785407725321888,25,TRUE
+"all_released","Gender","(missing)",2,2,0,0.00108754758020663,NA,25,FALSE
+"core_complete","Gender","F",1013,834,179,0.624922887106724,0.82329713721619,25,TRUE
+"core_complete","Gender","M",606,492,114,0.373843306600864,0.811881188118812,25,TRUE
+"core_complete","Gender","(missing)",2,2,0,0.00123380629241209,NA,25,FALSE
+"all_released","Level1Dialect","uk",1720,1374,346,0.935290918977705,0.798837209302326,25,TRUE
+"all_released","Level1Dialect","unspecified",106,89,17,0.0576400217509516,0.839622641509434,25,TRUE
+"all_released","Level1Dialect","non_uk",11,9,2,0.00598151169113649,NA,25,FALSE
+"all_released","Level1Dialect","(missing)",2,2,0,0.00108754758020663,NA,25,FALSE
+"core_complete","Level1Dialect","uk",1521,1241,280,0.938309685379395,0.815910585141354,25,TRUE
+"core_complete","Level1Dialect","unspecified",91,78,13,0.0561381863047502,0.857142857142857,25,TRUE
+"core_complete","Level1Dialect","non_uk",7,7,0,0.00431832202344232,NA,25,FALSE
+"core_complete","Level1Dialect","(missing)",2,2,0,0.00123380629241209,NA,25,FALSE
+"all_released","Level2Dialect","english",1689,1351,338,0.918433931484502,0.799881586737715,25,TRUE
+"all_released","Level2Dialect","unspecified",112,92,20,0.0609026644915715,0.821428571428571,25,TRUE
+"all_released","Level2Dialect","welsh",23,18,5,0.0125067971723763,NA,25,FALSE
+"all_released","Level2Dialect","non_uk",11,9,2,0.00598151169113649,NA,25,FALSE
+"all_released","Level2Dialect","(missing)",2,2,0,0.00108754758020663,NA,25,FALSE
+"all_released","Level2Dialect","scottish",2,2,0,0.00108754758020663,NA,25,FALSE
+"core_complete","Level2Dialect","english",1491,1219,272,0.919802590993214,0.81757209926224,25,TRUE
+"core_complete","Level2Dialect","unspecified",97,81,16,0.0598396051819864,0.835051546391753,25,TRUE
+"core_complete","Level2Dialect","welsh",22,17,5,0.013571869216533,NA,25,FALSE
+"core_complete","Level2Dialect","non_uk",7,7,0,0.00431832202344232,NA,25,FALSE
+"core_complete","Level2Dialect","(missing)",2,2,0,0.00123380629241209,NA,25,FALSE
+"core_complete","Level2Dialect","scottish",2,2,0,0.00123380629241209,NA,25,FALSE
+"all_released","Relation","Close family, partners, very close friends",1171,954,217,0.636759108210984,0.81468830059778,25,TRUE
+"all_released","Relation","Friends, wider family circle",538,413,125,0.292550299075585,0.767657992565056,25,TRUE
+"all_released","Relation","Colleagues",110,89,21,0.0598151169113649,0.809090909090909,25,TRUE
+"all_released","Relation","Acquaintances",17,16,1,0.00924415443175639,NA,25,FALSE
+"all_released","Relation","Strangers",3,2,1,0.00163132137030995,NA,25,FALSE
+"core_complete","Relation","Close family, partners, very close friends",1037,863,174,0.639728562615669,0.832208293153327,25,TRUE
+"core_complete","Relation","Friends, wider family circle",470,368,102,0.289944478716841,0.782978723404255,25,TRUE
+"core_complete","Relation","Colleagues",94,79,15,0.0579888957433683,0.840425531914894,25,TRUE
+"core_complete","Relation","Acquaintances",17,16,1,0.0104873534855028,NA,25,FALSE
+"core_complete","Relation","Strangers",3,2,1,0.00185070943861814,NA,25,FALSE
+"all_released","NumSpeakers","2 speakers",887,712,175,0.482327351821642,0.802705749718151,25,TRUE
+"all_released","NumSpeakers","3 speakers",499,400,99,0.271343121261555,0.801603206412826,25,TRUE
+"all_released","NumSpeakers","4 speakers",365,289,76,0.198477433387711,0.791780821917808,25,TRUE
+"all_released","NumSpeakers","5 speakers",78,67,11,0.0424143556280587,0.858974358974359,25,TRUE
+"all_released","NumSpeakers","6 speakers",4,3,1,0.00217509516041327,NA,25,FALSE
+"all_released","NumSpeakers","7 speakers",3,1,2,0.00163132137030995,NA,25,FALSE
+"all_released","NumSpeakers","8 speakers",3,2,1,0.00163132137030995,NA,25,FALSE
+"core_complete","NumSpeakers","2 speakers",782,647,135,0.482418260333128,0.827365728900256,25,TRUE
+"core_complete","NumSpeakers","3 speakers",431,351,80,0.265885256014806,0.814385150812065,25,TRUE
+"core_complete","NumSpeakers","4 speakers",324,261,63,0.199876619370759,0.805555555555556,25,TRUE
+"core_complete","NumSpeakers","5 speakers",75,64,11,0.0462677359654534,0.853333333333333,25,TRUE
+"core_complete","NumSpeakers","6 speakers",4,3,1,0.00246761258482418,NA,25,FALSE
+"core_complete","NumSpeakers","8 speakers",3,2,1,0.00185070943861814,NA,25,FALSE
+"core_complete","NumSpeakers","7 speakers",2,0,2,0.00123380629241209,NA,25,FALSE
+"all_released","SpeakerHighestQual","Graduate",663,536,127,0.360522022838499,0.808446455505279,25,TRUE
+"all_released","SpeakerHighestQual","Postgraduate",563,428,135,0.306144643828167,0.760213143872114,25,TRUE
+"all_released","SpeakerHighestQual","College/6th Form",373,318,55,0.202827623708537,0.85254691689008,25,TRUE
+"all_released","SpeakerHighestQual","Secondary School",224,178,46,0.121805328983143,0.794642857142857,25,TRUE
+"all_released","SpeakerHighestQual","(missing)",16,14,2,0.00870038064165307,NA,25,FALSE
+"core_complete","SpeakerHighestQual","Graduate",589,492,97,0.363355953115361,0.835314091680815,25,TRUE
+"core_complete","SpeakerHighestQual","Postgraduate",476,367,109,0.293645897594078,0.771008403361345,25,TRUE
+"core_complete","SpeakerHighestQual","College/6th Form",339,290,49,0.209130166563849,0.855457227138643,25,TRUE
+"core_complete","SpeakerHighestQual","Secondary School",203,166,37,0.125231338679827,0.817733990147783,25,TRUE
+"core_complete","SpeakerHighestQual","(missing)",14,13,1,0.00863664404688464,NA,25,FALSE
+"all_released","SpeakerSocGrade","E",624,499,125,0.33931484502447,0.799679487179487,25,TRUE
+"all_released","SpeakerSocGrade","B",611,499,112,0.332245785753127,0.816693944353519,25,TRUE
+"all_released","SpeakerSocGrade","A",308,238,70,0.167482327351822,0.772727272727273,25,TRUE
+"all_released","SpeakerSocGrade","C1",203,162,41,0.110386079390973,0.798029556650246,25,TRUE
+"all_released","SpeakerSocGrade","C2",57,45,12,0.0309951060358891,0.789473684210526,25,TRUE
+"all_released","SpeakerSocGrade","D",34,29,5,0.0184883088635128,0.852941176470588,25,TRUE
+"all_released","SpeakerSocGrade","(missing)",2,2,0,0.00108754758020663,NA,25,FALSE
+"core_complete","SpeakerSocGrade","E",552,455,97,0.340530536705737,0.824275362318841,25,TRUE
+"core_complete","SpeakerSocGrade","B",541,449,92,0.333744602097471,0.829944547134935,25,TRUE
+"core_complete","SpeakerSocGrade","A",268,211,57,0.16533004318322,0.787313432835821,25,TRUE
+"core_complete","SpeakerSocGrade","C1",175,144,31,0.107958050586058,0.822857142857143,25,TRUE
+"core_complete","SpeakerSocGrade","C2",52,41,11,0.0320789636027144,0.788461538461538,25,TRUE
+"core_complete","SpeakerSocGrade","D",31,26,5,0.0191239975323874,0.838709677419355,25,TRUE
+"core_complete","SpeakerSocGrade","(missing)",2,2,0,0.00123380629241209,NA,25,FALSE

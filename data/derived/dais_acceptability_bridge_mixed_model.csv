@@ -1,0 +1,9 @@
+"model","term","estimate","std_error","df","statistic","p_value"
+"dais_participant_mixed_bridge","(Intercept)",0.274465855843643,0.0247449521900427,NA,11.0917917212258,NA
+"dais_participant_mixed_bridge","production_np_prob",0.051863785298432,0.0600836633868392,NA,0.863192794429247,NA
+"dais_participant_mixed_bridge","recipient_idlongIndefinite",-0.0340229434016242,0.0216123863934292,NA,-1.5742335335985,NA
+"dais_participant_mixed_bridge","recipient_idpronoun",0.295660951659051,0.0457050561584154,NA,6.46888936388742,NA
+"dais_participant_mixed_bridge","recipient_idshortDefinite",0.198262505001437,0.0229662274778049,NA,8.63278504025283,NA
+"dais_participant_mixed_bridge","recipient_idshortIndefinite",0.103241926088407,0.0232176273433471,NA,4.44670441822691,NA
+"dais_participant_mixed_bridge","theme_typeindef",0.0866365652108595,0.0204758901680022,NA,4.23115012338984,NA
+"dais_participant_mixed_bridge","theme_typesomething",0.0126460541141201,0.0195711672111179,NA,0.64615737925616,NA

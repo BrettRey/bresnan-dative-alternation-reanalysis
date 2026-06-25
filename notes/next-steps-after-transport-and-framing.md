@@ -38,7 +38,7 @@ The next draft should make three things impossible to miss:
 
 ## Defer
 
-- DAIS analysis: defer until licence/redistribution is clear and the question is explicitly acceptability preference.
+- DAIS analysis: done narrowly in `analysis/08_dais_acceptability_bridge.R` after licence/permission cleared; keep it as an acceptability-preference bridge, not a second full target.
 - Neural language models: defer unless the paper is reframed around the production/acceptability bridge.
 - More `languageR` model variants: defer unless a reviewer asks. The current same-data result already answers that part of the question.
 

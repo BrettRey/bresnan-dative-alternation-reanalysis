@@ -60,11 +60,14 @@ between production and acceptability:
 - Do low-frequency but grammatical alternatives receive acceptable ratings?
 - Do model probabilities track production, human preference, both, or neither?
 
-Until that probe is implemented, DAIS/NLMs should remain background or future
-work. They should not be advertised as part of the title or the core result.
-Because the DAIS repository has no explicit licence file, this project should
-cite DAIS but not fetch, analyze, or redistribute the DAIS files without further
-permission or a clearer licence record.
+The DAIS probe is now implemented narrowly. `analysis/08_dais_acceptability_bridge.R`
+uses the item-level DAIS means for the 150 items whose verbs overlap the
+six-verb production core. It should be described as an acceptability/preference
+bridge, not as production-token evidence and not as a full neural-language-model
+result. The repository now carries a CC BY 4.0 licence, and Robert Hawkins's
+2026-06-25 email gives explicit permission to reuse and redistribute the DAIS
+judgements. The script fetches the item-level CSV to a temporary file and writes
+derived summaries only.
 
 ## Manuscript Language
 

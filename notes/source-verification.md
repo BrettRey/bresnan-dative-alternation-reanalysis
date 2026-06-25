@@ -80,6 +80,14 @@ been checked against authoritative records.
   length, pronominality, animacy, definiteness for theme, and speaker metadata
   such as age, gender, nationality, dialect, education, occupation, and word
   counts.
+- Metadata-scope audit by `analysis/09_bnc2014_metadata_scope.R`: the released
+  rows are heavily structured, with Level 1 dialect `uk` for 1,720/1,839 rows,
+  Level 2 dialect `english` for 1,689/1,839, female-coded gender for 1,138 rows
+  and male-coded gender for 699, age band 19-29 for 736 rows, and close-family,
+  partner, or very-close-friend conversations for 1,171 rows. The transport
+  complete-case subset has the same broad shape. Treat BNC2014 transport as a
+  corpus-domain diagnostic, not a clean estimate for all British spoken
+  English.
 - Use in paper: cross-corpus/generalization target, especially spoken British
   English and sociolinguistic metadata. It should not be treated as a direct
   replication of `languageR::dative`, because the verb set and metadata differ.
@@ -88,9 +96,12 @@ been checked against authoritative records.
 
 ### DAIS / Hawkins et al. 2020
 
-- Status: paper and repository verified; no explicit repository licence found
-  as of 2026-06-23, so do not copy, redistribute, or analyze the DAIS files in
-  this public repo without further permission or a clearer licence record.
+- Status: paper, repository, licence, and reuse permission verified. A
+  repository-level CC BY 4.0 licence was added upstream on 2026-06-24 in commit
+  `16ef145b71d1f6e6d755ad0f5ff822327639af0a` (merge PR
+  `add-cc-by-license`). Robert Hawkins's 2026-06-25 email also gives explicit
+  permission to reuse and redistribute the DAIS judgements while the licence
+  update is being settled.
 - Paper record: Robert Hawkins, Takateru Yamakoshi, Thomas Griffiths, and Adele
   Goldberg, "Investigating representations of verb bias in neural language
   models," EMNLP 2020, pp. 4653-4663, DOI `10.18653/v1/2020.emnlp-main.376`.
@@ -103,12 +114,25 @@ been checked against authoritative records.
   naturally occurring datives annotated by Bresnan and Nikitina. The top-level
   README calls the directory `DATIVE`, while the live repository directory is
   `DAIS`.
-- Licence check: the GitHub repository page and a fresh shallow clone show no
-  top-level `LICENSE` or `COPYING` file. The GitHub licence API also returns no
-  licence record for the repository.
-- Use in paper: cite as an acceptability/preference bridge and neural-LM
-  comparison. It is not production-token evidence and should not be merged with
-  `languageR` or BNC2014 as if it measured the same outcome.
+- Licence check: a fresh sparse clone on 2026-06-25 finds top-level `LICENSE`
+  and README licence language saying that the DAIS dataset and repository code
+  are released under Creative Commons Attribution 4.0 International (CC BY 4.0)
+  and asking users to cite both the EMNLP 2020 paper and the dataset.
+- Data-file check: `DAIS/data/generated_pairs_with_results.csv` at commit
+  `16ef145b71d1f6e6d755ad0f5ff822327639af0a` has MD5
+  `46af310f1633b8784f897e4482faed84`, 5,000 item rows, and columns including
+  the double-object sentence, prepositional-dative sentence, verb
+  classification, condition labels, `BehavDOpreference`, and model
+  log-likelihood ratios. The cleaned individual-judgement ZIP has MD5
+  `e7b3ac6f2dd8e85bc93e6e20fc0f6ec1` and contains 50,136 retained judgement
+  rows from 1,011 participants after the authors' exclusions.
+- Use in paper: one compact acceptability/preference bridge. The project script
+  fetches the item-level DAIS CSV and cleaned individual-judgement ZIP to
+  temporary files, validates the MD5 hashes, and writes derived summaries for
+  the 150 DAIS items whose verbs overlap the six-verb `languageR`/BNC2014 core.
+  When `lme4` is available, it also fits a compact participant-level mixed
+  bridge model. DAIS is not production-token evidence and should not be merged
+  with `languageR` or BNC2014 as if it measured the same outcome.
 - Sources: <https://aclanthology.org/2020.emnlp-main.376/>,
   <https://github.com/taka-yamakoshi/neural_constructions>
 

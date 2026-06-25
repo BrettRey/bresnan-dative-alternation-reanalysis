@@ -1,0 +1,9 @@
+"field","levels","missing_rows","largest_level","largest_rows","largest_share","reportable_cells_all"
+"AgeRange",10,8,"19_29",736,0.400217509516041,7
+"Gender",3,2,"F",1138,0.618814573137575,2
+"Level1Dialect",4,2,"uk",1720,0.935290918977705,2
+"Level2Dialect",6,2,"english",1689,0.918433931484502,2
+"NumSpeakers",7,0,"2 speakers",887,0.482327351821642,4
+"Relation",5,0,"Close family, partners, very close friends",1171,0.636759108210984,3
+"SpeakerHighestQual",5,16,"Graduate",663,0.360522022838499,4
+"SpeakerSocGrade",7,2,"E",624,0.33931484502447,6

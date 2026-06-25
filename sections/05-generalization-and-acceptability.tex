@@ -6,6 +6,15 @@ on the spoken \texttt{languageR} rows restricted to the six BNC2014 verbs. It's
 then evaluated on harmonized BNC2014 rows, with complete-case filtering stated
 as part of the evidential scope.
 
+Three estimands are kept apart. The \texttt{languageR} models estimate
+conditional production choice among attested noun phrase and prepositional
+phrase dative tokens. The BNC2014 transport result estimates out-of-domain
+predictive performance over complete-case rows in the six shared
+high-frequency verbs after harmonization. DAIS estimates controlled
+double-object preference for constructed alternatives. These numbers can
+therefore be read together only as different evidence channels, not as repeated
+measurements of one quantity.
+
 Cross-variety probabilistic grammar of the dative isn't new ground.
 \textcite{BresnanFord2010} compared American and Australian English and found
 that speakers' probabilistic choice knowledge is largely shared across
@@ -58,6 +67,17 @@ are not neutral: noun phrase recipients make up 0.819 of the complete rows but
 only 0.670 of the 218 incomplete rows. The headline comparison is consequently
 a complete-case estimate over the shared high-frequency core.
 
+A BNC2014 metadata audit makes the domain label concrete. In the released
+dative rows, Level 1 dialect is \enquote{uk} for 1,720 of 1,839 rows and Level 2
+dialect is \enquote{english} for 1,689. Gender is female-coded for 1,138 rows
+and male-coded for 699, and the largest age band is 19--29 with 736 rows.
+Interaction type is also skewed: close-family, partner, and very-close-friend
+conversations contribute 1,171 rows, while friends and wider-family
+conversations contribute another 538. The complete-case subset has the same
+shape. A single BNC2014 transport score should therefore be read as a
+corpus-domain diagnostic, not as a clean estimate for British spoken English in
+general.
+
 \begin{table}[htbp]
 \centering
 \small
@@ -109,7 +129,7 @@ and the BNC2014-native holdout model. The vertical axis is the noun phrase
 \end{figure}
 
 That framing changes the interpretation of the result. Success is evidence that
-the conditioning profile is projectible across macro-variety and period within
+the conditioning profile is projectible across the bundled corpus shift within
 the shared high-frequency core, not just refittable. Failure, if it had
 occurred, would not have identified a single cause: variety, date, register,
 verb restriction, and annotation all move together.
@@ -158,7 +178,70 @@ Acceptability evidence answers a different question. The Dative Alternation and
 Information Structure (DAIS) dataset, introduced by
 \textcite{HawkinsYamakoshiGriffithsGoldberg2020VerbBias}, contains 50,000 human
 judgements over 5,000 dative sentence pairs and systematically varies verb,
-definiteness, and argument length. It's useful as a future bridge from
-production probability to acceptability preference. It's not analyzed here:
-the public repository has no explicit licence file, and the outcome is
-judgement preference rather than corpus choice.
+definiteness, and argument length. The repository now carries a CC BY 4.0
+licence, and the dataset authors have given explicit permission to reuse the
+judgements. DAIS can therefore enter as a compact bridge
+\citep{HawkinsYamakoshiGriffithsGoldberg2020DAIS}.
+
+The bridge keeps the targets separate. I score only the 150 DAIS items whose
+verbs overlap the six-verb production core. The same spoken \texttt{languageR}
+production model that was transported to BNC2014 predicts a noun-phrase
+recipient probability for each constructed DAIS pair; the DAIS item mean gives
+the corresponding human double-object preference on a 0--1 scale. As a bridge
+analysis, it asks whether a production probability profile and a controlled
+preference profile point in the same direction.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\linewidth]{data/derived/figures/dais_production_preference_bridge.pdf}
+\caption{DAIS production/preference bridge for the six shared verbs. Each point
+is a constructed DAIS item. The horizontal axis is the spoken
+\texttt{languageR} model's noun phrase (NP) recipient probability; the vertical
+axis is DAIS double-object (DO) preference. The diagonal marks equality between
+the two channels, and the \mention{offer} cluster is highlighted because it
+shows the clearest channel separation.}
+\label{fig:dais-bridge}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Verb & Prod. NP prob. & DAIS DO pref. & Difference \\
+\midrule
+\mention{give} & 0.408 & 0.449 & -0.041 \\
+\mention{lend} & 0.204 & 0.426 & -0.222 \\
+\mention{offer} & 0.150 & 0.468 & -0.319 \\
+\mention{sell} & 0.231 & 0.351 & -0.120 \\
+\mention{send} & 0.196 & 0.428 & -0.232 \\
+\mention{show} & 0.506 & 0.516 & -0.009 \\
+\bottomrule
+\end{tabular}
+\caption{DAIS bridge for the six shared verbs. The DAIS column is the item-level
+mean double-object (DO) preference. The production column is the noun-phrase
+(NP) recipient probability from the spoken \texttt{languageR} core model.}
+\label{tab:dais-bridge}
+\end{table}
+
+The two channels line up moderately, while remaining distinct. With
+\mention{something} treated as a pronominal theme, Pearson's \(r\) is 0.667 and
+Spearman's \(\rho\) is 0.685 over the 150 shared-verb items. The mean production
+NP probability is 0.283, while the mean human DO preference is 0.440. Treating
+\mention{something} as nonpronominal gives the same interpretation
+(\(r = 0.645\), \(\rho = 0.675\), mean production probability 0.343).
+The participant-level check points the same way without making the correlation
+carry the whole inference. A mixed model on 1,525 shared-verb judgements from
+923 participants, with random intercepts for participant and verb, is
+non-singular; once recipient condition and theme type are included, the
+incremental production-score coefficient is small (0.052, standard error
+0.060). The bridge is therefore evidence of shared conditioning and diagnostic
+divergence, not validation of one channel by the other.
+
+The useful cases are the divergences. \mention{Offer} is the clearest verb-level
+one: the production model makes it strongly PP-like, but DAIS participants are
+much more willing to choose the double-object version. For example,
+\enquote{Juan offered the woman a payment} has predicted NP probability 0.141
+but DAIS DO preference 0.694. The point is channel separation: judgement
+preference can occupy a different region of the evidence space from corpus
+production probability.

@@ -17,7 +17,11 @@ Analysis sequence:
 6. Fit the first BNC2014 transport model on documented shared features.
 7. Audit sampling-scope and complete-case sensitivity before treating the
    transport metrics as final.
-8. Test generalization to later datasets only after schema comparability is
+8. Add a compact DAIS acceptability bridge only after licence and permission
+   are documented.
+9. Audit BNC2014 metadata descriptively before treating the target domain as
+   homogeneous.
+10. Test generalization to later datasets only after schema comparability is
    documented.
 
 ## Scripts
@@ -48,6 +52,16 @@ Analysis sequence:
 - `07_sampling_tilt_sensitivity.R`: quantifies the six-verb sampling scope,
   BNC2014 complete-case filtering, and simple all-row imputation sensitivities
   for the transport result.
+- `08_dais_acceptability_bridge.R`: downloads the CC BY 4.0 DAIS item-level
+  results CSV and cleaned individual-judgement ZIP to temporary files,
+  validates their MD5 hashes, scores the 150 shared-verb DAIS items with the
+  spoken six-verb `languageR` production model, fits a compact participant-level
+  mixed bridge model when `lme4` is available, and writes derived
+  production/preference bridge summaries.
+- `09_bnc2014_metadata_scope.R`: downloads the public Figshare BNC2014 dative
+  CSV to a temporary file, validates the Figshare MD5, and writes descriptive
+  metadata-scope counts/rates for the released rows and transport complete-case
+  rows.
 
 Run scripts from the repository root with `Rscript`.
 Run the figure-candidate script from the repository root with `python3`.
