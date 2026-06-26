@@ -399,6 +399,92 @@ reduced_allrow_metrics <- function(languageR_h, bnc_h) {
   }))
 }
 
+predictor_distribution_comparison <- function(languageR_h, bnc_h, bnc_complete) {
+  source <- languageR_h
+  target_complete <- bnc_h[bnc_complete, , drop = FALSE]
+  datasets <- list(
+    languageR_spoken_shared = source,
+    BNC2014_all_released = bnc_h,
+    BNC2014_core_complete = target_complete
+  )
+  numeric_vars <- c("rec_len_words", "theme_len_words")
+  binary_vars <- c(
+    "rec_anim",
+    "rec_def",
+    "rec_pron",
+    "theme_anim",
+    "theme_def",
+    "theme_pron"
+  )
+
+  numeric_rows <- do.call(rbind, lapply(names(datasets), function(set_name) {
+    data <- datasets[[set_name]]
+    do.call(rbind, lapply(numeric_vars, function(var) {
+      x <- data[[var]]
+      data.frame(
+        set = set_name,
+        variable = var,
+        type = "numeric",
+        level = NA_character_,
+        rows = nrow(data),
+        observed_rows = sum(!is.na(x)),
+        missing_rows = sum(is.na(x)),
+        mean = mean(x, na.rm = TRUE),
+        sd = stats::sd(x, na.rm = TRUE),
+        min = min(x, na.rm = TRUE),
+        max = max(x, na.rm = TRUE),
+        share = NA_real_,
+        stringsAsFactors = FALSE
+      )
+    }))
+  }))
+
+  binary_rows <- do.call(rbind, lapply(names(datasets), function(set_name) {
+    data <- datasets[[set_name]]
+    do.call(rbind, lapply(binary_vars, function(var) {
+      x <- as.character(data[[var]])
+      data.frame(
+        set = set_name,
+        variable = var,
+        type = "binary",
+        level = "yes",
+        rows = nrow(data),
+        observed_rows = sum(!is.na(x)),
+        missing_rows = sum(is.na(x)),
+        mean = NA_real_,
+        sd = NA_real_,
+        min = NA_real_,
+        max = NA_real_,
+        share = mean(x == "yes", na.rm = TRUE),
+        stringsAsFactors = FALSE
+      )
+    }))
+  }))
+
+  verb_rows <- do.call(rbind, lapply(names(datasets), function(set_name) {
+    data <- datasets[[set_name]]
+    do.call(rbind, lapply(shared_verbs, function(verb) {
+      data.frame(
+        set = set_name,
+        variable = "Verb",
+        type = "factor",
+        level = verb,
+        rows = nrow(data),
+        observed_rows = sum(!is.na(data$Verb)),
+        missing_rows = sum(is.na(data$Verb)),
+        mean = NA_real_,
+        sd = NA_real_,
+        min = NA_real_,
+        max = NA_real_,
+        share = mean(as.character(data$Verb) == verb, na.rm = TRUE),
+        stringsAsFactors = FALSE
+      )
+    }))
+  }))
+
+  rbind(numeric_rows, binary_rows, verb_rows)
+}
+
 bnc <- canonical_metadata(as.data.frame(lapply(bnc_raw, blank_to_na), stringsAsFactors = FALSE))
 bnc$y_np <- as.integer(bnc$Pattern == "VNN")
 
@@ -439,6 +525,7 @@ completeness_metadata_rows <- do.call(rbind, lapply(metadata_fields, function(fi
 }))
 
 harmonization_rows <- harmonization_mapping(languageR_h, bnc_h)
+distribution_rows <- predictor_distribution_comparison(languageR_h, bnc_h, core_complete)
 core_variables <- c(
   "rec_len_words",
   "theme_len_words",
@@ -510,6 +597,11 @@ utils::write.csv(
   row.names = FALSE
 )
 utils::write.csv(
+  distribution_rows,
+  file.path(derived_dir, "bnc2014_predictor_distribution_comparison.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
   missing_variable_rows,
   file.path(derived_dir, "bnc2014_core_missingness_by_variable.csv"),
   row.names = FALSE
@@ -527,5 +619,6 @@ utils::write.csv(
 
 print(summary_rows, row.names = FALSE)
 print(field_summary_rows, row.names = FALSE)
+print(distribution_rows, row.names = FALSE)
 print(missing_variable_rows, row.names = FALSE)
 print(reduced_metrics, row.names = FALSE)

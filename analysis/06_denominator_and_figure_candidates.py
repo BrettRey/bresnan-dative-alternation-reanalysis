@@ -377,33 +377,40 @@ def make_dais_bridge(scored_items: pd.DataFrame) -> None:
     ax.plot([0, 1], [0, 1], color="#9A9A9A", linewidth=0.9,
             linestyle="--", zorder=1)
 
+    highlighted_verbs = {"offer", "sell"}
+
     for verb in verb_order:
         rows = data[data["Verb"] == verb]
-        is_offer = verb == "offer"
+        is_highlighted = verb in highlighted_verbs
         ax.scatter(
             rows["production_np_prob"],
             rows["human_do_preference"],
-            s=42 if is_offer else 30,
+            s=42 if is_highlighted else 30,
             color=verb_colours[verb],
-            alpha=0.88 if is_offer else 0.68,
-            edgecolor=COLORS["dark"] if is_offer else "white",
-            linewidth=0.65 if is_offer else 0.35,
+            alpha=0.88 if is_highlighted else 0.68,
+            edgecolor=COLORS["dark"] if is_highlighted else "white",
+            linewidth=0.65 if is_highlighted else 0.35,
             label=mention(verb),
-            zorder=3 if is_offer else 2,
+            zorder=3 if is_highlighted else 2,
         )
 
-    offer_mean = data[data["Verb"] == "offer"][
-        ["production_np_prob", "human_do_preference"]
-    ].mean()
-    ax.annotate(
-        mention("offer"),
-        xy=(offer_mean["production_np_prob"], offer_mean["human_do_preference"]),
-        xytext=(0.24, 0.66),
-        arrowprops=dict(arrowstyle="->", color=TEXT_COLORS["secondary"],
-                        linewidth=1.0, shrinkA=3, shrinkB=3),
-        color=TEXT_COLORS["secondary"],
-        fontsize=10,
-    )
+    annotations = {
+        "offer": (0.24, 0.66, TEXT_COLORS["secondary"]),
+        "sell": (0.10, 0.20, TEXT_COLORS["quinary"]),
+    }
+    for verb, (x_text, y_text, colour) in annotations.items():
+        verb_mean = data[data["Verb"] == verb][
+            ["production_np_prob", "human_do_preference"]
+        ].mean()
+        ax.annotate(
+            mention(verb),
+            xy=(verb_mean["production_np_prob"], verb_mean["human_do_preference"]),
+            xytext=(x_text, y_text),
+            arrowprops=dict(arrowstyle="->", color=colour,
+                            linewidth=1.0, shrinkA=3, shrinkB=3),
+            color=colour,
+            fontsize=10,
+        )
 
     ax.set_xlim(-0.02, 1.02)
     ax.set_ylim(-0.02, 1.02)

@@ -329,6 +329,79 @@ calibration_model <- function(y, p, model, type) {
   )
 }
 
+coef_rows <- function(fit, model, training_rows) {
+  coef_summary <- summary(fit)$coefficients
+  data.frame(
+    model = model,
+    term = rownames(coef_summary),
+    estimate = coef_summary[, "Estimate"],
+    std_error = coef_summary[, "Std. Error"],
+    z_value = coef_summary[, "z value"],
+    p_value = coef_summary[, "Pr(>|z|)"],
+    training_rows = training_rows,
+    row.names = NULL
+  )
+}
+
+term_group <- function(term) {
+  if (term == "(Intercept)") {
+    return("intercept")
+  }
+  if (grepl("^Verb", term)) {
+    return("verb")
+  }
+  if (grepl("^rec_len_words|^theme_len_words", term)) {
+    return("length")
+  }
+  if (grepl("_anim", term)) {
+    return("animacy")
+  }
+  if (grepl("_pron", term)) {
+    return("pronominality")
+  }
+  if (grepl("_def", term)) {
+    return("definiteness")
+  }
+  "other"
+}
+
+coefficient_transport <- function(formula, source_data, target_data) {
+  source_fit <- stats::glm(formula, data = source_data, family = stats::binomial())
+  native_fit <- stats::glm(formula, data = target_data, family = stats::binomial())
+  source <- coef_rows(source_fit, "source_languageR_spoken_shared", nrow(source_data))
+  native <- coef_rows(native_fit, "native_BNC2014_complete_case", nrow(target_data))
+  names(source)[names(source) != "term"] <- paste0(
+    "source_",
+    names(source)[names(source) != "term"]
+  )
+  names(native)[names(native) != "term"] <- paste0(
+    "native_",
+    names(native)[names(native) != "term"]
+  )
+  merged <- merge(source, native, by = "term", all = TRUE, sort = FALSE)
+  merged$group <- vapply(merged$term, term_group, character(1))
+  merged$source_direction <- sign(merged$source_estimate)
+  merged$native_direction <- sign(merged$native_estimate)
+  merged$same_direction <- merged$source_direction == merged$native_direction
+  merged[, c(
+    "group",
+    "term",
+    "source_estimate",
+    "source_std_error",
+    "source_z_value",
+    "source_p_value",
+    "native_estimate",
+    "native_std_error",
+    "native_z_value",
+    "native_p_value",
+    "source_direction",
+    "native_direction",
+    "same_direction",
+    "source_training_rows",
+    "native_training_rows"
+  )]
+}
+
 formula_text <- function(formula) {
   if (is.null(formula)) {
     "intercept-only marginal probability"
@@ -391,6 +464,16 @@ bnc_h <- harmonize_bnc2014(bnc_raw)
 
 headline_complete <- complete_for_formula(bnc_h, headline_formula)
 bnc_eval <- bnc_h[headline_complete, , drop = FALSE]
+headline_source <- languageR_h[
+  complete_for_formula(languageR_h, headline_formula),
+  ,
+  drop = FALSE
+]
+coefficient_transport_rows <- coefficient_transport(
+  headline_formula,
+  headline_source,
+  bnc_eval
+)
 
 folds <- make_stratified_folds(bnc_eval, k = 10L, repeats = 5L)
 
@@ -689,9 +772,15 @@ utils::write.csv(
   file.path(derived_dir, "bnc2014_reduced_matched_denominator.csv"),
   row.names = FALSE
 )
+utils::write.csv(
+  coefficient_transport_rows,
+  file.path(derived_dir, "bnc2014_source_native_coefficient_comparison.csv"),
+  row.names = FALSE
+)
 
 print(metric_rows, row.names = FALSE)
 print(loss_differences, row.names = FALSE)
 print(native_agg, row.names = FALSE)
 print(native_source_auc_gap, row.names = FALSE)
 print(matched_denominator, row.names = FALSE)
+print(coefficient_transport_rows, row.names = FALSE)

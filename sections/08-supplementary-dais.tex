@@ -24,15 +24,21 @@ same NP-recipient form, on a 0--1 scale. As a bridge analysis, it
 asks whether a production probability profile and a controlled preference
 profile point in the same direction.
 
+The cleaned DAIS responses use integer values from 0 to 100 and are scaled here
+by division by 100. The shared-verb subset contains 1,525 judgement rows from
+923 participants over 150 constructed items. Item support ranges from 6 to 14
+judgements, with a median of 10; the mean item-level standard error is 0.082 on
+the 0--1 response scale.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.82\linewidth]{data/derived/figures/dais_production_preference_bridge.pdf}
 \caption{DAIS production/preference bridge for the six shared verbs. Each point
 is a constructed DAIS item. The horizontal axis is the spoken
 \texttt{languageR} model's NP recipient probability; the vertical axis is DAIS
-DO preference. The diagonal marks equality between the two channels, and the
-\mention{offer} cluster is highlighted because it shows the clearest channel
-separation.}
+DO preference. The diagonal marks equality between the two channels.
+\mention{Offer} and \mention{sell} are highlighted because they have opposite
+verb-level residuals after marginal production--preference calibration.}
 \label{fig:dais-bridge}
 \end{figure}
 
@@ -63,26 +69,30 @@ production NP probability is 0.283, while mean DAIS DO preference is 0.440; the
 mean paired difference is \(-0.157\), with bootstrap interval
 \([-0.198,-0.115]\). Treating \mention{something} as nonpronominal gives the
 same interpretation (\(r = 0.645\), \(\rho = 0.675\), mean production
-probability 0.343).
+probability 0.343). The verb means show a general calibration difference: mean
+production probability is below mean DAIS DO preference for every verb, not
+only for \mention{offer}.
 
 The item and participant checks show why the raw correlation should not be
 overread. At the item level, a marginal calibration regression has a positive
 slope, but once recipient condition, theme type, and verb are represented
 directly, the production-score slope is essentially zero (0.006, standard error
-0.078). At the judgement level, a linear mixed model on 1,525 shared-verb
-judgements from 923 participants uses fixed effects for production score,
-recipient condition, theme type, and verb, with crossed random intercepts for
-participant and constructed item. The fit is non-singular, and the incremental
+0.078).
+
+At the judgement level, a linear mixed model with Gaussian residuals uses fixed
+effects for production score, recipient condition, theme type, and verb, with
+crossed random intercepts for participant and constructed item. The incremental
 production-score coefficient is 0.017 (standard error 0.076; approximate
 interval \([-0.132,0.165]\)). DAIS preference and production probability
 therefore show moderate marginal rank correspondence, much of it attributable
 to shared sensitivity to the manipulated predictors; the production score adds
 little once those predictors are represented directly.
 
-The useful cases are the divergences. \mention{Offer} is the clearest
-verb-level one: the production model makes it strongly PP-like, but DAIS
-participants are much more willing to choose the double-object version. For
-example, \enquote{Juan offered the woman a payment} has predicted NP
-probability 0.141 but DAIS DO preference 0.694. The point is channel
-separation: judgement preference can occupy a different region of the evidence
-space from corpus production probability.
+The useful cases are calibrated divergences, not isolated raw gaps. After a
+marginal production--preference calibration, the verb-level residual is 0.077
+for \mention{offer} (bootstrap CI 0.027 to 0.129) and \(-0.070\) for
+\mention{sell} (CI \(-0.119\) to \(-0.027\)). For example, \enquote{Juan
+offered the woman a payment} has predicted NP probability 0.141 but DAIS DO
+preference 0.694. The point is channel separation: judgement preference can
+occupy a different region of the evidence space from corpus production
+probability, and the difference is not reducible to a single verb anecdote.

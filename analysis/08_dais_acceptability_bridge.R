@@ -303,6 +303,89 @@ item_calibration_rows <- function(scored) {
   }))
 }
 
+verb_residual_rows <- function(scored) {
+  do.call(rbind, lapply(split(scored, scored$coding), function(x) {
+    fit <- stats::lm(human_do_preference ~ production_np_prob, data = x)
+    x$calibrated_preference <- stats::predict(fit, newdata = x)
+    x$calibration_residual <- x$human_do_preference - x$calibrated_preference
+    rows <- do.call(rbind, lapply(split(x, x$Verb), function(v) {
+      set.seed(20260625L + match(unique(v$Verb), shared_verbs))
+      boot_resid <- replicate(
+        2000L,
+        mean(sample(v$calibration_residual, nrow(v), replace = TRUE))
+      )
+      data.frame(
+        coding = unique(v$coding),
+        Verb = unique(v$Verb),
+        n_items = nrow(v),
+        production_np_prob = mean(v$production_np_prob),
+        human_do_preference = mean(v$human_do_preference),
+        raw_production_minus_DAIS = mean(v$production_minus_DAIS),
+        calibrated_preference = mean(v$calibrated_preference),
+        preference_residual = mean(v$calibration_residual),
+        residual_lo = stats::quantile(boot_resid, 0.025, names = FALSE),
+        residual_hi = stats::quantile(boot_resid, 0.975, names = FALSE),
+        stringsAsFactors = FALSE
+      )
+    }))
+    rows[order(-abs(rows$preference_residual)), ]
+  }))
+}
+
+response_summary_rows <- function(all_rows, shared_rows) {
+  response_values <- sort(unique(shared_rows$DOpreference))
+  data.frame(
+    metric = c(
+      "cleaned_rows_all_verbs",
+      "cleaned_rows_shared_verbs",
+      "shared_response_min",
+      "shared_response_max",
+      "shared_response_unique_values",
+      "shared_response_values",
+      "scaled_response"
+    ),
+    value = c(
+      nrow(all_rows),
+      nrow(shared_rows),
+      min(shared_rows$DOpreference, na.rm = TRUE),
+      max(shared_rows$DOpreference, na.rm = TRUE),
+      length(response_values),
+      paste(response_values, collapse = ";"),
+      "DOpreference divided by 100"
+    ),
+    stringsAsFactors = FALSE
+  )
+}
+
+item_uncertainty_rows <- function(shared_rows) {
+  item_stats <- stats::aggregate(
+    DOpreference_01 ~ item_id + Verb + DOsentence + PDsentence,
+    data = shared_rows,
+    FUN = function(x) c(
+      n = length(x),
+      mean = mean(x),
+      sd = stats::sd(x),
+      se = stats::sd(x) / sqrt(length(x))
+    )
+  )
+  stats_matrix <- item_stats$DOpreference_01
+  if (!is.matrix(stats_matrix)) {
+    stats_matrix <- do.call(rbind, stats_matrix)
+  }
+  item_out <- data.frame(
+    item_id = item_stats$item_id,
+    Verb = item_stats$Verb,
+    DOsentence = item_stats$DOsentence,
+    PDsentence = item_stats$PDsentence,
+    judgement_rows = stats_matrix[, "n"],
+    mean_DOpreference_01 = stats_matrix[, "mean"],
+    sd_DOpreference_01 = stats_matrix[, "sd"],
+    se_DOpreference_01 = stats_matrix[, "se"],
+    stringsAsFactors = FALSE
+  )
+  item_out[order(item_out$Verb, item_out$item_id), ]
+}
+
 source_rows <- data.frame(
   source = "DAIS item-level generated pairs with behavioral means",
   repository = dais_repo,
@@ -427,6 +510,7 @@ scored_item_cols <- c(
 scored_item_rows <- scored[, scored_item_cols]
 item_difference_out <- item_difference_rows(scored)
 item_calibration_out <- item_calibration_rows(scored)
+verb_residual_out <- verb_residual_rows(scored)
 
 dais_cleaned$Verb <- unname(past_to_base[dais_cleaned$verb])
 dais_cleaned_shared <- merge(
@@ -447,6 +531,8 @@ dais_cleaned_shared$item_id <- paste(
   dais_cleaned_shared$PDsentence,
   sep = "\n"
 )
+response_summary_out <- response_summary_rows(dais_cleaned, dais_cleaned_shared)
+item_uncertainty_out <- item_uncertainty_rows(dais_cleaned_shared)
 
 participant_summary_out <- data.frame(
   metric = c(
@@ -644,6 +730,21 @@ utils::write.csv(
 utils::write.csv(
   item_calibration_out,
   file.path(derived_dir, "dais_acceptability_bridge_item_calibration.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  verb_residual_out,
+  file.path(derived_dir, "dais_acceptability_bridge_verb_residuals.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  response_summary_out,
+  file.path(derived_dir, "dais_acceptability_bridge_response_summary.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  item_uncertainty_out,
+  file.path(derived_dir, "dais_acceptability_bridge_item_uncertainty.csv"),
   row.names = FALSE
 )
 utils::write.csv(

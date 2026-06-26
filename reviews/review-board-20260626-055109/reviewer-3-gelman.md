@@ -1,0 +1,33 @@
+I've read the full manuscript (main.tex, sections 01-08) and the core analysis script (`analysis/10_bnc2014_paired_transport_cv.R`) to ground the statistical claims. Here is my review.
+
+---
+
+# Reviewer 3 (Bayesian/statistical-workflow standpoint)
+
+## 1. One-sentence summary of the main claim
+
+Treating cross-corpus transport of a Bresnan-style dative production model as a full predictive-evaluation problem (proper scoring, calibration, a paired target-native benchmark on identical rows, predictor-group ablation, missing-data sensitivity, and an explicit opportunity-set denominator) shows that the source profile's non-lexical conditioning transports and discriminates well out of domain but stays worse-calibrated than a target-native fit, and that the fitted quantity is a conditional production probability inside an annotated alternation frame, silent by construction about grammaticality.
+
+## 2. Strengths
+
+- **Estimand discipline is exemplary.** The paper states its estimand as P(NP recipient | a token entered the annotated NP/PP dative sample) and holds to it (Section 06, eq. on l.5-7; Figure `fig:opportunity-sets`). The nested-denominator argument and the observational-identification claim (no quantity of further positive tokens under the same design D₀ identifies the grammatical-but-unattested region) are correct and unusually clear about what the data can and cannot license. This is the level of "what is your target quantity" rigor most corpus papers skip.
+
+- **Candid, correctly-scoped uncertainty accounting.** Section 06 (l.89-93) states plainly that the row bootstrap and Wilson intervals are conditional row-level intervals that omit source-estimation uncertainty and within-conversation dependence and are "probably too narrow." The missing grouping-ID problem is not asserted but *verified* in code (`support_audit()`, l.355-385, checking the Figshare combine/cleaning scripts), and the denominator is decomposed cleanly (matched reduced-model check, Section 05 l.180-189) to show that dropping predictors, not enlarging the row set, drives the loss.
+
+- **The in-sample recalibration is used correctly as an upper bound.** Reporting apparent (fit-and-scored-on-the-same-rows) recalibration and then arguing that *even this best case* (log loss 0.290) fails to reach the native 0.227 (Section 05 l.158-167) is a valid and economical inferential move: it shows the source-native gap is not merely a prevalence/scaling shift without needing an out-of-sample recalibration fold.
+
+## 3. Weaknesses (actionable)
+
+- **Row-level CV biases the central native-vs-source gap, not just the interval width.** The paper treats the missing speaker/conversation IDs as a symmetric "intervals too narrow" problem. It is asymmetric. The native model is cross-validated *on BNC rows*, so near-duplicate within-speaker tokens and conversation-homogeneous predictor-outcome mappings leak across the row-level fold boundary and inflate native performance; the frozen external source model trains on no BNC rows and gets no such benefit. So the headline native-minus-source advantage (0.081 log loss, `[-0.104,-0.059]`; 0.032 AUC, `[0.025,0.039]`; Section 05 l.149-156), the native calibration in `fig:bnc-calibration`, and the claim that "the target corpus supplies local calibration and residual lexical structure" are all optimistic for the native side specifically. *Action:* state the direction of bias on the point estimate; attempt a coarse pseudo-grouping sensitivity from the available metadata (age/gender/dialect/relationship signatures) or a block-CV bound; and soften "recovers local structure" since part of that structure may be conversation-level non-independence rather than grammar.
+
+- **Table 2's AUC column is not on a common basis, and the reported AUC gap is a third computation that the table can't reproduce.** The log-loss column is fine (source 0.308 and native 0.227 are both pooled over the same 1,621 rows, and 0.308−0.227 = 0.081 matches the paired bootstrap). But the source AUCs are pooled over all rows while the native AUCs are averaged within fold (necessarily, since AUC isn't decomposable, per your code comment l.451-458). The text's 0.032 native-source AUC gap (l.152-153) is a *matched fold-level* quantity whose source term, the fold-averaged source AUC (`source_fold_auc` in code, l.501), is never shown, so a reader who differences the table (0.939−0.906 = 0.033) is mixing a pooled and a fold-averaged number and only coincidentally lands near 0.032. *Action:* report the matched fold-level source AUC, label the two AUC bases in the caption, and note that each native prediction is the mean of 5 repeat-OOF predictions (a small bagging step the single fixed source model does not get, which mildly flatters native log loss).
+
+- **Rigor is applied unevenly to the paper's own tables.** Table 1 (within-`languageR`, Section 04) reports single-split point estimates (one seed, 2,637/626) with no resampling uncertainty, while the paper's whole thesis is that single statistics are insufficient; the 0.271→0.234 log-loss and 0.932→0.951 AUC differences carry no SE. Relatedly, the "Param." column invites a complexity reading (hierarchical 19 vs fixed-verb 92) that the prose then disclaims (l.42-46), but with verb-intercept SD = 2.106 the shrinkage is weak, so the hierarchical model's *effective* degrees of freedom sit near the high end, not 19. *Action:* give Table 1 the same repeated-CV + bootstrap treatment used in Table 2, and replace or supplement the bare parameter count with an effective-parameters estimate so "smaller parameterization, same performance" is not over-read.
+
+## 4. Key question for Q&A
+
+The frozen source length coefficient is estimated in `languageR` token-like units (Section 03 l.74-79) but applied at transport to BNC2014 word counts derived by regex `\S+` from phrase strings (`word_count()`, code l.67-74), with raw, untransformed, linear length (Section 05 l.60-61): have you verified the two length scales are actually on the same footing, and how much of the source-native gap survives a log-length or z-scored-length harmonization rather than being a measurement-scale artifact read as domain shift?
+
+## 5. Verdict
+
+**Revise & Resubmit.** The estimand discipline and the validation-ladder framing are a genuine contribution and the execution is mostly sound, but the central native-vs-source comparison currently understates an asymmetric leakage bias from row-level CV and the AUC table is not on a common basis, both of which must be fixed (and ideally bounded) before the headline transport claim can be trusted.

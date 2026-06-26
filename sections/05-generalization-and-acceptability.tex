@@ -1,10 +1,10 @@
 \section{Cross-corpus transport}
 
 The BNC2014 analysis asks whether the production profile travels across corpus
-design, variety, period, and annotation regime. The transport model is trained
-on the spoken \texttt{languageR} rows restricted to the six BNC2014 verbs. It is
-then scored on harmonized BNC2014 rows, with complete-case filtering stated as
-part of the estimand.
+design, variety, period, register, and annotation regime. The transport model
+is trained on the spoken \texttt{languageR} rows restricted to the six BNC2014
+verbs. It is then scored on harmonized BNC2014 rows, with complete-case
+filtering stated as part of the estimand.
 
 Two corpus targets are kept apart. The \texttt{languageR} models estimate
 conditional production choice among attested NP and PP dative tokens. The
@@ -28,23 +28,25 @@ contribution here.
 
 What those transport studies report is discrimination: a concordance index,
 equivalently the area under the curve, or classification accuracy, that is,
-whether the moved model ranks or labels new tokens correctly. They do not ask whether it stays
-calibrated, how it compares to a target-native model fit and scored on the same
-observations, which predictor groups carry the transport, how missing data and
-the harmonized denominator bound the claim, or what quantity the fitted
-probability estimates. This paper treats external validation as that fuller
-problem. The contribution is the validation regime: proper scoring, calibration
-intercept and slope, a paired target-native benchmark on identical rows,
-predictor-group ablation, missing-data sensitivity, and an explicit
-opportunity-set denominator, with an open harmonization record that lets each
-step be checked.
+whether the moved model ranks or labels new tokens correctly.
+
+They do not ask whether it stays calibrated, how it compares to a target-native
+model fit and scored on the same observations, which predictor groups carry the
+transport, how missing data and the harmonized denominator bound the claim, or
+what quantity the fitted probability estimates. This paper treats external
+validation as that fuller problem. The contribution is the validation regime:
+proper scoring, calibration intercept and slope, a paired target-native
+benchmark on identical rows, predictor-group ablation, missing-data sensitivity,
+and an explicit opportunity-set denominator, with an open harmonization record
+that lets each step be checked.
 
 The comparison is a bundled out-of-domain test. The source side is American
 telephone conversation from 1990--1991, restricted to the six shared spoken
 \texttt{languageR} verbs. The target side is spontaneous British conversation
-from 2012--2014, under a different annotation scheme. Those six verbs account
-for 2,201 of 3,263 \texttt{languageR} rows and for 1,564 of 2,360 spoken rows.
-They are the high-frequency core, not a random sample of the alternation.
+from 2012--2014, mostly intimate face-to-face conversation, under a different
+annotation and extraction scheme. Those six verbs account for 2,201 of 3,263
+\texttt{languageR} rows and for 1,564 of 2,360 spoken rows. They are the
+high-frequency core, not a random sample of the alternation.
 
 The transport models are logistic generalized linear models with logit link.
 The core formula is
@@ -57,27 +59,41 @@ The core formula is
   + \textrm{theme pronominality}.
 \end{aligned}
 \]
+
 Lengths are raw word counts, with no centering, scaling, or logging. Factors
 use R treatment contrasts, with \mention{give} as the verb reference and
 \enquote{no} as the binary reference. There are no interactions in the
-transport models. Factor levels and coding are fixed before scoring BNC2014;
-no BNC2014-specific scaling or imputation enters the headline model.
-Recipient definiteness is unavailable in BNC2014 and enters only as a labelled
-regex proxy in a sensitivity check. The validation is retrospective: freezing
-means the source coefficients are not re-estimated from BNC2014 outcomes, not
-that the target corpus was unavailable while the harmonization, common-predictor
-set, and six-verb restriction were chosen. Those design choices are target-aware
-by necessity; the fitted coefficients are not.
+transport models.
 
-Harmonization is lossy. The outcome maps cleanly: \texttt{VNN} becomes NP and
-\texttt{VNPP} becomes PP. Verb maps cleanly after the six-verb restriction.
-Length needs more care. The released BNC2014 length fields are character
-counts: the data dictionary defines \texttt{RecLen} and \texttt{ThemeLen} as
-the number of characters in the recipient and theme
+Factor levels and coding are fixed before scoring BNC2014; no BNC2014-specific
+scaling or imputation enters the headline model. Recipient definiteness is
+unavailable in BNC2014 and enters only as a labelled regex proxy in a
+sensitivity check. The validation is retrospective: freezing means the source
+coefficients are not re-estimated from BNC2014 outcomes, not that the target
+corpus was unavailable while the harmonization, common-predictor set, and
+six-verb restriction were chosen. Those design choices are target-aware by
+necessity; the fitted coefficients are not.
+
+Harmonization is lossy. The outcome maps cleanly at the pattern level:
+\texttt{VNN} becomes NP and \texttt{VNPP} becomes PP. Verb maps cleanly after
+the six-verb restriction. Length needs more care. The released BNC2014 length
+fields are character counts: the data dictionary defines \texttt{RecLen} and
+\texttt{ThemeLen} as the number of characters in the recipient and theme
 \citep{JensetMcGillivray2019Dative}. Those fields are not comparable to
 \texttt{languageR}'s token-like lengths, so the scripts derive word counts
 from the released phrase strings. Rows with empty phrase strings cannot be used
-in the complete-case transport model.
+in the complete-case transport model. The result is therefore a harmonized
+analysis, not an assumption that the two extraction protocols are
+interchangeable.
+
+The harmonized target is compositionally different from the source. In the
+six-verb spoken source rows, \mention{give} accounts for 0.808 of tokens and
+\mention{send} for 0.089; in the BNC2014 complete cases the corresponding
+shares are 0.450 and 0.300. Recipients are still usually pronominal in both
+corpora (0.831 in the source, 0.870 in BNC2014 complete cases), but recipient
+animacy is lower in the target (0.943 vs.\ 0.837), and themes are shorter on
+average (3.68 vs.\ 2.43 words). These are not nuisance details. They are the
+population shift against which transport is being tested.
 
 The core transport model scores the 1,621 BNC2014 rows complete for the
 harmonized predictors, not all 1,839 released dative rows. The missing rows are
@@ -104,8 +120,8 @@ speaker, text, or conversation identifier is recoverable from the released
 files. The native BNC2014 benchmark therefore uses repeated verb-stratified
 row-level cross-validation, not grouped speaker or conversation folds. The
 comparison below repairs the old sample mismatch by scoring source-trained and
-native out-of-fold predictions on the same 1,621 rows, but it cannot remove all
-within-conversation dependence.
+native out-of-fold predictions on the same 1,621 rows and by computing the AUC
+gap fold by fold, but it cannot remove within-conversation dependence.
 
 \begin{table}[htbp]
 \centering
@@ -127,10 +143,10 @@ BNC2014-native OOF & full core & 0.227 & 0.939 \\
 \caption{Same-row BNC2014 complete-case evaluation. OOF = out-of-fold. All
 rows are the same 1,621 BNC2014 complete-case observations; the native rows use
 five repeated 10-fold verb-stratified row-level cross-validation. Native AUC is
-averaged within each held-out fold, so an intercept-only model is 0.500 by
-construction; log loss is pooled. The released file carries no speaker or
-conversation identifier, so the folds are row-level and within-conversation
-dependence is not removed.}
+averaged within each held-out fold, with the source prediction scored on the
+same held-out fold for the AUC gap; log loss is pooled. The released file
+carries no speaker or conversation identifier, so the folds are row-level and
+within-conversation dependence is not removed.}
 \label{tab:bnc-transport}
 \end{table}
 
@@ -142,18 +158,32 @@ source verb-only model gives only a small log loss gain over marginal
 (0.456 vs.\ 0.473), while the source non-verb model reaches 0.296 log loss and
 0.899 AUC. Adding the source verb terms to the non-verb model improves ranking
 slightly but worsens log loss slightly (full minus non-verb \(= 0.012\),
-bootstrap interval \([-0.006,0.030]\)). In this target corpus, the portable part
-of the profile is mainly the non-lexical conditioning, captured by the non-verb
-model, rather than lexical base-rate ordering.
+bootstrap interval \([-0.006,0.030]\)).
+
+In this target corpus, the portable part of the profile is mainly the
+non-lexical conditioning, captured by the non-verb model, rather than lexical
+base-rate ordering.
+
+Coefficient comparison gives a second, more local check. Fitting the same full
+formula separately to the source core and the BNC2014 complete cases gives the
+same sign for ten of twelve non-intercept terms. Recipient length is negative
+in both models, theme length positive, recipient pronominality strongly
+positive, and theme pronominality strongly negative. The two unstable signs are
+recipient animacy and theme definiteness, and the lexical comparison is mixed:
+the source \mention{offer} penalty largely disappears in BNC2014. The transport
+claim is therefore not that every coefficient is invariant. It is that the
+length and pronominality profile, and much of the animacy profile, remain
+predictively useful under a substantial corpus shift.
 
 The target-native model is still better. On the identical rows, the BNC2014
 native full model has log loss 0.227 and a fold-averaged AUC of 0.939. Against
 the source full model scored on the same held-out folds, its log loss is lower
 by 0.081 (paired row bootstrap \([-0.104,-0.059]\)) and its fold-averaged AUC is
-higher by 0.032 (fold bootstrap \([0.025,0.039]\)). The native non-verb model is
-already close to the native full model, which reinforces the same
-interpretation: the broad conditioning profile is portable, but the target
-corpus supplies local calibration and residual lexical structure.
+higher by 0.032 (fold bootstrap \([0.025,0.039]\)); the source fold-averaged
+AUC in that matched comparison is 0.906. The native non-verb model is already
+close to the native full model, which reinforces the same interpretation: the
+broad conditioning profile is portable, but the target corpus supplies local
+calibration, annotation-regime adaptation, and residual structure.
 
 Calibration tells the same story. The source full model underpredicts NP
 realization for \mention{send}, \mention{offer}, and \mention{lend}, and
@@ -184,6 +214,8 @@ and theme definiteness. Holding that reduced model fixed and scoring it on the
 1,621 complete-case rows already collapses performance relative to the full
 model (log loss 0.562 vs.\ 0.308, AUC 0.510 vs.\ 0.906). Expanding the same
 reduced model to all 1,839 rows changes little (log loss 0.562 to 0.586, AUC
-0.510 to 0.523). Dropping the recipient and length predictors, not enlarging the
-row denominator, accounts for almost all of the loss, which is why the headline
+0.510 to 0.523).
+
+Dropping the recipient and length predictors, not enlarging the row
+denominator, accounts for almost all of the loss, which is why the headline
 claim stays tied to the complete-case harmonized denominator.
