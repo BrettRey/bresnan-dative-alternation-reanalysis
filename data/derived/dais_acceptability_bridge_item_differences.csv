@@ -1,0 +1,3 @@
+"coding","n_items","mean_production_np_prob","mean_DAIS_preference","mean_production_minus_DAIS","production_minus_DAIS_lo","production_minus_DAIS_hi","mean_abs_difference"
+"something_nonpronominal",150,0.342916520005488,0.439838846338846,-0.096922326333358,-0.137976092166353,-0.0549962337370779,0.252367077104957
+"something_pronominal",150,0.282689406419972,0.439838846338846,-0.157149439918874,-0.198348353718246,-0.114785519969723,0.264736150182439

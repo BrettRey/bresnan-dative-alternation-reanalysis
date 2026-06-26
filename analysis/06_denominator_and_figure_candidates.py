@@ -60,23 +60,16 @@ def mention(verb: str) -> str:
 
 def make_transport_metrics(metrics: pd.DataFrame) -> None:
     labels = {
-        "languageR_spoken_shared_core_marginal_to_bnc2014":
-            "languageR\nmarginal",
-        "languageR_spoken_shared_core_to_bnc2014":
-            "languageR\ntransport",
-        "languageR_spoken_shared_core_to_bnc2014_scrambled_bnc_outcome":
-            "scrambled\nBNC outcome",
-        "bnc2014_core_marginal_holdout":
-            "BNC2014\nmarginal",
-        "bnc2014_native_core_holdout":
-            "BNC2014\nnative",
-        "bnc2014_native_core_scrambled_train":
-            "scrambled\nBNC train",
+        "source_marginal": "source\nmarginal",
+        "source_verb_only": "source\nverb only",
+        "source_nonverb": "source\nnon-verb",
+        "source_full_core": "source\nfull",
+        "native_oof_marginal": "native\nmarginal",
+        "native_oof_nonverb": "native\nnon-verb",
+        "native_oof_full_core": "native\nfull",
     }
     ordered = list(labels)
-    data = metrics[
-        (metrics["formula"] == "core") & (metrics["model"].isin(ordered))
-    ].copy()
+    data = metrics[metrics["model"].isin(ordered)].copy()
     data["label"] = pd.Categorical(
         data["model"].map(labels),
         categories=[labels[item] for item in ordered],
@@ -86,9 +79,10 @@ def make_transport_metrics(metrics: pd.DataFrame) -> None:
 
     fills = [
         COLORS["light"],
+        TEXT_COLORS["accent"],
+        TEXT_COLORS["tertiary"],
         COLORS["primary"],
         TEXT_COLORS["secondary"],
-        COLORS["light"],
         TEXT_COLORS["quaternary"],
         TEXT_COLORS["quinary"],
     ]
@@ -141,7 +135,19 @@ def calibration_panel(ax, data: pd.DataFrame, colour: str, title: str) -> None:
     tick_labels = [f"{mention(row.group)}\nn={row.n}" for row in data.itertuples()]
 
     ax.vlines(x, data["observed"], data["predicted"], color="#9A9A9A", linewidth=0.7)
-    ax.plot(x, data["observed"], color=COLORS["dark"], marker="o", label="observed")
+    lower = data["observed"] - data["observed_lo"]
+    upper = data["observed_hi"] - data["observed"]
+    ax.errorbar(
+        x,
+        data["observed"],
+        yerr=[lower, upper],
+        color=COLORS["dark"],
+        marker="o",
+        linestyle="none",
+        capsize=2.8,
+        linewidth=0.8,
+        label="observed",
+    )
     ax.plot(x, data["predicted"], color=colour, marker="^", linestyle="--",
             label="predicted")
     ax.set_title(title)
@@ -165,8 +171,8 @@ def calibration_panel(ax, data: pd.DataFrame, colour: str, title: str) -> None:
 
 def make_calibration(calibration: pd.DataFrame) -> None:
     model_names = {
-        "languageR_spoken_shared_core_to_bnc2014": "Transported languageR model",
-        "bnc2014_native_core_holdout": "BNC2014-native holdout model",
+        "source_full_core": "Transported source full model",
+        "native_oof_full_core": "BNC2014-native out-of-fold model",
     }
     verb_order = ["give", "show", "offer", "lend", "send", "sell"]
     data = calibration[calibration["model"].isin(model_names)].copy()
@@ -176,24 +182,24 @@ def make_calibration(calibration: pd.DataFrame) -> None:
     fig, axes = plt.subplots(1, 2, figsize=(8.4, 3.6), sharey=True)
     calibration_panel(
         axes[0],
-        data[data["model"] == "languageR_spoken_shared_core_to_bnc2014"],
+        data[data["model"] == "source_full_core"],
         COLORS["primary"],
-        model_names["languageR_spoken_shared_core_to_bnc2014"],
+        model_names["source_full_core"],
     )
     axes[0].set_ylabel("Noun phrase (NP) recipient rate")
     calibration_panel(
         axes[1],
-        data[data["model"] == "bnc2014_native_core_holdout"],
+        data[data["model"] == "native_oof_full_core"],
         TEXT_COLORS["quaternary"],
-        model_names["bnc2014_native_core_holdout"],
+        model_names["native_oof_full_core"],
     )
     save(fig, "bnc2014_transport_calibration_by_verb")
 
 
 def make_calibration_error(calibration: pd.DataFrame) -> None:
     selected = {
-        "languageR_spoken_shared_core_to_bnc2014": ("languageR transport", COLORS["primary"]),
-        "bnc2014_native_core_holdout": ("BNC2014 native", TEXT_COLORS["quaternary"]),
+        "source_full_core": ("source full transport", COLORS["primary"]),
+        "native_oof_full_core": ("BNC2014 native OOF", TEXT_COLORS["quaternary"]),
     }
     verb_order = ["give", "show", "offer", "lend", "send", "sell"]
     data = calibration[calibration["model"].isin(selected)].copy()
@@ -327,9 +333,13 @@ def make_opportunity_sets() -> None:
     )
 
     arrow = dict(arrowstyle="->", color=TEXT_COLORS["quaternary"],
-                 linewidth=1.2, shrinkA=4, shrinkB=4)
+                 linewidth=1.2, shrinkA=4, shrinkB=4, linestyle="--")
     ax.annotate("", xy=(9.78, 4.74), xytext=(9.78, 5.78), arrowprops=arrow)
     ax.annotate("", xy=(9.78, 2.49), xytext=(9.78, 3.53), arrowprops=arrow)
+    ax.text(10.05, 5.23, "elicited response", fontsize=8.2,
+            color=TEXT_COLORS["quaternary"], va="center", ha="left")
+    ax.text(10.05, 3.00, "inferential support", fontsize=8.2,
+            color=TEXT_COLORS["quaternary"], va="center", ha="left")
     ax.annotate(
         "",
         xy=(7.85, 3.00),
@@ -420,9 +430,9 @@ def main() -> None:
         "mathtext.it": "serif:italic",
         "mathtext.bf": "serif:bold",
     })
-    make_transport_metrics(read_derived("bnc2014_transport_metrics.csv"))
+    make_transport_metrics(read_derived("bnc2014_paired_transport_cv_metrics.csv"))
     make_observed_np_rate(read_derived("bnc2014_dative_verb_pattern_counts.csv"))
-    calibration = read_derived("bnc2014_transport_calibration_by_verb.csv")
+    calibration = read_derived("bnc2014_paired_transport_cv_calibration_by_verb.csv")
     make_calibration(calibration)
     make_calibration_error(calibration)
     make_dais_bridge(read_derived("dais_acceptability_bridge_scored_items.csv"))

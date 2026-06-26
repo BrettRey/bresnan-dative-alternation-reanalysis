@@ -4,14 +4,22 @@ The \texttt{languageR} result is a robustness result. The central question is
 whether modern modelling changes Bresnan et al.'s linguistic conclusion or
 mainly repackages it statistically. The answer, so far, is the latter.
 The table reports log loss, area under the receiver operating characteristic
-curve (AUC), and effective degrees of freedom (df).
+curve (AUC), and a compact parameter count.
+
+The non-verb \texttt{languageR} formula uses modality, semantic class,
+recipient length, recipient animacy, recipient definiteness, recipient
+pronominality, theme length, theme animacy, theme definiteness, theme
+pronominality, and recipient/theme accessibility. The fixed-verb model adds
+verb as a fixed effect. The hierarchical model uses the same non-verb fixed
+effects and a varying verb intercept. All are logistic models for NP versus PP
+realization with R treatment contrasts and no interactions.
 
 \begin{table}[htbp]
 \centering
 \small
 \begin{tabular}{lrrr}
 \toprule
-Model & Test log loss & Test AUC & df \\
+Model & Test log loss & Test AUC & Param. \\
 \midrule
 Marginal null & 0.554 & 0.500 & 1 \\
 Non-verb main model & 0.271 & 0.932 & 18 \\
@@ -30,15 +38,19 @@ a minor residue after length, animacy, definiteness, pronominality, and
 accessibility are included.
 
 The hierarchical verb-intercept model reaches almost the same held-out
-performance with far fewer effective parameters. Its test log loss is 0.233 and
-its AUC is 0.952. The estimated verb random-intercept standard deviation is
-2.106, so the lexical signal remains large under partial pooling.
+performance with a smaller fixed-effect parameterization. Its test log loss is
+0.233 and its AUC is 0.952. The table's parameter count for this model is the
+18 fixed-effect coefficients plus the verb-intercept variance parameter; it is
+not an effective degrees-of-freedom estimate for the 75 partially pooled verb
+effects. The estimated verb random-intercept standard deviation is 2.106, so
+the lexical signal remains large under partial pooling.
 
-The null checks behave as they should. Scrambled-label fits lose predictive
-value. Fake-data fits without a verb signal collapse toward singular
-zero-variance random-effects models, while a fake verb-effect check recovers a
-nonzero verb standard deviation. These checks make the production result more
-credible, but they do not change its explanatory level.
+The negative-control and simulation checks behave as they should.
+Scrambled-label fits lose predictive value. Fake-data fits without a verb
+signal collapse toward singular zero-variance random-effects models, while a
+fake verb-effect check recovers a nonzero verb standard deviation. These checks
+make the production result more credible, but they do not change its
+explanatory level.
 
 The result supports Bresnan et al.'s production-choice conclusion. It does not
 create a new grammatical conclusion on its own. The same-data analysis shows

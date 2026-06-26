@@ -1,26 +1,29 @@
 \section{Conclusion}
 
 The reanalysis has two production results and one acceptability bridge. First,
-the \texttt{languageR} profile survives baselines, falsification checks, and
-partial pooling. The hierarchical model matches the fixed-verb model with a
-smaller effective parameterization, so modern modelling confirms the classic
-production-choice conclusion.
+the \texttt{languageR} profile survives baselines, negative controls,
+simulation checks, and partial pooling. The hierarchical model matches the
+fixed-verb model with a smaller fixed-effect parameterization, so modern
+modelling confirms the classic production-choice conclusion.
 
 Second, the profile partly transports. A spoken six-verb model trained on
 \texttt{languageR} predicts BNC2014 complete-case rows well above a marginal
-baseline and fails against a scrambled BNC2014 outcome. The BNC2014-native model
-still performs better. The diagnostic verdict is bounded. Transport survives
-the null comparison in the high-frequency shared core, but the target corpus is
-internally structured and the comparison remains too bundled to identify
-separate variety, period, register, annotation, or missingness effects.
+baseline when scored on the same rows as a target-native out-of-fold benchmark.
+The strongest portable signal is structural rather than verb-only: the
+source-trained non-verb model nearly matches the source full model by log loss.
+The BNC2014-native model still performs better. The diagnostic verdict is
+bounded. Transport survives the null comparison in the high-frequency shared
+core, but the target corpus is internally structured and the comparison remains
+too bundled to identify separate variety, period, register, annotation, or
+missingness effects.
 
 The bridge is DAIS. On the six verbs shared with the production core, human
 double-object preference tracks the production profile moderately, but the two
-channels diverge in diagnostically useful places. The participant-level check
-reinforces that reading: after recipient condition and theme type are included,
-the production score has only a small incremental association with individual
-judgements. The \mention{offer} cases show why acceptability evidence cannot be
-replaced by a larger production corpus.
+channels diverge in diagnostically useful places. The item and
+participant-level checks reinforce that reading: after recipient condition,
+theme type, and verb are included, the production score has little incremental
+association with individual judgements. The \mention{offer} cases show why
+acceptability evidence cannot be replaced by a larger production corpus.
 
 That combination is the paper's centre. The classic result is not overturned.
 It's made reproducible, tested against real nulls, and moved into a second
@@ -31,6 +34,7 @@ The conceptual lesson is the same one that motivates the title. Production
 probability is evidence about grammatical possibility, not a synonym for it.
 Open data, transport tests, and the DAIS bridge make that evidence stronger,
 but they also mark a structural boundary: a production model estimates choice
-within the attested frame and stays silent, by construction, about the
-grammatical-but-unattested region. Crossing that boundary needs acceptability
-evidence, not more tokens.
+within the attested frame. Additional positive-token data under the same
+denominator cannot identify the grammatical-but-unattested region by itself.
+Crossing that boundary needs a broader opportunity set, an explicit
+extrapolative model, or another evidence channel.

@@ -1,4 +1,4 @@
-"coding","Verb","classification","recipient_id","theme_type","DOsentence","PDsentence","production_np_prob","human_do_preference","gap_production_minus_human","abs_gap","rec_len_words","theme_len_words"
+"coding","Verb","classification","recipient_id","theme_type","DOsentence","PDsentence","production_np_prob","human_do_preference","production_minus_DAIS","abs_gap","rec_len_words","theme_len_words"
 "something_pronominal","give","alternating","longDefinite","def","Linda gave the man from work the book","Linda gave the book to the man from work",0.112939304522801,0.324166666666667,-0.211227362143866,0.211227362143866,4,2
 "something_pronominal","give","alternating","longIndefinite","def","Alice gave a woman wearing a hat the book","Alice gave the book to a woman wearing a hat",0.0761807738447575,0.334,-0.257819226155242,0.257819226155242,5,2
 "something_pronominal","give","alternating","pronoun","def","Juan gave her the book","Juan gave the book to her",0.935573706292917,0.64,0.295573706292917,0.295573706292917,1,2

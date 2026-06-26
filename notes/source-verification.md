@@ -88,6 +88,19 @@ been checked against authoritative records.
   complete-case subset has the same broad shape. Treat BNC2014 transport as a
   corpus-domain diagnostic, not a clean estimate for all British spoken
   English.
+- Grouping-ID audit by `analysis/10_bnc2014_paired_transport_cv.R`: the
+  released final CSV has no stable speaker, text, or conversation ID. The
+  support scripts show that `combine_data.py` constructs `main_speaker_id` and
+  that `r_cleaning_data_script.rmd` selects it at an intermediate stage, but
+  the public final CSV drops it and the intermediate combined verb files needed
+  to join it back are not included. Grouped speaker/conversation folds therefore
+  cannot be reconstructed from the released files.
+- Harmonization/missingness audit by `analysis/09_bnc2014_metadata_scope.R`:
+  the core complete-case subset has 1,621/1,839 rows. The 218 incomplete rows
+  have lower NP rate (0.670) than complete rows (0.819). Missingness is
+  predictor-specific and outcome-associated: recipient-pronominality is missing
+  for 112 rows with NP rate 0.357, while theme-pronominality is missing for 139
+  rows with NP rate 0.950.
 - Use in paper: cross-corpus/generalization target, especially spoken British
   English and sociolinguistic metadata. It should not be treated as a direct
   replication of `languageR::dative`, because the verb set and metadata differ.
@@ -130,9 +143,10 @@ been checked against authoritative records.
   fetches the item-level DAIS CSV and cleaned individual-judgement ZIP to
   temporary files, validates the MD5 hashes, and writes derived summaries for
   the 150 DAIS items whose verbs overlap the six-verb `languageR`/BNC2014 core.
-  When `lme4` is available, it also fits a compact participant-level mixed
-  bridge model. DAIS is not production-token evidence and should not be merged
-  with `languageR` or BNC2014 as if it measured the same outcome.
+  When `lme4` is available, it also fits a participant-level mixed bridge model
+  with fixed verb effects and crossed participant/item intercepts. DAIS is not
+  production-token evidence and should not be merged with `languageR` or
+  BNC2014 as if it measured the same outcome.
 - Sources: <https://aclanthology.org/2020.emnlp-main.376/>,
   <https://github.com/taka-yamakoshi/neural_constructions>
 

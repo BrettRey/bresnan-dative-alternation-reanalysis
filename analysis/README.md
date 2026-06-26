@@ -21,7 +21,9 @@ Analysis sequence:
    are documented.
 9. Audit BNC2014 metadata descriptively before treating the target domain as
    homogeneous.
-10. Test generalization to later datasets only after schema comparability is
+10. Replace the first BNC2014 holdout comparison with same-row paired source
+    and native out-of-fold predictions before making model-performance claims.
+11. Test generalization to later datasets only after schema comparability is
    documented.
 
 ## Scripts
@@ -60,8 +62,14 @@ Analysis sequence:
   production/preference bridge summaries.
 - `09_bnc2014_metadata_scope.R`: downloads the public Figshare BNC2014 dative
   CSV to a temporary file, validates the Figshare MD5, and writes descriptive
-  metadata-scope counts/rates for the released rows and transport complete-case
-  rows.
+  metadata-scope counts/rates, harmonization mapping, predictor missingness
+  summaries, and reduced all-row transport checks.
+- `10_bnc2014_paired_transport_cv.R`: downloads the public Figshare BNC2014
+  CSV to a temporary file, validates the Figshare MD5, audits the released
+  support scripts for recoverable grouping IDs, scores source-trained
+  marginal/verb/non-verb/full models and BNC2014-native out-of-fold analogues
+  on the same complete-case rows, and writes paired loss/AUC comparisons plus
+  calibration outputs.
 
 Run scripts from the repository root with `Rscript`.
 Run the figure-candidate script from the repository root with `python3`.

@@ -1,0 +1,11 @@
+"predictor","languageR_field","bnc2014_field_or_derivation","recoding","headline_role","reference_or_scale","languageR_missing_rows","bnc2014_missing_rows","languageR_rows","bnc2014_rows"
+"y_np","RealizationOfRecipient","Pattern","languageR NP = 1; BNC2014 VNN = 1","outcome","PP/VNPP is reference outcome",0,0,1564,1839
+"Verb","Verb","Verb","restricted to six shared verbs","headline and reduced all-row","give",0,0,1564,1839
+"rec_len_words","LengthOfRecipient","word count derived from Recipient text","left raw; no centering or scaling","headline","raw count",0,31,1564,1839
+"theme_len_words","LengthOfTheme","word count derived from Theme text","left raw; no centering or scaling","headline","raw count",0,34,1564,1839
+"rec_anim","AnimacyOfRec","AnimateRec","animate = yes; inanimate = no","headline","no",0,31,1564,1839
+"rec_def","DefinOfRec","proxy from Recipient determiner string","definite = yes; other = no; BNC proxy uses the/this/that/these/those","sensitivity only","no",0,31,1564,1839
+"rec_pron","PronomOfRec","RecPrn","pronominal = yes; nonpronominal = no","headline","no",0,112,1564,1839
+"theme_anim","AnimacyOfTheme","AnimateTheme","animate = yes; inanimate = no","headline and reduced all-row","no",0,0,1564,1839
+"theme_def","DefinOfTheme","DefTheme","definite = yes; indefinite = no","headline and reduced all-row","no",0,0,1564,1839
+"theme_pron","PronomOfTheme","ThemePrn","pronominal = yes; nonpronominal = no","headline","no",0,139,1564,1839

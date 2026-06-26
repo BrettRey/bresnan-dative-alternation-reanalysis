@@ -1,0 +1,6 @@
+"check","value","note"
+"final_csv_has_speaker_id","FALSE","The released 44-column CSV contains no stable speaker/text/conversation ID."
+"combine_script_constructs_main_speaker_id","TRUE","The Python combine script derives main_speaker_id from CQPweb speaker IDs."
+"cleaning_script_selects_main_speaker_id","TRUE","The R cleaning script includes main_speaker_id in an intermediate selected-column vector."
+"released_final_csv_keeps_main_speaker_id","FALSE","The final cleaned data frame renames/drops the intermediate main_speaker_id before the public CSV."
+"recoverable_group_id_from_released_files","FALSE","The intermediate combined verb files needed to join IDs back to rows are not included in the Figshare release."

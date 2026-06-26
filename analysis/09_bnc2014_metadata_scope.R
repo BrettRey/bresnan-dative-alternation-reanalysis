@@ -1,11 +1,16 @@
 # Descriptive metadata-scope audit for the BNC2014 dative transport target.
 
+source(file.path("analysis", "lib_languageR_dative.R"))
+
 if (!requireNamespace("jsonlite", quietly = TRUE)) {
   stop("Package 'jsonlite' is required to read Figshare API metadata.")
 }
 
 derived_dir <- file.path("data", "derived")
 dir.create(derived_dir, recursive = TRUE, showWarnings = FALSE)
+
+shared_verbs <- c("give", "send", "show", "sell", "offer", "lend")
+yes_no_levels <- c("no", "yes")
 
 bnc_article_id <- "7353164"
 bnc_dataset_file_id <- 16713434L
@@ -66,8 +71,21 @@ word_count <- function(x) {
 logical_yes_no <- function(x) {
   factor(
     ifelse(is.na(x), NA_character_, ifelse(x, "yes", "no")),
-    levels = c("no", "yes")
+    levels = yes_no_levels
   )
+}
+
+level_yes_no <- function(x, positive) {
+  factor(ifelse(x == positive, "yes", "no"), levels = yes_no_levels)
+}
+
+definite_proxy <- function(x) {
+  x <- trimws(x)
+  x[x == ""] <- NA_character_
+  out <- rep(NA, length(x))
+  ok <- !is.na(x)
+  out[ok] <- grepl("\\b(the|these|this|those|that)\\b", x[ok], ignore.case = TRUE)
+  logical_yes_no(out)
 }
 
 label_missing <- function(x) {
@@ -93,10 +111,48 @@ canonical_metadata <- function(data) {
 make_bnc_core <- function(bnc) {
   data.frame(
     y_np = as.integer(bnc$Pattern == "VNN"),
-    Verb = factor(bnc$Verb, levels = c("give", "send", "show", "sell", "offer", "lend")),
+    Verb = factor(bnc$Verb, levels = shared_verbs),
     rec_len_words = word_count(bnc$Recipient),
     theme_len_words = word_count(bnc$Theme),
     rec_anim = logical_yes_no(bnc$AnimateRec),
+    rec_pron = logical_yes_no(bnc$RecPrn),
+    theme_anim = logical_yes_no(bnc$AnimateTheme),
+    theme_def = logical_yes_no(bnc$DefTheme),
+    theme_pron = logical_yes_no(bnc$ThemePrn),
+    stringsAsFactors = FALSE
+  )
+}
+
+make_languageR_harmonized <- function(dative) {
+  d <- dative[
+    dative$Modality == "spoken" & as.character(dative$Verb) %in% shared_verbs,
+  ]
+  d <- droplevels(d)
+  data.frame(
+    y_np = as.integer(d$RealizationOfRecipient == "NP"),
+    Verb = factor(as.character(d$Verb), levels = shared_verbs),
+    rec_len_words = d$LengthOfRecipient,
+    theme_len_words = d$LengthOfTheme,
+    rec_anim = level_yes_no(d$AnimacyOfRec, "animate"),
+    rec_def = level_yes_no(d$DefinOfRec, "definite"),
+    rec_pron = level_yes_no(d$PronomOfRec, "pronominal"),
+    theme_anim = level_yes_no(d$AnimacyOfTheme, "animate"),
+    theme_def = level_yes_no(d$DefinOfTheme, "definite"),
+    theme_pron = level_yes_no(d$PronomOfTheme, "pronominal"),
+    stringsAsFactors = FALSE
+  )
+}
+
+make_bnc_harmonized <- function(bnc) {
+  data.frame(
+    row_id = seq_len(nrow(bnc)),
+    y_np = as.integer(bnc$Pattern == "VNN"),
+    Pattern = bnc$Pattern,
+    Verb = factor(bnc$Verb, levels = shared_verbs),
+    rec_len_words = word_count(bnc$Recipient),
+    theme_len_words = word_count(bnc$Theme),
+    rec_anim = logical_yes_no(bnc$AnimateRec),
+    rec_def = definite_proxy(bnc$Recipient),
     rec_pron = logical_yes_no(bnc$RecPrn),
     theme_anim = logical_yes_no(bnc$AnimateTheme),
     theme_def = logical_yes_no(bnc$DefTheme),
@@ -161,15 +217,202 @@ field_summary <- function(count_rows) {
   }))
 }
 
+missingness_by_variable <- function(data, variables) {
+  do.call(rbind, lapply(variables, function(var) {
+    miss <- is.na(data[[var]])
+    data.frame(
+      variable = var,
+      rows = nrow(data),
+      missing_rows = sum(miss),
+      missing_share = mean(miss),
+      observed_rows = sum(!miss),
+      np_rate_missing = if (any(miss)) mean(data$y_np[miss]) else NA_real_,
+      np_rate_observed = if (any(!miss)) mean(data$y_np[!miss]) else NA_real_,
+      stringsAsFactors = FALSE
+    )
+  }))
+}
+
+missingness_by_verb_pattern <- function(data, variables) {
+  rows <- expand.grid(
+    variable = variables,
+    Verb = as.character(sort(unique(data$Verb))),
+    Pattern = sort(unique(data$Pattern)),
+    stringsAsFactors = FALSE
+  )
+  do.call(rbind, lapply(seq_len(nrow(rows)), function(i) {
+    row <- rows[i, ]
+    idx <- as.character(data$Verb) == row$Verb & data$Pattern == row$Pattern
+    miss <- is.na(data[[row$variable]][idx])
+    data.frame(
+      variable = row$variable,
+      Verb = row$Verb,
+      Pattern = row$Pattern,
+      rows = sum(idx),
+      missing_rows = sum(miss),
+      missing_share = if (sum(idx)) mean(miss) else NA_real_,
+      stringsAsFactors = FALSE
+    )
+  }))
+}
+
+completeness_by_metadata <- function(data, complete, field) {
+  values <- sort(unique(label_missing(data[[field]])))
+  do.call(rbind, lapply(values, function(value) {
+    idx <- label_missing(data[[field]]) == value
+    complete_rows <- sum(complete[idx])
+    incomplete_rows <- sum(!complete[idx])
+    data.frame(
+      field = field,
+      value = value,
+      rows = sum(idx),
+      complete_rows = complete_rows,
+      incomplete_rows = incomplete_rows,
+      incomplete_share = incomplete_rows / sum(idx),
+      np_rate_all = mean(data$y_np[idx]),
+      np_rate_complete = if (complete_rows) mean(data$y_np[idx & complete]) else NA_real_,
+      np_rate_incomplete = if (incomplete_rows) mean(data$y_np[idx & !complete]) else NA_real_,
+      stringsAsFactors = FALSE
+    )
+  }))
+}
+
+harmonization_mapping <- function(languageR_h, bnc_h) {
+  rows <- data.frame(
+    predictor = c(
+      "y_np",
+      "Verb",
+      "rec_len_words",
+      "theme_len_words",
+      "rec_anim",
+      "rec_def",
+      "rec_pron",
+      "theme_anim",
+      "theme_def",
+      "theme_pron"
+    ),
+    languageR_field = c(
+      "RealizationOfRecipient",
+      "Verb",
+      "LengthOfRecipient",
+      "LengthOfTheme",
+      "AnimacyOfRec",
+      "DefinOfRec",
+      "PronomOfRec",
+      "AnimacyOfTheme",
+      "DefinOfTheme",
+      "PronomOfTheme"
+    ),
+    bnc2014_field_or_derivation = c(
+      "Pattern",
+      "Verb",
+      "word count derived from Recipient text",
+      "word count derived from Theme text",
+      "AnimateRec",
+      "proxy from Recipient determiner string",
+      "RecPrn",
+      "AnimateTheme",
+      "DefTheme",
+      "ThemePrn"
+    ),
+    recoding = c(
+      "languageR NP = 1; BNC2014 VNN = 1",
+      "restricted to six shared verbs",
+      "left raw; no centering or scaling",
+      "left raw; no centering or scaling",
+      "animate = yes; inanimate = no",
+      "definite = yes; other = no; BNC proxy uses the/this/that/these/those",
+      "pronominal = yes; nonpronominal = no",
+      "animate = yes; inanimate = no",
+      "definite = yes; indefinite = no",
+      "pronominal = yes; nonpronominal = no"
+    ),
+    headline_role = c(
+      "outcome",
+      "headline and reduced all-row",
+      "headline",
+      "headline",
+      "headline",
+      "sensitivity only",
+      "headline",
+      "headline and reduced all-row",
+      "headline and reduced all-row",
+      "headline"
+    ),
+    reference_or_scale = c(
+      "PP/VNPP is reference outcome",
+      shared_verbs[1],
+      "raw count",
+      "raw count",
+      yes_no_levels[1],
+      yes_no_levels[1],
+      yes_no_levels[1],
+      yes_no_levels[1],
+      yes_no_levels[1],
+      yes_no_levels[1]
+    ),
+    stringsAsFactors = FALSE
+  )
+  rows$languageR_missing_rows <- vapply(
+    rows$predictor,
+    function(x) sum(is.na(languageR_h[[x]])),
+    integer(1)
+  )
+  rows$bnc2014_missing_rows <- vapply(
+    rows$predictor,
+    function(x) sum(is.na(bnc_h[[x]])),
+    integer(1)
+  )
+  rows$languageR_rows <- nrow(languageR_h)
+  rows$bnc2014_rows <- nrow(bnc_h)
+  rows
+}
+
+reduced_allrow_metrics <- function(languageR_h, bnc_h) {
+  formulas <- list(
+    source_marginal_all_rows = NULL,
+    source_verb_only_all_rows = y_np ~ Verb,
+    source_theme_only_all_rows = y_np ~ theme_anim + theme_def,
+    source_verb_theme_all_rows = y_np ~ Verb + theme_anim + theme_def
+  )
+  do.call(rbind, lapply(names(formulas), function(name) {
+    formula <- formulas[[name]]
+    pred <- if (is.null(formula)) {
+      rep(mean(languageR_h$y_np), nrow(bnc_h))
+    } else {
+      fit <- stats::glm(formula, data = languageR_h, family = stats::binomial())
+      stats::predict(fit, newdata = bnc_h, type = "response")
+    }
+    data.frame(
+      evaluation = name,
+      formula = if (is.null(formula)) {
+        "intercept-only marginal probability"
+      } else {
+        paste(deparse(formula), collapse = " ")
+      },
+      rows = nrow(bnc_h),
+      np_rate = mean(bnc_h$y_np),
+      mean_prediction = mean(pred),
+      classification_metrics(bnc_h$y_np, pred),
+      stringsAsFactors = FALSE
+    )
+  }))
+}
+
 bnc <- canonical_metadata(as.data.frame(lapply(bnc_raw, blank_to_na), stringsAsFactors = FALSE))
 bnc$y_np <- as.integer(bnc$Pattern == "VNN")
 
 bnc_core <- make_bnc_core(bnc)
+bnc_h <- make_bnc_harmonized(bnc)
 core_formula <- y_np ~ Verb + rec_len_words + theme_len_words +
   rec_anim + rec_pron + theme_anim + theme_def + theme_pron
 core_complete <- stats::complete.cases(
   bnc_core[, all.vars(core_formula), drop = FALSE]
 )
+
+dative <- load_languageR_dative()
+validate_languageR_dative(dative)
+languageR_h <- make_languageR_harmonized(dative)
 
 metadata_fields <- c(
   "AgeRange",
@@ -191,6 +434,23 @@ counts <- do.call(rbind, lapply(metadata_fields, function(field) {
 rownames(counts) <- NULL
 
 field_summary_rows <- field_summary(counts)
+completeness_metadata_rows <- do.call(rbind, lapply(metadata_fields, function(field) {
+  completeness_by_metadata(bnc, core_complete, field)
+}))
+
+harmonization_rows <- harmonization_mapping(languageR_h, bnc_h)
+core_variables <- c(
+  "rec_len_words",
+  "theme_len_words",
+  "rec_anim",
+  "rec_pron",
+  "theme_anim",
+  "theme_def",
+  "theme_pron"
+)
+missing_variable_rows <- missingness_by_variable(bnc_h, core_variables)
+missing_verb_pattern_rows <- missingness_by_verb_pattern(bnc_h, core_variables)
+reduced_metrics <- reduced_allrow_metrics(languageR_h, bnc_h)
 
 summary_rows <- data.frame(
   metric = c(
@@ -239,6 +499,33 @@ utils::write.csv(
   file.path(derived_dir, "bnc2014_metadata_scope_field_summary.csv"),
   row.names = FALSE
 )
+utils::write.csv(
+  completeness_metadata_rows,
+  file.path(derived_dir, "bnc2014_core_completeness_by_metadata.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  harmonization_rows,
+  file.path(derived_dir, "bnc2014_harmonization_mapping.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  missing_variable_rows,
+  file.path(derived_dir, "bnc2014_core_missingness_by_variable.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  missing_verb_pattern_rows,
+  file.path(derived_dir, "bnc2014_core_missingness_by_verb_pattern.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  reduced_metrics,
+  file.path(derived_dir, "bnc2014_reduced_allrow_transport_metrics.csv"),
+  row.names = FALSE
+)
 
 print(summary_rows, row.names = FALSE)
 print(field_summary_rows, row.names = FALSE)
+print(missing_variable_rows, row.names = FALSE)
+print(reduced_metrics, row.names = FALSE)

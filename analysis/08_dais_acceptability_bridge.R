@@ -170,9 +170,10 @@ score_dais <- function(dais_shared, fit, shared_verbs, coding, something_pronomi
     type = "response"
   ))
   scored$human_do_preference <- scored$BehavDOpreference / 100
-  scored$gap_production_minus_human <-
+  scored$production_minus_DAIS <-
     scored$production_np_prob - scored$human_do_preference
-  scored$abs_gap <- abs(scored$gap_production_minus_human)
+  scored$gap_production_minus_human <- scored$production_minus_DAIS
+  scored$abs_gap <- abs(scored$production_minus_DAIS)
   scored$rec_len_words <- newdata$rec_len_words
   scored$theme_len_words <- newdata$theme_len_words
   scored
@@ -188,6 +189,7 @@ summary_rows <- function(scored, all_item_count) {
       "spearman_production_human",
       "mean_production_np_prob",
       "mean_human_do_preference",
+      "mean_production_minus_DAIS",
       "mean_abs_gap"
     ),
     value = c(
@@ -201,6 +203,7 @@ summary_rows <- function(scored, all_item_count) {
       ),
       mean(scored$production_np_prob),
       mean(scored$human_do_preference),
+      mean(scored$production_minus_DAIS),
       mean(scored$abs_gap)
     ),
     stringsAsFactors = FALSE
@@ -212,11 +215,11 @@ mean_aggregate <- function(group_vars, data) {
     cbind(
       production_np_prob,
       human_do_preference,
-      gap_production_minus_human,
+      production_minus_DAIS,
       abs_gap
     ) ~ .,
     data = data[, c(group_vars, "production_np_prob",
-                    "human_do_preference", "gap_production_minus_human",
+                    "human_do_preference", "production_minus_DAIS",
                     "abs_gap")],
     mean
   )
@@ -227,6 +230,77 @@ mean_aggregate <- function(group_vars, data) {
   )
   names(count_rows)[ncol(count_rows)] <- "n_items"
   merge(count_rows, mean_rows, by = group_vars)
+}
+
+bootstrap_mean_ci <- function(x, B = 2000L, seed = 20260625L) {
+  set.seed(seed)
+  boot <- replicate(B, mean(sample(x, length(x), replace = TRUE)))
+  c(
+    mean = mean(x),
+    lo = stats::quantile(boot, 0.025, names = FALSE),
+    hi = stats::quantile(boot, 0.975, names = FALSE)
+  )
+}
+
+item_difference_rows <- function(scored) {
+  do.call(rbind, lapply(split(scored, scored$coding), function(x) {
+    ci <- bootstrap_mean_ci(
+      x$production_minus_DAIS,
+      seed = 20260625L + match(unique(x$coding), sort(unique(scored$coding)))
+    )
+    data.frame(
+      coding = unique(x$coding),
+      n_items = nrow(x),
+      mean_production_np_prob = mean(x$production_np_prob),
+      mean_DAIS_preference = mean(x$human_do_preference),
+      mean_production_minus_DAIS = ci[["mean"]],
+      production_minus_DAIS_lo = ci[["lo"]],
+      production_minus_DAIS_hi = ci[["hi"]],
+      mean_abs_difference = mean(x$abs_gap),
+      stringsAsFactors = FALSE
+    )
+  }))
+}
+
+lm_coefficient_rows <- function(model_name, coding, fit) {
+  coef_summary <- summary(fit)$coefficients
+  data.frame(
+    coding = coding,
+    model = model_name,
+    term = rownames(coef_summary),
+    estimate = coef_summary[, "Estimate"],
+    std_error = coef_summary[, "Std. Error"],
+    statistic = coef_summary[, "t value"],
+    p_value = coef_summary[, "Pr(>|t|)"],
+    r_squared = summary(fit)$r.squared,
+    n_items = stats::nobs(fit),
+    row.names = NULL
+  )
+}
+
+item_calibration_rows <- function(scored) {
+  do.call(rbind, lapply(split(scored, scored$coding), function(x) {
+    marginal_fit <- stats::lm(
+      human_do_preference ~ production_np_prob,
+      data = x
+    )
+    adjusted_fit <- stats::lm(
+      human_do_preference ~ production_np_prob + recipient_id + theme_type + Verb,
+      data = x
+    )
+    rbind(
+      lm_coefficient_rows(
+        "item_marginal_calibration",
+        unique(x$coding),
+        marginal_fit
+      ),
+      lm_coefficient_rows(
+        "item_adjusted_calibration",
+        unique(x$coding),
+        adjusted_fit
+      )
+    )
+  }))
 }
 
 source_rows <- data.frame(
@@ -310,8 +384,8 @@ by_verb <- mean_aggregate(c("coding", "Verb"), scored)
 by_condition <- mean_aggregate(c("coding", "recipient_id", "theme_type"), scored)
 
 ranked_cases <- do.call(rbind, lapply(split(scored, scored$coding), function(x) {
-  high_production <- x[order(-x$gap_production_minus_human), ]
-  high_human <- x[order(x$gap_production_minus_human), ]
+  high_production <- x[order(-x$production_minus_DAIS), ]
+  high_human <- x[order(x$production_minus_DAIS), ]
   high_production <- head(high_production, 12L)
   high_human <- head(high_human, 12L)
   high_production$direction <- "production_higher_than_human"
@@ -330,7 +404,7 @@ case_cols <- c(
   "PDsentence",
   "production_np_prob",
   "human_do_preference",
-  "gap_production_minus_human",
+  "production_minus_DAIS",
   "abs_gap"
 )
 ranked_cases <- ranked_cases[, case_cols]
@@ -345,12 +419,14 @@ scored_item_cols <- c(
   "PDsentence",
   "production_np_prob",
   "human_do_preference",
-  "gap_production_minus_human",
+  "production_minus_DAIS",
   "abs_gap",
   "rec_len_words",
   "theme_len_words"
 )
 scored_item_rows <- scored[, scored_item_cols]
+item_difference_out <- item_difference_rows(scored)
+item_calibration_out <- item_calibration_rows(scored)
 
 dais_cleaned$Verb <- unname(past_to_base[dais_cleaned$verb])
 dais_cleaned_shared <- merge(
@@ -366,6 +442,11 @@ dais_cleaned_shared <- merge(
   all = FALSE
 )
 dais_cleaned_shared$DOpreference_01 <- dais_cleaned_shared$DOpreference / 100
+dais_cleaned_shared$item_id <- paste(
+  dais_cleaned_shared$DOsentence,
+  dais_cleaned_shared$PDsentence,
+  sep = "\n"
+)
 
 participant_summary_out <- data.frame(
   metric = c(
@@ -394,18 +475,41 @@ mixed_model_out <- data.frame(
   term = character(),
   estimate = numeric(),
   std_error = numeric(),
+  conf_low = numeric(),
+  conf_high = numeric(),
   df = numeric(),
   statistic = numeric(),
   p_value = numeric(),
   stringsAsFactors = FALSE
 )
+mixed_formula <- DOpreference_01 ~ production_np_prob + recipient_id +
+  theme_type + Verb + (1 | participant_id) + (1 | item_id)
 mixed_model_diagnostics <- data.frame(
-  metric = c("lme4_available", "model_fit", "singular_fit", "rows"),
+  metric = c(
+    "lme4_available",
+    "model_fit",
+    "singular_fit",
+    "rows",
+    "participants",
+    "items",
+    "verbs",
+    "response",
+    "link",
+    "estimator",
+    "formula"
+  ),
   value = c(
     requireNamespace("lme4", quietly = TRUE),
     FALSE,
     NA,
-    nrow(dais_cleaned_shared)
+    nrow(dais_cleaned_shared),
+    length(unique(dais_cleaned_shared$participant_id)),
+    length(unique(dais_cleaned_shared$item_id)),
+    length(unique(dais_cleaned_shared$Verb)),
+    "continuous preference scaled to 0-1",
+    "identity",
+    "lme4::lmer, ML (REML = FALSE)",
+    paste(deparse(mixed_formula), collapse = " ")
   ),
   stringsAsFactors = FALSE
 )
@@ -414,6 +518,7 @@ mixed_model_warnings <- character()
 if (requireNamespace("lme4", quietly = TRUE)) {
   mm_data <- dais_cleaned_shared
   mm_data$participant_id <- factor(mm_data$participant_id)
+  mm_data$item_id <- factor(mm_data$item_id)
   mm_data$Verb <- factor(mm_data$Verb, levels = shared_verbs)
   mm_data$recipient_id <- factor(mm_data$recipient_id)
   mm_data$theme_type <- factor(mm_data$theme_type)
@@ -421,8 +526,7 @@ if (requireNamespace("lme4", quietly = TRUE)) {
   mixed_fit <- tryCatch(
     withCallingHandlers(
       lme4::lmer(
-        DOpreference_01 ~ production_np_prob + recipient_id + theme_type +
-          (1 | participant_id) + (1 | Verb),
+        mixed_formula,
         data = mm_data,
         REML = FALSE
       ),
@@ -453,6 +557,8 @@ if (requireNamespace("lme4", quietly = TRUE)) {
       term = rownames(coef_summary),
       estimate = coef_summary[, "Estimate"],
       std_error = coef_summary[, "Std. Error"],
+      conf_low = coef_summary[, "Estimate"] - 1.96 * coef_summary[, "Std. Error"],
+      conf_high = coef_summary[, "Estimate"] + 1.96 * coef_summary[, "Std. Error"],
       df = if ("df" %in% colnames(coef_summary)) coef_summary[, "df"] else NA_real_,
       statistic = if ("t value" %in% colnames(coef_summary)) {
         coef_summary[, "t value"]
@@ -528,6 +634,16 @@ utils::write.csv(
 utils::write.csv(
   scored_item_rows,
   file.path(derived_dir, "dais_acceptability_bridge_scored_items.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  item_difference_out,
+  file.path(derived_dir, "dais_acceptability_bridge_item_differences.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  item_calibration_out,
+  file.path(derived_dir, "dais_acceptability_bridge_item_calibration.csv"),
   row.names = FALSE
 )
 utils::write.csv(

@@ -5,6 +5,7 @@
 "something_nonpronominal","spearman_production_human",0.674734331994178
 "something_nonpronominal","mean_production_np_prob",0.342916520005488
 "something_nonpronominal","mean_human_do_preference",0.439838846338846
+"something_nonpronominal","mean_production_minus_DAIS",-0.096922326333358
 "something_nonpronominal","mean_abs_gap",0.252367077104957
 "something_pronominal","all_dais_item_rows",5000
 "something_pronominal","shared_verb_item_rows",150
@@ -12,4 +13,5 @@
 "something_pronominal","spearman_production_human",0.684633165547896
 "something_pronominal","mean_production_np_prob",0.282689406419972
 "something_pronominal","mean_human_do_preference",0.439838846338846
+"something_pronominal","mean_production_minus_DAIS",-0.157149439918874
 "something_pronominal","mean_abs_gap",0.264736150182439

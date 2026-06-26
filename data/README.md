@@ -23,6 +23,7 @@ Current derived tables and figures, when generated, are created by:
 - `../analysis/07_sampling_tilt_sensitivity.R`
 - `../analysis/08_dais_acceptability_bridge.R`
 - `../analysis/09_bnc2014_metadata_scope.R`
+- `../analysis/10_bnc2014_paired_transport_cv.R`
 
 These are small summaries, diagnostics, and model outputs. They are not raw data
 downloads.

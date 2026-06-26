@@ -1,5 +1,12 @@
 "metric","value"
-"lme4_available",1
-"model_fit",1
-"singular_fit",0
-"rows",1525
+"lme4_available","TRUE"
+"model_fit","TRUE"
+"singular_fit","FALSE"
+"rows","1525"
+"participants","923"
+"items","150"
+"verbs","6"
+"response","continuous preference scaled to 0-1"
+"link","identity"
+"estimator","lme4::lmer, ML (REML = FALSE)"
+"formula","DOpreference_01 ~ production_np_prob + recipient_id + theme_type +      Verb + (1 | participant_id) + (1 | item_id)"

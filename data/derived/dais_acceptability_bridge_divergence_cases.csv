@@ -1,4 +1,4 @@
-"coding","direction","Verb","classification","recipient_id","theme_type","DOsentence","PDsentence","production_np_prob","human_do_preference","gap_production_minus_human","abs_gap"
+"coding","direction","Verb","classification","recipient_id","theme_type","DOsentence","PDsentence","production_np_prob","human_do_preference","production_minus_DAIS","abs_gap"
 "something_nonpronominal","production_higher_than_human","show","alternating","shortIndefinite","indef","Juan showed a woman a picture","Juan showed a picture to a woman",0.839591285236828,0.323,0.516591285236828,0.516591285236828
 "something_nonpronominal","production_higher_than_human","give","alternating","shortIndefinite","something","Maria gave a man something","Maria gave something to a man",0.669216378134085,0.178181818181818,0.491034559952267,0.491034559952267
 "something_nonpronominal","production_higher_than_human","sell","alternating","pronoun","something","John sold her something","John sold something to her",0.947860153910091,0.474166666666667,0.473693487243425,0.473693487243425

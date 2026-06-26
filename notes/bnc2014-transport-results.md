@@ -1,5 +1,12 @@
 # BNC2014 Transport Results
 
+**Superseded 2026-06-26 for manuscript comparison purposes.** The first-pass
+transport metrics below are still reproducible from `analysis/05`, but the
+native-vs-transport comparison used different evaluation samples. Current
+manuscript claims should use `analysis/10_bnc2014_paired_transport_cv.R`, which
+scores source-trained and BNC2014-native out-of-fold predictions on the same
+1,621 complete-case rows.
+
 Purpose: record the first cross-corpus transport result before manuscript prose
 turns it into an argument.
 

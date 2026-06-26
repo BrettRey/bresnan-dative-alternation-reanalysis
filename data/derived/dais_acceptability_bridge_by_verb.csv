@@ -1,4 +1,4 @@
-"coding","Verb","n_items","production_np_prob","human_do_preference","gap_production_minus_human","abs_gap"
+"coding","Verb","n_items","production_np_prob","human_do_preference","production_minus_DAIS","abs_gap"
 "something_nonpronominal","give",25,0.48678154288216,0.449088764568765,0.037692778313396,0.198810065400411
 "something_nonpronominal","lend",25,0.253881759513289,0.426098124098124,-0.172216364584835,0.258333719703808
 "something_nonpronominal","offer",25,0.189090394714301,0.468179544899545,-0.279089150185244,0.322088814094606
