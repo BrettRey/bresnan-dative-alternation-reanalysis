@@ -14,7 +14,7 @@ These are different evidence channels, not repeated measurements of one
 quantity. A third channel, controlled acceptability preference, is a different
 target again and is kept to the supplementary DAIS bridge.
 
-Out-of-domain transfer of a dative model is not new ground either.
+Out-of-domain transport of a dative model is not new ground either.
 \textcite{BresnanHay2008} extended the \textcite{bresnan2007} analysis to spoken
 New Zealand English; \textcite{KendallBresnanVanHerk2011} trained a model on the
 \textcite{bresnan2007} data and predicted the alternation in African American
@@ -26,11 +26,11 @@ stability by other means. So neither the finding that dative conditioning
 travels nor the act of scoring one variety's model on another is the
 contribution here.
 
-What those transfer studies report is discrimination: a concordance index, an
-area under the curve, or classification accuracy, that is, whether the moved
-model ranks or labels new tokens correctly. They do not ask whether it stays
+What those transport studies report is discrimination: a concordance index,
+equivalently the area under the curve, or classification accuracy, that is,
+whether the moved model ranks or labels new tokens correctly. They do not ask whether it stays
 calibrated, how it compares to a target-native model fit and scored on the same
-observations, which predictor groups carry the transfer, how missing data and
+observations, which predictor groups carry the transport, how missing data and
 the harmonized denominator bound the claim, or what quantity the fitted
 probability estimates. This paper treats external validation as that fuller
 problem. The contribution is the validation regime: proper scoring, calibration
@@ -118,10 +118,10 @@ Origin & Model family & Log loss & AUC \\
 \texttt{languageR} source & verb only & 0.456 & 0.646 \\
 \texttt{languageR} source & non-verb & 0.296 & 0.899 \\
 \texttt{languageR} source & full core & 0.308 & 0.906 \\
-BNC2014 native OOF & marginal & 0.473 & 0.500 \\
-BNC2014 native OOF & verb only & 0.439 & 0.625 \\
-BNC2014 native OOF & non-verb & 0.234 & 0.928 \\
-BNC2014 native OOF & full core & 0.227 & 0.939 \\
+BNC2014-native OOF & marginal & 0.473 & 0.500 \\
+BNC2014-native OOF & verb only & 0.439 & 0.625 \\
+BNC2014-native OOF & non-verb & 0.234 & 0.928 \\
+BNC2014-native OOF & full core & 0.227 & 0.939 \\
 \bottomrule
 \end{tabular}
 \caption{Same-row BNC2014 complete-case evaluation. OOF = out-of-fold. All
@@ -138,13 +138,13 @@ The source-trained non-lexical profile transports, but not because shared verb
 base rates do most of the work. The source full model improves log loss over
 the source marginal model by 0.165 in a paired row bootstrap
 (\([-0.198,-0.133]\) for full minus marginal) and raises AUC by 0.406. The
-source verb-only model gives only a small log-loss gain over marginal
+source verb-only model gives only a small log loss gain over marginal
 (0.456 vs.\ 0.473), while the source non-verb model reaches 0.296 log loss and
 0.899 AUC. Adding the source verb terms to the non-verb model improves ranking
 slightly but worsens log loss slightly (full minus non-verb \(= 0.012\),
 bootstrap interval \([-0.006,0.030]\)). In this target corpus, the portable part
-of the profile is mainly the non-lexical conditioning rather than lexical
-base-rate ordering.
+of the profile is mainly the non-lexical conditioning, captured by the non-verb
+model, rather than lexical base-rate ordering.
 
 The target-native model is still better. On the identical rows, the BNC2014
 native full model has log loss 0.227 and a fold-averaged AUC of 0.939. Against

@@ -9,6 +9,9 @@ claims that the named people have reviewed the paper.
   interpretable and faithful to the data structure?
 - Stefan Th. Gries standpoint: are corpus-methods claims and collostructional /
   alternation evidence handled with proper caution?
+- Jack Grieve standpoint: are corpus comparability, speaker/register structure,
+  regional scope, and claims about British English framed with enough
+  sociolinguistic caution?
 - Jennifer Hay / usage-based standpoint: does probabilistic conditioning map to
   grammatical knowledge without overclaiming?
 - Jon Sprouse / acceptability-methods standpoint: does the bridge to judgments

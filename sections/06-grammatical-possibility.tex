@@ -23,11 +23,16 @@ inferential step to a new target, not a larger sample of the same one.}
 \label{fig:opportunity-sets}
 \end{figure}
 
-This bounds what successful transport licenses. A durable, transportable
-production profile is projectible within a stated target domain
-\citep{Goodman1955}: it forecasts realization for unseen tokens among the verbs,
-registers, and varieties inside its scope. It stays silent, by construction,
-about the grammatical-but-unattested region. No amount of additional
+This bounds what successful transport licenses, and it separates two notions
+that sit close. The conditioning relations the profile encodes, the effects of
+pronominality, length, animacy, and definiteness, are projectible in Goodman's
+sense \citep{Goodman1955}: the kind of generalization that supports projection
+to new cases. Whether a fitted model then transports to a given new corpus is a
+separate, empirical question, and a projectible relation can still fail to
+transport under a population shift. Within its demonstrated scope the production
+model forecasts realization for unseen tokens among the verbs, registers, and
+varieties it covers, and it stays silent, by construction, about the
+grammatical-but-unattested region. No amount of additional
 positive-token data collected under the same sampling design \(D_0\) can
 identify that region by itself; more tokens enlarge the attested NP/PP area
 without changing the opportunity set. That is an observational-identification
@@ -39,7 +44,7 @@ The acceptability channel illustrates the last route and its limits. A model
 validated for production choice is not thereby validated for judgement: the
 supplementary DAIS bridge shows the two channels separating, most clearly for
 \mention{offer}, where participants accept the double-object form far more
-readily than the production model expects. Validity is relative to a target;
+readily than the production probabilities imply. Validity is relative to a target;
 carrying it across channels is a further claim, not a free one.
 
 External validation is itself a ladder; Table~\ref{tab:validation-ladder} lays
@@ -47,7 +52,7 @@ out its rungs, and the dative shows what each reports. Source-data reproduction,
 within-domain validation, frozen cross-domain prediction, a target-native
 benchmark scored on the same observations, recalibration, and error
 decomposition are distinct steps, and a model can clear some while failing
-others. Here the source profile discriminates well out of domain yet stays
+others. Here the source model discriminates well out of domain yet stays
 worse-calibrated than a target-native fit, and an intercept-and-slope
 recalibration does not close the gap, so the remaining gap is not removed by
 globally rescaling the predictions; it is not only a prevalence shift. Reporting
@@ -65,7 +70,7 @@ Source reproduction & Source corpus & Held-out log loss and AUC against nulls & 
 Within-source validation & Source corpus & Partial pooling, negative controls & Lexical and non-lexical signal are not overfit \\
 Frozen external scoring & Target corpus & Log loss and AUC against the target marginal & The profile carries predictive information out of domain \\
 External calibration & Target corpus & Calibration intercept and slope & Whether the levels are right, not just the ranking \\
-Paired target-native benchmark & Target corpus & Same-row paired loss differences & How much local structure the source profile misses \\
+Paired target-native benchmark & Target corpus & Same-row paired loss differences & How much local structure the source model misses \\
 Predictor-group ablation & Both & Marginal, verb-only, non-verb, and full contrasts & Which part of the profile transports \\
 Opportunity-set audit & Target corpus & Denominator and missingness map & What quantity the predictions estimate \\
 \bottomrule
@@ -76,9 +81,9 @@ can pass some rungs while failing others.}
 \label{tab:validation-ladder}
 \end{table}
 
-The ladder transfers to other alternations under stated preconditions: two
+The ladder extends to other alternations under stated preconditions: two
 corpora sharing a harmonizable categorical alternation, an annotated outcome,
-and a lexical core large enough to fit and to score on. Its limits transfer too.
+and a lexical core large enough to fit and to score on. Its limits carry over too.
 The comparison is testable only where the corpora intersect, so the periphery of
 an alternation goes unevaluated; preprocessing learned on the source must be
 frozen before the target is scored; and the released data set the ceiling on how
@@ -96,7 +101,7 @@ So the analyses license a cautious, well-scoped claim. The Bresnan et al.
 production-conditioning profile is durable and partly transportable within the
 shared high-frequency core; its non-lexical component travels better than its
 lexical base rates; and a target-native model still recovers local structure the
-source profile misses. What the validated profile buys is prediction within a
+source model misses. What the validated model buys is prediction within a
 stated domain, plus a clear marker of the low-probability cells where
 grammaticality, if it is at issue, has to be settled through another channel and
 another paper.
