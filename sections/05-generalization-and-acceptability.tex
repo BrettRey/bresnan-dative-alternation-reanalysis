@@ -1,4 +1,4 @@
-\section{Generalization and acceptability}
+\section{Cross-corpus transport}
 
 The BNC2014 analysis asks whether the production profile travels across corpus
 design, variety, period, and annotation regime. The transport model is trained
@@ -6,23 +6,38 @@ on the spoken \texttt{languageR} rows restricted to the six BNC2014 verbs. It is
 then scored on harmonized BNC2014 rows, with complete-case filtering stated as
 part of the estimand.
 
-Three targets are kept apart. The \texttt{languageR} models estimate
+Two corpus targets are kept apart. The \texttt{languageR} models estimate
 conditional production choice among attested NP and PP dative tokens. The
 BNC2014 analysis estimates out-of-domain predictive performance over
 complete-case rows in the six shared high-frequency verbs after harmonization.
-DAIS estimates controlled double-object preference for constructed
-alternatives. These numbers can therefore be read together only as different
-evidence channels, not as repeated measurements of one quantity.
+These are different evidence channels, not repeated measurements of one
+quantity. A third channel, controlled acceptability preference, is a different
+target again and is kept to the supplementary DAIS bridge.
 
-Cross-variety probabilistic grammar of the dative is not new ground.
-\textcite{BresnanFord2010} compared American and Australian English and found
-that speakers' probabilistic choice knowledge is largely shared across
-varieties, while \textcite{RothlisbergerGrafmillerSzmrecsanyi2017} found broad
-stability across nine post-colonial Englishes. The bare finding that dative
-conditioning largely travels would not, on its own, be new. The contribution
-here is the strict transport test, the open harmonization record, and the
-separation of production probability from acceptability preference and
-grammatical possibility.
+Out-of-domain transfer of a dative model is not new ground either.
+\textcite{BresnanHay2008} extended the \textcite{bresnan2007} analysis to spoken
+New Zealand English; \textcite{KendallBresnanVanHerk2011} trained a model on the
+\textcite{bresnan2007} data and predicted the alternation in African American
+English, then reversed the direction, reporting concordance indices of 0.97 and
+0.95; and \textcite{EngelEtAl2025} trained separate English and Dutch models and
+tested each on the other language. \textcite{BresnanFord2010} and
+\textcite{RothlisbergerGrafmillerSzmrecsanyi2017} document broad cross-variety
+stability by other means. So neither the finding that dative conditioning
+travels nor the act of scoring one variety's model on another is the
+contribution here.
+
+What those transfer studies report is discrimination: a concordance index, an
+area under the curve, or classification accuracy, that is, whether the moved
+model ranks or labels new tokens correctly. They do not ask whether it stays
+calibrated, how it compares to a target-native model fit and scored on the same
+observations, which predictor groups carry the transfer, how missing data and
+the harmonized denominator bound the claim, or what quantity the fitted
+probability estimates. This paper treats external validation as that fuller
+problem. The contribution is the validation regime: proper scoring, calibration
+intercept and slope, a paired target-native benchmark on identical rows,
+predictor-group ablation, missing-data sensitivity, and an explicit
+opportunity-set denominator, with an open harmonization record that lets each
+step be checked.
 
 The comparison is a bundled out-of-domain test. The source side is American
 telephone conversation from 1990--1991, restricted to the six shared spoken
@@ -48,7 +63,11 @@ use R treatment contrasts, with \mention{give} as the verb reference and
 transport models. Factor levels and coding are fixed before scoring BNC2014;
 no BNC2014-specific scaling or imputation enters the headline model.
 Recipient definiteness is unavailable in BNC2014 and enters only as a labelled
-regex proxy in a sensitivity check.
+regex proxy in a sensitivity check. The validation is retrospective: freezing
+means the source coefficients are not re-estimated from BNC2014 outcomes, not
+that the target corpus was unavailable while the harmonization, common-predictor
+set, and six-verb restriction were chosen. Those design choices are target-aware
+by necessity; the fitted coefficients are not.
 
 Harmonization is lossy. The outcome maps cleanly: \texttt{VNN} becomes NP and
 \texttt{VNPP} becomes PP. Verb maps cleanly after the six-verb restriction.
@@ -99,19 +118,23 @@ Origin & Model family & Log loss & AUC \\
 \texttt{languageR} source & verb only & 0.456 & 0.646 \\
 \texttt{languageR} source & non-verb & 0.296 & 0.899 \\
 \texttt{languageR} source & full core & 0.308 & 0.906 \\
-BNC2014 native OOF & marginal & 0.473 & 0.395 \\
-BNC2014 native OOF & verb only & 0.439 & 0.538 \\
-BNC2014 native OOF & non-verb & 0.234 & 0.920 \\
-BNC2014 native OOF & full core & 0.227 & 0.936 \\
+BNC2014 native OOF & marginal & 0.473 & 0.500 \\
+BNC2014 native OOF & verb only & 0.439 & 0.625 \\
+BNC2014 native OOF & non-verb & 0.234 & 0.928 \\
+BNC2014 native OOF & full core & 0.227 & 0.939 \\
 \bottomrule
 \end{tabular}
 \caption{Same-row BNC2014 complete-case evaluation. OOF = out-of-fold. All
 rows are the same 1,621 BNC2014 complete-case observations; the native rows use
-five repeated 10-fold row-level cross-validation.}
+five repeated 10-fold verb-stratified row-level cross-validation. Native AUC is
+averaged within each held-out fold, so an intercept-only model is 0.500 by
+construction; log loss is pooled. The released file carries no speaker or
+conversation identifier, so the folds are row-level and within-conversation
+dependence is not removed.}
 \label{tab:bnc-transport}
 \end{table}
 
-The source-trained structural profile transports, but not because shared verb
+The source-trained non-lexical profile transports, but not because shared verb
 base rates do most of the work. The source full model improves log loss over
 the source marginal model by 0.165 in a paired row bootstrap
 (\([-0.198,-0.133]\) for full minus marginal) and raises AUC by 0.406. The
@@ -120,119 +143,47 @@ source verb-only model gives only a small log-loss gain over marginal
 0.899 AUC. Adding the source verb terms to the non-verb model improves ranking
 slightly but worsens log loss slightly (full minus non-verb \(= 0.012\),
 bootstrap interval \([-0.006,0.030]\)). In this target corpus, the portable part
-of the profile is mainly the structural conditioning rather than lexical
+of the profile is mainly the non-lexical conditioning rather than lexical
 base-rate ordering.
 
 The target-native model is still better. On the identical rows, the BNC2014
-native full model has log loss 0.227 and AUC 0.936. Against the source full
-model, the paired difference is \(-0.081\) log loss
-(\([-0.104,-0.059]\)) and \(+0.030\) AUC (\([0.017,0.043]\)). The native
-non-verb model is already close to the native full model, which reinforces the
-same interpretation: the broad conditioning profile is portable, but the
-target corpus supplies local calibration and residual lexical structure.
+native full model has log loss 0.227 and a fold-averaged AUC of 0.939. Against
+the source full model scored on the same held-out folds, its log loss is lower
+by 0.081 (paired row bootstrap \([-0.104,-0.059]\)) and its fold-averaged AUC is
+higher by 0.032 (fold bootstrap \([0.025,0.039]\)). The native non-verb model is
+already close to the native full model, which reinforces the same
+interpretation: the broad conditioning profile is portable, but the target
+corpus supplies local calibration and residual lexical structure.
 
 Calibration tells the same story. The source full model underpredicts NP
 realization for \mention{send}, \mention{offer}, and \mention{lend}, and
-overpredicts it for \mention{sell}. An intercept-only BNC2014 recalibration
-improves its log loss from 0.308 to 0.301; an intercept-plus-slope
-recalibration improves it to 0.290, with slope 0.728. That helps, but it still
-does not reach the target-native full model. The problem is not only prevalence
-shift.
+overpredicts it for \mention{sell}. Apparent recalibration on the same BNC2014
+rows, a diagnostic upper bound rather than out-of-sample performance, gives a
+calibration intercept of 0.44 (standard error 0.10) under an intercept-only
+update and an intercept of 0.58 (0.09) with slope 0.73 (0.04) under an
+intercept-and-slope update, lowering log loss from 0.308 to 0.301 and to 0.290
+respectively. Even that best case stays short of the target-native full model's
+0.227, so the remaining gap is not removed by globally rescaling the level and
+slope of the source predictions; it is not only a prevalence shift.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{data/derived/figures/bnc2014_transport_calibration_by_verb.pdf}
 \caption{Verb-level calibration for the transported source full model and the
 BNC2014-native out-of-fold model on the same complete-case rows. Black points
-and intervals are observed NP recipient rates with Wilson intervals; coloured
-triangles are mean predictions.}
+and intervals are observed NP recipient rates with binomial Wilson intervals,
+unadjusted for conversational clustering; coloured triangles are mean
+predictions.}
 \label{fig:bnc-calibration}
 \end{figure}
 
-The all-row check is deliberately weaker. Only three common predictors are
-observed for every BNC2014 row: verb, theme animacy, and theme definiteness. On
-all 1,839 released rows, the source verb-only model modestly beats the source
-marginal model (0.469 vs.\ 0.499 log loss), while the theme variables alone do
-not recover the complete-case result. This does not replace the headline model;
-it shows why the headline claim must stay tied to the complete-case harmonized
-denominator.
-
-Acceptability evidence answers a different question. The Dative Alternation and
-Information Structure (DAIS) dataset, introduced by
-\textcite{HawkinsYamakoshiGriffithsGoldberg2020VerbBias}, contains 50,000
-human judgements over 5,000 dative sentence pairs and systematically varies
-verb, definiteness, and argument length. The repository now carries a CC BY 4.0
-licence, and the dataset authors have given explicit permission to reuse the
-judgements. DAIS can therefore enter as a compact bridge
-\citep{HawkinsYamakoshiGriffithsGoldberg2020DAIS}.
-
-The bridge keeps the targets separate. I score only the 150 DAIS items whose
-verbs overlap the six-verb production core. The same spoken \texttt{languageR}
-production model that was transported to BNC2014 predicts an NP recipient
-probability for each constructed DAIS pair; the DAIS item mean gives the
-corresponding human DO preference on a 0--1 scale. As a bridge analysis, it
-asks whether a production probability profile and a controlled preference
-profile point in the same direction.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.82\linewidth]{data/derived/figures/dais_production_preference_bridge.pdf}
-\caption{DAIS production/preference bridge for the six shared verbs. Each point
-is a constructed DAIS item. The horizontal axis is the spoken
-\texttt{languageR} model's NP recipient probability; the vertical axis is DAIS
-DO preference. The diagonal marks equality between the two channels, and the
-\mention{offer} cluster is highlighted because it shows the clearest channel
-separation.}
-\label{fig:dais-bridge}
-\end{figure}
-
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{lrrr}
-\toprule
-Verb & Prod. NP prob. & DAIS DO pref. & Prod. - DAIS \\
-\midrule
-\mention{give} & 0.408 & 0.449 & -0.041 \\
-\mention{lend} & 0.204 & 0.426 & -0.222 \\
-\mention{offer} & 0.150 & 0.468 & -0.319 \\
-\mention{sell} & 0.231 & 0.351 & -0.120 \\
-\mention{send} & 0.196 & 0.428 & -0.232 \\
-\mention{show} & 0.506 & 0.516 & -0.009 \\
-\bottomrule
-\end{tabular}
-\caption{DAIS bridge for the six shared verbs. The difference column is
-production probability minus DAIS DO preference.}
-\label{tab:dais-bridge}
-\end{table}
-
-The two channels line up moderately, while remaining distinct. With
-\mention{something} treated as a pronominal theme, Pearson's \(r\) is 0.667 and
-Spearman's \(\rho\) is 0.685 over the 150 shared-verb items. The mean
-production NP probability is 0.283, while mean DAIS DO preference is 0.440; the
-mean paired difference is \(-0.157\), with bootstrap interval
-\([-0.198,-0.115]\). Treating \mention{something} as nonpronominal gives the
-same interpretation (\(r = 0.645\), \(\rho = 0.675\), mean production
-probability 0.343).
-
-The item and participant checks show why the raw correlation should not be
-overread. At the item level, a marginal calibration regression has a positive
-slope, but once recipient condition, theme type, and verb are represented
-directly, the production-score slope is essentially zero (0.006, standard error
-0.078). At the judgement level, a linear mixed model on 1,525 shared-verb
-judgements from 923 participants uses fixed effects for production score,
-recipient condition, theme type, and verb, with crossed random intercepts for
-participant and constructed item. The fit is non-singular, and the incremental
-production-score coefficient is 0.017 (standard error 0.076; approximate
-interval \([-0.132,0.165]\)). DAIS preference and production probability
-therefore show moderate marginal rank correspondence, much of it attributable
-to shared sensitivity to the manipulated predictors; the production score adds
-little once those predictors are represented directly.
-
-The useful cases are the divergences. \mention{Offer} is the clearest
-verb-level one: the production model makes it strongly PP-like, but DAIS
-participants are much more willing to choose the double-object version. For
-example, \enquote{Juan offered the woman a payment} has predicted NP
-probability 0.141 but DAIS DO preference 0.694. The point is channel
-separation: judgement preference can occupy a different region of the evidence
-space from corpus production probability.
+A matched check separates the two things the missing rows change: the predictor
+set and the row denominator. Only three predictors are observed for every
+BNC2014 row, so the reduced common-predictor model keeps verb, theme animacy,
+and theme definiteness. Holding that reduced model fixed and scoring it on the
+1,621 complete-case rows already collapses performance relative to the full
+model (log loss 0.562 vs.\ 0.308, AUC 0.510 vs.\ 0.906). Expanding the same
+reduced model to all 1,839 rows changes little (log loss 0.562 to 0.586, AUC
+0.510 to 0.523). Dropping the recipient and length predictors, not enlarging the
+row denominator, accounts for almost all of the loss, which is why the headline
+claim stays tied to the complete-case harmonized denominator.

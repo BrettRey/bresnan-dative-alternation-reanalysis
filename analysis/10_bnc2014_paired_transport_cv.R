@@ -302,11 +302,15 @@ calibration_model <- function(y, p, model, type) {
   if (type == "intercept_only") {
     fit <- stats::glm(y ~ 1 + offset(lp), data = data, family = stats::binomial())
     pred <- stats::plogis(lp + stats::coef(fit)[["(Intercept)"]])
+    coefs <- summary(fit)$coefficients
     slope <- 1
+    slope_se <- NA_real_
   } else if (type == "intercept_plus_slope") {
     fit <- stats::glm(y ~ lp, data = data, family = stats::binomial())
     pred <- stats::predict(fit, type = "response")
+    coefs <- summary(fit)$coefficients
     slope <- stats::coef(fit)[["lp"]]
+    slope_se <- coefs["lp", "Std. Error"]
   } else {
     stop("Unknown calibration model type.")
   }
@@ -314,8 +318,11 @@ calibration_model <- function(y, p, model, type) {
   data.frame(
     model = model,
     calibration = type,
+    evaluation = "apparent (recalibration fit and scored on the same BNC2014 rows)",
     intercept = stats::coef(fit)[["(Intercept)"]],
+    intercept_se = coefs["(Intercept)", "Std. Error"],
     slope = slope,
+    slope_se = slope_se,
     log_loss = metrics$log_loss,
     auc = metrics$auc,
     stringsAsFactors = FALSE
@@ -441,6 +448,117 @@ prediction_rows <- do.call(rbind, lapply(names(predictions), function(model) {
   )
 }))
 
+# --- Fold-level AUC aggregation (corrects the pooled OOF AUC artifact) -------
+# AUC must be computed within each held-out fold. Pooling out-of-fold
+# predictions from models with fold-specific intercepts can drag an
+# intercept-only model below 0.5, because the leave-one-fold-out prevalence is
+# mechanically anti-correlated with the held-out outcomes. Log loss is
+# decomposable, so it is pooled per repeat. The source models are single fixed
+# models whose pooled AUC is valid; we also score the source model within each
+# fold for a matched paired comparison on identical held-out rows.
+native_families <- setdiff(names(formula_specs), "plus_rec_def_proxy")
+fold_metric_recs <- list()
+for (r in sort(unique(folds$repeat_id))) {
+  fr <- folds[folds$repeat_id == r, , drop = FALSE]
+  for (fold_id in sort(unique(fr$fold))) {
+    test_row_ids <- fr$row_id[fr$fold == fold_id]
+    test_idx <- match(test_row_ids, bnc_eval$row_id)
+    train_idx <- setdiff(seq_len(nrow(bnc_eval)), test_idx)
+    train <- bnc_eval[train_idx, , drop = FALSE]
+    test <- bnc_eval[test_idx, , drop = FALSE]
+    y <- test$y_np
+    for (family in native_families) {
+      formula <- formula_specs[[family]]
+      p <- if (is.null(formula)) {
+        rep(mean(train$y_np), nrow(test))
+      } else {
+        withCallingHandlers(
+          fit_predict_glm(formula, train, test),
+          warning = function(w) invokeRestart("muffleWarning")
+        )
+      }
+      fold_metric_recs[[length(fold_metric_recs) + 1L]] <- data.frame(
+        repeat_id = r,
+        fold = fold_id,
+        family = family,
+        n = length(y),
+        native_log_loss = mean(per_row_log_loss(y, p)),
+        native_auc = auc_score(y, p),
+        source_auc = auc_score(y, predictions[[paste0("source_", family)]][test_idx]),
+        stringsAsFactors = FALSE
+      )
+    }
+  }
+}
+fold_metrics <- do.call(rbind, fold_metric_recs)
+
+native_agg <- do.call(rbind, lapply(native_families, function(family) {
+  fm <- fold_metrics[fold_metrics$family == family, , drop = FALSE]
+  data.frame(
+    family = family,
+    native_oof_log_loss = stats::weighted.mean(fm$native_log_loss, fm$n),
+    native_oof_auc = mean(fm$native_auc, na.rm = TRUE),
+    source_fold_auc = mean(fm$source_auc, na.rm = TRUE),
+    native_minus_source_auc = mean(fm$native_auc - fm$source_auc, na.rm = TRUE),
+    stringsAsFactors = FALSE
+  )
+}))
+
+# Overwrite the pooled native AUC/log loss with the fold-aggregated values.
+for (family in native_families) {
+  m <- paste0("native_oof_", family)
+  agg <- native_agg[native_agg$family == family, , drop = FALSE]
+  metrics[[m]]$test_auc <- agg$native_oof_auc
+  metrics[[m]]$test_log_loss <- agg$native_oof_log_loss
+  metrics[[m]]$resampling <-
+    "5 x 10-fold OOF; AUC averaged within fold, log loss pooled per repeat"
+}
+
+# Fold bootstrap CI for the matched native-minus-source full-core AUC gap.
+fm_full <- fold_metrics[fold_metrics$family == "full_core", , drop = FALSE]
+set.seed(20260625L)
+boot_auc_gap <- numeric(2000L)
+for (b in seq_len(2000L)) {
+  idx <- sample.int(nrow(fm_full), nrow(fm_full), replace = TRUE)
+  boot_auc_gap[b] <- mean(fm_full$native_auc[idx] - fm_full$source_auc[idx])
+}
+native_source_auc_gap <- data.frame(
+  comparison = "native_oof_full_core_minus_source_full_core",
+  fold_auc_gap = mean(fm_full$native_auc - fm_full$source_auc),
+  gap_lo = stats::quantile(boot_auc_gap, 0.025, names = FALSE),
+  gap_hi = stats::quantile(boot_auc_gap, 0.975, names = FALSE),
+  native_fold_auc = mean(fm_full$native_auc),
+  source_fold_auc = mean(fm_full$source_auc),
+  stringsAsFactors = FALSE
+)
+
+# --- Matched missing-data denominator check ---------------------------------
+# The same reduced common-predictor model, scored on the 1,621 complete-case
+# rows and on all rows that carry the common predictors. Holding the model fixed
+# isolates the effect of expanding the row denominator from the effect of
+# dropping recipient length, theme length, and the pronominality predictors.
+common_formula <- y_np ~ Verb + theme_anim + theme_def
+lang_common <- languageR_h[complete_for_formula(languageR_h, common_formula), , drop = FALSE]
+common_fit <- stats::glm(common_formula, data = lang_common, family = stats::binomial())
+common_predict <- function(newdata) {
+  as.numeric(stats::predict(common_fit, newdata = newdata, type = "response"))
+}
+bnc_all_common <- bnc_h[complete_for_formula(bnc_h, common_formula), , drop = FALSE]
+matched_denominator <- rbind(
+  data.frame(
+    evaluation = "reduced_common_complete_case",
+    rows = nrow(bnc_eval),
+    classification_metrics(bnc_eval$y_np, common_predict(bnc_eval)),
+    stringsAsFactors = FALSE
+  ),
+  data.frame(
+    evaluation = "reduced_common_all_rows",
+    rows = nrow(bnc_all_common),
+    classification_metrics(bnc_all_common$y_np, common_predict(bnc_all_common)),
+    stringsAsFactors = FALSE
+  )
+)
+
 metric_rows <- do.call(rbind, metrics)
 warning_rows_out <- if (length(warnings_out)) {
   do.call(rbind, warnings_out)
@@ -551,6 +669,29 @@ utils::write.csv(
   file.path(derived_dir, "bnc2014_paired_transport_cv_warnings.csv"),
   row.names = FALSE
 )
+utils::write.csv(
+  fold_metrics,
+  file.path(derived_dir, "bnc2014_paired_transport_cv_fold_metrics.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  native_agg,
+  file.path(derived_dir, "bnc2014_paired_transport_cv_native_agg.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  native_source_auc_gap,
+  file.path(derived_dir, "bnc2014_paired_transport_cv_auc_gap.csv"),
+  row.names = FALSE
+)
+utils::write.csv(
+  matched_denominator,
+  file.path(derived_dir, "bnc2014_reduced_matched_denominator.csv"),
+  row.names = FALSE
+)
 
 print(metric_rows, row.names = FALSE)
 print(loss_differences, row.names = FALSE)
+print(native_agg, row.names = FALSE)
+print(native_source_auc_gap, row.names = FALSE)
+print(matched_denominator, row.names = FALSE)

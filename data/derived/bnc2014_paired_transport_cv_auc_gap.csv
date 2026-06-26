@@ -1,0 +1,2 @@
+"comparison","fold_auc_gap","gap_lo","gap_hi","native_fold_auc","source_fold_auc"
+"native_oof_full_core_minus_source_full_core",0.0323252765458453,0.0252629620280381,0.038796513999585,0.938748994072884,0.906423717527039

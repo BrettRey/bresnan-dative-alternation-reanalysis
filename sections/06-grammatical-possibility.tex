@@ -1,95 +1,102 @@
-\section{Grammatical possibility}
+\section{Estimand, opportunity set, and inferential scope}
 
-The empirical result supports a sharper vocabulary, not a shortcut from
-frequency to grammar. The \texttt{languageR} analysis shows that a classic
-production profile is reproducible under explicit validation. The BNC2014
-analysis shows that much of that profile travels to the BNC2014 corpus-domain
-target within the shared high-frequency verb set. Both results concern
-production choice.
-
-The target is grammaticality, a contested construct that I'll take as a
-community-conditioned licensing status for form--value, or form--meaning,
-relations \citep{pullum2019-normativity,nefdt2023}. Cognitive and social
-mechanisms stabilize that status across a speech community. The evidence for
-that status is graded even when one remains neutral about whether the underlying
-licensing relation is categorical, multidimensional, or itself graded. A
-category earns its keep by being projectible for a purpose
-\citep{Goodman1955,boyd1999}, and the purpose here is predicting realization in
-unseen contexts and telling rare-but-grammatical cases apart from
-ungrammatical ones.
-
-Acceptability preference, raw judgement, corpus frequency, formal generability,
-and standardness are neighbouring constructs. They can bear on licensing, but
-none fixes it alone. A corpus token records what a speaker or writer did in a
-context. A judgement task samples a noisy, role-dependent instrument: how a
-speaker, participant, or evaluator responds to constructed alternatives under
-controlled conditions.
-
-The useful distinction is between target and channel. Corpus choices are one
-channel: they show which form was realized when an alternation token occurred.
-Judgements are another channel: they provide detector responses calibrated to a
-speech community and task role. Grammaticality is the target those channels bear
-on indirectly.
-
-The DAIS bridge shows why the distinction matters. Its shared-verb judgements
-agree enough with the production model to show shared sensitivity to several
-dative conditioning factors. They also diverge enough to show that
-acceptability preference has a different evidential role from production
-probability. The \mention{offer} cases are the useful warning: controlled
-judgements can make a double-object form look more acceptable than a corpus
-production model trained on attested choices would lead us to expect.
-
-Everything here is conditioned on the opportunity set. This corpus evidence
-covers attested dative-alternation tokens: cases already annotated as NP or PP
-recipient realizations. It can support claims about which realization speakers
-chose inside that frame. A broader corpus design could estimate other
-opportunities: transfer events expressed by non-dative paraphrase, left implicit
-in context, or paired with an independent acceptability task. These released
-rows don't provide that broader denominator.
+The transport result is informative only against a clear statement of what the
+model estimates. The fitted probability is, approximately,
+\[
+P\!\left(\textrm{NP recipient} \mid \textrm{a token entered the annotated NP/PP dative sample}\right),
+\]
+not the probability that a double-object form is grammatical, and not the
+probability that a transfer event is realized as a dative at all. The corpus
+rows are already tokens in which a recipient was realized as an NP or a PP. They
+are not the set of contexts in which a transfer event could have been expressed,
+paraphrased, left implicit, or judged. The models estimate conditional choice
+inside an attested alternation frame.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{data/derived/figures/opportunity_sets_nested.pdf}
-\caption{Nested opportunity sets for the dative-alternation evidence. The
-released corpus rows estimate realization choice inside the annotated noun
-phrase/prepositional phrase denominator. Broader transfer-event and judgement
-opportunity sets would answer different questions about grammaticality.}
+\caption{Nested denominators for the dative estimand. The released corpus rows
+fix realization choice inside the annotated noun phrase/prepositional phrase
+sample, the innermost set. The broader transfer-event and judgement sets are
+different denominators that answer different questions; reaching them is an
+inferential step to a new target, not a larger sample of the same one.}
 \label{fig:opportunity-sets}
 \end{figure}
 
-Production data can support claims about grammaticality only through an
-explicit bridge from attested choices to possible alternatives. Figure
-\ref{fig:opportunity-sets} marks where that bridge would have to be built. A
-fitted production profile may be projectible to new tokens; community licensing
-of a candidate form is a further target that the production profile bears on
-only through additional assumptions.
+This bounds what successful transport licenses. A durable, transportable
+production profile is projectible within a stated target domain
+\citep{Goodman1955}: it forecasts realization for unseen tokens among the verbs,
+registers, and varieties inside its scope. It stays silent, by construction,
+about the grammatical-but-unattested region. No amount of additional
+positive-token data collected under the same sampling design \(D_0\) can
+identify that region by itself; more tokens enlarge the attested NP/PP area
+without changing the opportunity set. That is an observational-identification
+claim, not a verdict that production evidence is useless. A broader denominator,
+elicited production, novel-item productivity tests, or acceptability judgements
+can each add information about the otherwise empty cells.
 
-The dative alternation makes the bridge visible. A low-probability double-object
-realization may be grammatical but dispreferred under the observed predictors.
-A prepositional realization may be likely because the theme is short and the
-recipient is long. A form may be absent because the corpus lacks the relevant
-verb, register, or discourse setting.
+The acceptability channel illustrates the last route and its limits. A model
+validated for production choice is not thereby validated for judgement: the
+supplementary DAIS bridge shows the two channels separating, most clearly for
+\mention{offer}, where participants accept the double-object form far more
+readily than the production model expects. Validity is relative to a target;
+carrying it across channels is a further claim, not a free one.
 
-No amount of additional positive-token data collected under the same \(D_0\)
-design can, by itself, identify the grammatical-but-unattested region. More
-tokens enlarge the attested NP/PP region without changing the opportunity set.
-That is an observational-identification claim, not a claim that production
-evidence is useless. A broader denominator, targeted elicited production,
-novel-item productivity tests, or acceptability judgements can add information
-about the otherwise empty region.
+External validation is itself a ladder; Table~\ref{tab:validation-ladder} lays
+out its rungs, and the dative shows what each reports. Source-data reproduction,
+within-domain validation, frozen cross-domain prediction, a target-native
+benchmark scored on the same observations, recalibration, and error
+decomposition are distinct steps, and a model can clear some while failing
+others. Here the source profile discriminates well out of domain yet stays
+worse-calibrated than a target-native fit, and an intercept-and-slope
+recalibration does not close the gap, so the remaining gap is not removed by
+globally rescaling the predictions; it is not only a prevalence shift. Reporting
+only discrimination, as a concordance index or an accuracy, would have hidden
+that.
 
-The dative case makes that boundary measurable. The opportunity set says which
-cells a production channel can and cannot reach, so the gap stops being a
-slogan and becomes a property of a stated dataset and design, open to the same
-kind of modelling the rest of the paper uses.
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.19\linewidth}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}}
+\toprule
+Stage & Data & Diagnostic & Licensed conclusion \\
+\midrule
+Source reproduction & Source corpus & Held-out log loss and AUC against nulls & The source profile is real and reproducible \\
+Within-source validation & Source corpus & Partial pooling, negative controls & Lexical and non-lexical signal are not overfit \\
+Frozen external scoring & Target corpus & Log loss and AUC against the target marginal & The profile carries predictive information out of domain \\
+External calibration & Target corpus & Calibration intercept and slope & Whether the levels are right, not just the ranking \\
+Paired target-native benchmark & Target corpus & Same-row paired loss differences & How much local structure the source profile misses \\
+Predictor-group ablation & Both & Marginal, verb-only, non-verb, and full contrasts & Which part of the profile transports \\
+Opportunity-set audit & Target corpus & Denominator and missingness map & What quantity the predictions estimate \\
+\bottomrule
+\end{tabular}
+\caption{A validation ladder for a corpus-based probabilistic grammar. Each
+stage has its own diagnostic and licenses a different conclusion, and a model
+can pass some rungs while failing others.}
+\label{tab:validation-ladder}
+\end{table}
 
-The current analyses therefore license a cautious claim. Bresnan et al.'s
+The ladder transfers to other alternations under stated preconditions: two
+corpora sharing a harmonizable categorical alternation, an annotated outcome,
+and a lexical core large enough to fit and to score on. Its limits transfer too.
+The comparison is testable only where the corpora intersect, so the periphery of
+an alternation goes unevaluated; preprocessing learned on the source must be
+frozen before the target is scored; and the released data set the ceiling on how
+honestly dependence can be handled. The Spoken BNC2014 release makes the last
+point concrete: it omits the speaker and conversation identifiers that grouped
+resampling needs, so the native benchmark can only use row-level
+cross-validation and cannot remove within-conversation dependence. That ceiling
+is a property of the data release, not a defect of the method. The row bootstrap
+and Wilson intervals reported above are therefore conditional row-level
+intervals: they reflect test-row resampling around the fitted predictions, not
+source-model estimation uncertainty or within-conversation dependence, which
+probably makes them too narrow.
+
+So the analyses license a cautious, well-scoped claim. The Bresnan et al.
 production-conditioning profile is durable and partly transportable within the
-shared high-frequency core. DAIS shows that related conditioning is visible
-through judgements, while preference and production can separate. That supports
-the idea that corpus probabilities can reveal structure that informal
-judgements miss. It does not make production probability identical to
-grammaticality. What the durable, transportable profile buys is prediction: it
-forecasts realization for unseen tokens within its scope of verbs, registers,
-and varieties, and it marks the low-probability cells where grammaticality has
-to be settled through another channel.
+shared high-frequency core; its non-lexical component travels better than its
+lexical base rates; and a target-native model still recovers local structure the
+source profile misses. What the validated profile buys is prediction within a
+stated domain, plus a clear marker of the low-probability cells where
+grammaticality, if it is at issue, has to be settled through another channel and
+another paper.

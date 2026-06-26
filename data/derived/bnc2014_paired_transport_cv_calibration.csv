@@ -1,4 +1,4 @@
-"model","calibration","intercept","slope","log_loss","auc"
-"source_full_core","intercept_only",0.436611940887882,1,0.301223578261218,0.905933889140178
-"source_full_core","intercept_plus_slope",0.580878431166777,0.727809431527089,0.290095714643499,0.905933889140178
-"native_oof_full_core","intercept_plus_slope",0.0420056158496294,0.951084421171203,0.226281774853163,0.93627667667256
+"model","calibration","evaluation","intercept","intercept_se","slope","slope_se","log_loss","auc"
+"source_full_core","intercept_only","apparent (recalibration fit and scored on the same BNC2014 rows)",0.436611940887882,0.0951549472498699,1,NA,0.301223578261218,0.905933889140178
+"source_full_core","intercept_plus_slope","apparent (recalibration fit and scored on the same BNC2014 rows)",0.580878431166777,0.0882291731968285,0.727809431527089,0.0408080029299516,0.290095714643499,0.905933889140178
+"native_oof_full_core","intercept_plus_slope","apparent (recalibration fit and scored on the same BNC2014 rows)",0.0420056158496294,0.104905391961091,0.951084421171203,0.0526787140394292,0.226281774853163,0.93627667667256

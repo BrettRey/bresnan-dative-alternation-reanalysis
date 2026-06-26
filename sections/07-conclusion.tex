@@ -1,40 +1,36 @@
 \section{Conclusion}
 
-The reanalysis has two production results and one acceptability bridge. First,
-the \texttt{languageR} profile survives baselines, negative controls,
-simulation checks, and partial pooling. The hierarchical model matches the
-fixed-verb model with a smaller fixed-effect parameterization, so modern
-modelling confirms the classic production-choice conclusion.
+External validation of a probabilistic grammar is a ladder, and the dative shows
+what each rung reports. The first rung holds: the \texttt{languageR} profile
+survives baselines, negative controls, simulation checks, and partial pooling,
+and the hierarchical model matches the fixed-verb model with a smaller
+fixed-effect parameterization. Modern modelling confirms the classic
+production-choice conclusion rather than revising it.
 
-Second, the profile partly transports. A spoken six-verb model trained on
-\texttt{languageR} predicts BNC2014 complete-case rows well above a marginal
-baseline when scored on the same rows as a target-native out-of-fold benchmark.
-The strongest portable signal is structural rather than verb-only: the
-source-trained non-verb model nearly matches the source full model by log loss.
-The BNC2014-native model still performs better. The diagnostic verdict is
-bounded. Transport survives the null comparison in the high-frequency shared
-core, but the target corpus is internally structured and the comparison remains
-too bundled to identify separate variety, period, register, annotation, or
-missingness effects.
+The profile then partly transports. On the BNC2014 complete-case rows, the
+spoken six-verb \texttt{languageR} model beats a marginal baseline when it is
+scored against a target-native out-of-fold benchmark on the same observations. The portable signal is mainly non-lexical rather than verb base rates:
+the source non-verb model nearly matches the source full model. But the
+target-native model is better calibrated, and an intercept-and-slope
+recalibration does not close the gap, which a global rescaling of the source
+predictions would have done were it only a prevalence shift. The verdict is bounded. Transport survives the null
+comparisons in the high-frequency core, while variety, period, register,
+annotation, and missingness stay bundled.
 
-The bridge is DAIS. On the six verbs shared with the production core, human
-double-object preference tracks the production profile moderately, but the two
-channels diverge in diagnostically useful places. The item and
-participant-level checks reinforce that reading: after recipient condition,
-theme type, and verb are included, the production score has little incremental
-association with individual judgements. The \mention{offer} cases show why
-acceptability evidence cannot be replaced by a larger production corpus.
+That contrast is visible only because the evaluation goes beyond concordance.
+Earlier transfer studies report discrimination or accuracy; proper scoring,
+calibration, a native benchmark on the same rows, predictor-group ablation, and
+missing-data sensitivity tell a model that ranks new tokens from one that is
+right about them. The regime, not the finding that the dative
+travels, is the contribution, and it transfers to other alternations under the
+preconditions set out above.
 
-That combination is the paper's centre. The classic result is not overturned.
-It's made reproducible, tested against real nulls, and moved into a second
-corpus where it can succeed or fail. The success is strong enough to matter,
-and the failures are specific enough to guide the next analysis.
-
-The conceptual lesson is the same one that motivates the title. Production
-probability is evidence about grammatical possibility, not a synonym for it.
-Open data, transport tests, and the DAIS bridge make that evidence stronger,
-but they also mark a structural boundary: a production model estimates choice
-within the attested frame. Additional positive-token data under the same
-denominator cannot identify the grammatical-but-unattested region by itself.
-Crossing that boundary needs a broader opportunity set, an explicit
-extrapolative model, or another evidence channel.
+The estimand keeps the claim honest. The fitted probability is a conditional
+production choice inside an annotated alternation sample, not a probability of
+grammaticality. A validated production profile forecasts realization within a
+stated target domain and stays silent, by construction, about the
+grammatical-but-unattested region; no quantity of further positive tokens under
+the same design reaches it. Crossing that boundary needs a broader opportunity
+set or another evidence channel, such as the acceptability judgements whose
+production/preference divergence for \mention{offer} is recorded in the
+supplementary bridge. That is a different question, and a different paper.

@@ -1,0 +1,87 @@
+\section*{Supplementary material: the DAIS acceptability bridge}
+\addcontentsline{toc}{section}{Supplementary material: the DAIS acceptability bridge}
+
+This bridge is supplementary to the external-validation result. It records what
+happens when the validated production model meets an acceptability channel, and
+it is reported here for completeness rather than as part of the paper's main
+claim.
+
+Acceptability evidence answers a different question from corpus production. The
+Dative Alternation and Information Structure (DAIS) dataset, introduced by
+\textcite{HawkinsYamakoshiGriffithsGoldberg2020VerbBias}, contains 50,000 human
+judgements over 5,000 dative sentence pairs and systematically varies verb,
+definiteness, and argument length. The repository carries a CC BY 4.0 licence,
+and the dataset authors have given explicit permission to reuse the judgements,
+so DAIS can enter as a compact bridge
+\citep{HawkinsYamakoshiGriffithsGoldberg2020DAIS}.
+
+The bridge keeps the targets separate. I score only the 150 DAIS items whose
+verbs overlap the six-verb production core. The same spoken \texttt{languageR}
+production model that was transported to BNC2014 predicts an NP recipient
+probability for each constructed DAIS pair; the DAIS item mean gives the
+corresponding human DO preference on a 0--1 scale. As a bridge analysis, it
+asks whether a production probability profile and a controlled preference
+profile point in the same direction.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\linewidth]{data/derived/figures/dais_production_preference_bridge.pdf}
+\caption{DAIS production/preference bridge for the six shared verbs. Each point
+is a constructed DAIS item. The horizontal axis is the spoken
+\texttt{languageR} model's NP recipient probability; the vertical axis is DAIS
+DO preference. The diagonal marks equality between the two channels, and the
+\mention{offer} cluster is highlighted because it shows the clearest channel
+separation.}
+\label{fig:dais-bridge}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Verb & Prod. NP prob. & DAIS DO pref. & Prod. - DAIS \\
+\midrule
+\mention{give} & 0.408 & 0.449 & -0.041 \\
+\mention{lend} & 0.204 & 0.426 & -0.222 \\
+\mention{offer} & 0.150 & 0.468 & -0.319 \\
+\mention{sell} & 0.231 & 0.351 & -0.120 \\
+\mention{send} & 0.196 & 0.428 & -0.232 \\
+\mention{show} & 0.506 & 0.516 & -0.009 \\
+\bottomrule
+\end{tabular}
+\caption{DAIS bridge for the six shared verbs. The difference column is
+production probability minus DAIS DO preference.}
+\label{tab:dais-bridge}
+\end{table}
+
+The two channels line up moderately, while remaining distinct. With
+\mention{something} treated as a pronominal theme, Pearson's \(r\) is 0.667 and
+Spearman's \(\rho\) is 0.685 over the 150 shared-verb items. The mean
+production NP probability is 0.283, while mean DAIS DO preference is 0.440; the
+mean paired difference is \(-0.157\), with bootstrap interval
+\([-0.198,-0.115]\). Treating \mention{something} as nonpronominal gives the
+same interpretation (\(r = 0.645\), \(\rho = 0.675\), mean production
+probability 0.343).
+
+The item and participant checks show why the raw correlation should not be
+overread. At the item level, a marginal calibration regression has a positive
+slope, but once recipient condition, theme type, and verb are represented
+directly, the production-score slope is essentially zero (0.006, standard error
+0.078). At the judgement level, a linear mixed model on 1,525 shared-verb
+judgements from 923 participants uses fixed effects for production score,
+recipient condition, theme type, and verb, with crossed random intercepts for
+participant and constructed item. The fit is non-singular, and the incremental
+production-score coefficient is 0.017 (standard error 0.076; approximate
+interval \([-0.132,0.165]\)). DAIS preference and production probability
+therefore show moderate marginal rank correspondence, much of it attributable
+to shared sensitivity to the manipulated predictors; the production score adds
+little once those predictors are represented directly.
+
+The useful cases are the divergences. \mention{Offer} is the clearest
+verb-level one: the production model makes it strongly PP-like, but DAIS
+participants are much more willing to choose the double-object version. For
+example, \enquote{Juan offered the woman a payment} has predicted NP
+probability 0.141 but DAIS DO preference 0.694. The point is channel
+separation: judgement preference can occupy a different region of the evidence
+space from corpus production probability.

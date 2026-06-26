@@ -8,13 +8,13 @@
 \ifdefined\blindbuild \blindtrue \else \blindfalse \fi
 
 \hypersetup{
-  pdftitle={Production probability, transport, and grammatical possibility: Reanalysing the English dative alternation with open data},
-  pdfkeywords={dative alternation, production probability, transport, projectibility, grammaticality, corpus linguistics, acceptability}
+  pdftitle={Beyond concordance: External validation of probabilistic grammar in the English dative alternation},
+  pdfkeywords={dative alternation, probabilistic grammar, external validation, cross-corpus transport, calibration, projectibility, corpus linguistics}
 }
 \ifblind\hypersetup{pdfauthor={}}\fi
 
-\title{Production probability, transport, and grammatical possibility\\
-{\large Reanalysing the English dative alternation with open data}}
+\title{Beyond concordance: External validation of probabilistic grammar\\
+{\large in the English dative alternation}}
 \ifblind
   \author{[Author name, Open Researcher and Contributor ID (ORCID), and affiliation removed for double-blind review]}
 \else
@@ -28,26 +28,28 @@
 \maketitle
 
 \begin{abstract}
-This paper develops a no-new-data reassessment of \textcite{bresnan2007}. The
-current analyses reproduce the production-choice target from
-\texttt{languageR::dative}, add explicit null and partial-pooling checks, and
-test whether the resulting conditioning profile transports to the Spoken
-British National Corpus 2014 (BNC2014) dative dataset. It then adds a compact
-DAIS acceptability bridge for the same high-frequency verb core. The
-result is that modern modelling preserves the classic production conclusion;
-within the shared high-frequency verb set, source-trained structural predictors
-retain substantial same-row discrimination in BNC2014, while target-native
-out-of-fold predictions reveal local calibration and residual lexical
-structure. DAIS preferences show moderate marginal correspondence with the
-production scores but are systematically more favourable to the double-object
-alternative, and the production score adds little once the experimental
-conditions are represented directly. The paper reads these results through
-projectibility: production probability, acceptability preference, and
-grammatical possibility are related evidence channels, not one repeated
-measurement.
+This paper treats the external validation of a corpus-based probabilistic
+grammar as a full predictive-evaluation problem, with the English dative
+alternation as a worked case. Earlier studies already train a dative model on
+one variety and apply it to another, reporting the transfer as discrimination or
+classification accuracy. I freeze a production model fit to the
+\texttt{languageR} dative data of \textcite{bresnan2007} and evaluate its move
+to the later Spoken British National Corpus 2014 (BNC2014) conversational data with
+proper scoring, calibration, a paired target-native benchmark scored on the same
+observations, predictor-group ablation, missing-data sensitivity, and an
+explicit opportunity-set denominator. The source-trained profile retains
+substantial discrimination in the new domain, and the portable part is mainly
+non-lexical conditioning rather than lexical base rates; but calibration and the
+paired native benchmark expose domain-specific structure that discrimination
+alone hides. The fitted quantity is a conditional production probability inside
+an annotated alternation sample, not a probability of grammaticality, so the
+validated model projects within a stated target domain while staying silent, by
+construction, about the grammatical-but-unattested region. The result is a
+validation ladder for probabilistic grammar and an account of what each rung
+licenses.
 \end{abstract}
 
-\noindent\textbf{Keywords:} dative alternation; production probability; transport; projectibility; grammaticality; corpus linguistics; acceptability
+\noindent\textbf{Keywords:} dative alternation; probabilistic grammar; external validation; cross-corpus transport; calibration; projectibility; corpus linguistics
 
 \input{sections/01-problem}
 \input{sections/02-original-target}
@@ -59,10 +61,17 @@ measurement.
 
 \section*{Data and code availability}
 
+\ifblind
+The analysis code and derived files are in a public repository, withheld here
+for double-blind review and available to the editors on request; a
+de-anonymized link will accompany the camera-ready version.
+\else
 The public working repository is
 \href{https://github.com/BrettRey/bresnan-dative-alternation-reanalysis}{\texttt{BrettRey/bresnan-dative-alternation-reanalysis}}.
 A submission release should archive the exact commit or digital object
-identifier. The analysis scripts fetch public datasets to temporary locations
+identifier.
+\fi
+The analysis scripts fetch public datasets to temporary locations
 and validate downloaded files by checksum.
 
 \begin{center}
@@ -101,5 +110,8 @@ author's responsibility.
 
 \clearpage
 \printbibliography
+
+\clearpage
+\input{sections/08-supplementary-dais}
 
 \end{document}

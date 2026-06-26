@@ -1,24 +1,28 @@
 \section{The problem}
 
-The English dative alternation is a small problem with a large methodological
-payoff. Speakers can say \enquote{give Kim the book} or \enquote{give the book
-to Kim}, but the choice is uneven. It varies with verb, length, animacy,
-definiteness, pronominality, discourse status, corpus, and register.
+A corpus-based probabilistic grammar can predict held-out observations from its
+own source corpus and still fail when it is moved to another corpus. External
+validation therefore needs more than a single discrimination statistic. It needs
+probability scoring, calibration, comparison with target-native predictions on
+the same observations, an account of which predictors carry any transfer, and a
+specification of the opportunity set over which the predictions are defined. This
+paper assembles that regime and runs it on a canonical case.
 
-That unevenness is easy to misread. A rare pattern can be lexically restricted,
-strongly dispreferred, or tied to a discourse context without falling outside
-the grammar. A production model therefore has two jobs. It has to predict
-attested choices, and it has to say what kind of grammatical claim those choices
-support.
+The English dative alternation is that case. Speakers can say \enquote{give Kim
+the book} or \enquote{give the book to Kim}, and the choice is uneven: it varies
+with verb, length, animacy, definiteness, pronominality, discourse status,
+corpus, and register. The unevenness is easy to misread, because a rare pattern
+can be lexically restricted, strongly dispreferred, or tied to a discourse
+context without falling outside the grammar. \textcite{bresnan2007} modelled that
+conditioning and argued that corpus probabilities can reveal grammatical
+possibilities informal judgements miss.
 
-\textcite{bresnan2007} made the case that corpus probabilities can reveal
-grammatical possibilities that informal judgements miss. This paper asks how
-that case looks after open-data replication, modern validation, and
-cross-corpus transport.
-
-The question is one of \term{projectibility}: what observing a conditioning
-profile in one setting licenses us to predict about another
-\citep{Goodman1955}. For the dative alternation, the relevant settings are a
-packaged reanalysis dataset, a later spoken British corpus, and possible
-acceptability evidence. Keeping those settings apart is the paper's main
-discipline.
+The model has since been shown to travel: trained on one variety and applied to
+another, it keeps much of its accuracy
+\citep{BresnanHay2008,KendallBresnanVanHerk2011,EngelEtAl2025}. The open question
+is not whether it travels but how well it travels once transport is treated as a
+full predictive-evaluation problem, and what a fitted production probability can
+and cannot say about grammar. That is a question of \term{projectibility}: what
+observing a conditioning profile in one setting licenses us to predict about
+another \citep{Goodman1955}. The paper's discipline is to keep the settings, and
+the quantities they estimate, apart.
