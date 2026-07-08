@@ -11,9 +11,7 @@ Treebank Wall Street Journal collection. Those sources place the original data
 in American English: Switchboard is telephone conversation among speakers from
 the United States, developed in 1990--1991
 \citep{GodfreyHolliman1993Switchboard1}, and the Treebank Wall Street Journal
-component is late-1980s American news and financial writing, with one million
-words of 1989 material and a larger 1987--1989 Wall Street Journal source
-collection
+component is late-1980s American news and financial writing
 \citep{MarcusSantoriniMarcinkiewiczTaylor1999Treebank3,CharniakEtAl2000BLLIPWSJ}.
 
 In the packaged dataset, there are 3,263 rows and 15 columns. The response
@@ -27,7 +25,7 @@ For the first model sequence, the response stays binary: NP is coded as 1 and PP
 (\texttt{20260623}), so every verb observed in the test set is also represented
 in training. That split gives 2,637 training rows and 626 test rows.
 
-The denominator is therefore narrow. These rows are already tokens in which a
+The denominator is narrow. These rows are already tokens in which a
 dative recipient was realized as NP or PP. They aren't all contexts in which a
 transfer event could have been expressed, omitted, paraphrased, or packaged in
 some other construction. The models estimate conditional choice within an
@@ -45,9 +43,7 @@ dative dataset
 \citep{JensetMcGillivray2018BNCData,JensetMcGillivray2019Dative}. The verified
 Figshare comma-separated values (CSV) file has 1,839 parsed data rows and 44
 columns under a Creative Commons Attribution 4.0 International (CC BY 4.0)
-licence. The apparent line-count discrepancy is mechanical: the file has 1,839
-newline characters but no terminal newline, giving 1,840 logical text lines
-including the header.
+licence.
 
 The BNC2014 dative file comes from the Early-Access Subset of the Spoken
 BNC2014, whose spontaneous conversations were recorded in 2012--2014 and

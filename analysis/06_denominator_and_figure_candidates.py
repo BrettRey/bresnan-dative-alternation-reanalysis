@@ -10,6 +10,7 @@ import sys
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+import numpy as np
 import pandas as pd
 
 
@@ -328,8 +329,8 @@ def make_opportunity_sets() -> None:
         1.15,
         "#FFFFFF",
         COLORS["dark"],
-        "Grammaticality",
-        "community-conditioned licensing status",
+        "Licensing question",
+        "outside the corpus estimand",
     )
 
     arrow = dict(arrowstyle="->", color=TEXT_COLORS["quaternary"],
@@ -377,39 +378,18 @@ def make_dais_bridge(scored_items: pd.DataFrame) -> None:
     ax.plot([0, 1], [0, 1], color="#9A9A9A", linewidth=0.9,
             linestyle="--", zorder=1)
 
-    highlighted_verbs = {"offer", "sell"}
-
     for verb in verb_order:
         rows = data[data["Verb"] == verb]
-        is_highlighted = verb in highlighted_verbs
         ax.scatter(
             rows["production_np_prob"],
             rows["human_do_preference"],
-            s=42 if is_highlighted else 30,
+            s=34,
             color=verb_colours[verb],
-            alpha=0.88 if is_highlighted else 0.68,
-            edgecolor=COLORS["dark"] if is_highlighted else "white",
-            linewidth=0.65 if is_highlighted else 0.35,
+            alpha=0.72,
+            edgecolor="white",
+            linewidth=0.35,
             label=mention(verb),
-            zorder=3 if is_highlighted else 2,
-        )
-
-    annotations = {
-        "offer": (0.24, 0.66, TEXT_COLORS["secondary"]),
-        "sell": (0.10, 0.20, TEXT_COLORS["quinary"]),
-    }
-    for verb, (x_text, y_text, colour) in annotations.items():
-        verb_mean = data[data["Verb"] == verb][
-            ["production_np_prob", "human_do_preference"]
-        ].mean()
-        ax.annotate(
-            mention(verb),
-            xy=(verb_mean["production_np_prob"], verb_mean["human_do_preference"]),
-            xytext=(x_text, y_text),
-            arrowprops=dict(arrowstyle="->", color=colour,
-                            linewidth=1.0, shrinkA=3, shrinkB=3),
-            color=colour,
-            fontsize=10,
+            zorder=2,
         )
 
     ax.set_xlim(-0.02, 1.02)
@@ -428,6 +408,58 @@ def make_dais_bridge(scored_items: pd.DataFrame) -> None:
     save(fig, "dais_production_preference_bridge")
 
 
+def make_calibration_curve(preds: pd.DataFrame, calibration: pd.DataFrame) -> None:
+    """Reliability diagram: binned observed NP rate vs predicted probability.
+
+    Shows the transported source model's miscalibration (points off the
+    diagonal) against the well-calibrated target-native model, with the fitted
+    intercept-and-slope recalibration line for the source model.
+    """
+    edges = np.linspace(0.0, 1.0, 11)
+
+    def binned(model: str) -> pd.DataFrame:
+        d = preds[preds["model"] == model].copy()
+        d["bin"] = pd.cut(d["pred"], edges, include_lowest=True)
+        g = (
+            d.groupby("bin", observed=True)
+            .agg(pred_mean=("pred", "mean"), obs_rate=("y_np", "mean"), n=("y_np", "size"))
+            .reset_index()
+        )
+        return g[g["n"] > 0]
+
+    src = binned("source_full_core")
+    nat = binned("native_oof_full_core")
+
+    cal = calibration[
+        (calibration["model"] == "source_full_core")
+        & (calibration["calibration"] == "intercept_plus_slope")
+    ].iloc[0]
+    intercept, slope = float(cal["intercept"]), float(cal["slope"])
+    xs = np.linspace(0.005, 0.995, 200)
+    lp = np.log(xs / (1 - xs))
+    ys = 1.0 / (1.0 + np.exp(-(intercept + slope * lp)))
+
+    fig, ax = plt.subplots(figsize=(5.6, 4.3))
+    ax.plot([0, 1], [0, 1], color="#9A9A9A", linewidth=0.9, linestyle="--",
+            zorder=1, label="perfect calibration")
+    ax.plot(xs, ys, color=TEXT_COLORS["secondary"], linewidth=1.4, zorder=2,
+            label=f"source recalibration (slope {slope:.2f})")
+    ax.scatter(nat["pred_mean"], nat["obs_rate"], s=30, facecolor="white",
+               edgecolor=TEXT_COLORS["tertiary"], linewidth=1.1, zorder=3,
+               label="BNC2014-native, by bin")
+    ax.scatter(src["pred_mean"], src["obs_rate"],
+               s=src["n"] / src["n"].max() * 120 + 20, color=COLORS["primary"],
+               edgecolor=COLORS["dark"], linewidth=0.5, zorder=4,
+               label="source transported, by bin")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_xlabel("Predicted noun phrase (NP) recipient probability")
+    ax.set_ylabel("Observed NP recipient rate (BNC2014)")
+    ax.legend(loc="upper left", frameon=False, fontsize=8)
+    add_grid(ax)
+    save(fig, "bnc2014_transport_calibration_curve")
+
+
 def main() -> None:
     setup(font_size=10, title_size=11, tick_size=9, legend_size=9)
     # Serif mathtext so \mention-style italic verbs match the body font.
@@ -442,6 +474,10 @@ def main() -> None:
     calibration = read_derived("bnc2014_paired_transport_cv_calibration_by_verb.csv")
     make_calibration(calibration)
     make_calibration_error(calibration)
+    make_calibration_curve(
+        read_derived("bnc2014_paired_transport_cv_predictions.csv"),
+        read_derived("bnc2014_paired_transport_cv_calibration.csv"),
+    )
     make_dais_bridge(read_derived("dais_acceptability_bridge_scored_items.csv"))
     make_opportunity_sets()
 

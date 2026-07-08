@@ -13,10 +13,10 @@
 }
 \ifblind\hypersetup{pdfauthor={}}\fi
 
-\title{Beyond concordance: External validation of probabilistic grammar\\
-{\large in the English dative alternation}}
+\title{Beyond concordance\\
+{\large External validation of probabilistic grammar in the English dative alternation}}
 \ifblind
-  \author{[Author name, Open Researcher and Contributor ID (ORCID), and affiliation removed for double-blind review]}
+  \author{}
 \else
   \author{Brett Reynolds \orcidlink{0000-0003-0073-7195}%
   \thanks{Contact: \href{mailto:brett.reynolds@humber.ca}{brett.reynolds@humber.ca}}\\
@@ -30,9 +30,9 @@
 \begin{abstract}
 This paper treats the external validation of a corpus-based probabilistic
 grammar as a full predictive-evaluation problem, with the English dative
-alternation as a worked case. Earlier studies already train a dative model on
-one variety and apply it to another, reporting the transfer as discrimination or
-classification accuracy. I freeze a production model fit to the
+alternation as a worked case. Earlier studies have already trained dative models
+on one variety and applied them to another, reporting the transport as
+discrimination or classification accuracy. I freeze a production model fit to the
 \texttt{languageR} dative data of \textcite{bresnan2007} and evaluate its move
 to the later Spoken British National Corpus 2014 (BNC2014) conversational data with
 proper scoring, calibration, a paired target-native benchmark scored on the same
@@ -42,7 +42,7 @@ substantial discrimination in the new corpus domain, and the portable part is
 mainly non-lexical conditioning rather than lexical base rates; but calibration,
 coefficient checks, and the paired native benchmark expose target-specific
 structure that discrimination alone hides. The fitted quantity is a conditional
-production probability inside an annotated alternation sample, not a probability
+production probability among annotated alternation tokens, not a probability
 of grammaticality, so the validated model projects within a stated target domain
 while staying silent, by construction, about the grammatical-but-unattested
 region. The result is a validation ladder for probabilistic grammar and an
@@ -68,11 +68,11 @@ de-anonymized link will accompany the camera-ready version.
 \else
 The public working repository is
 \href{https://github.com/BrettRey/bresnan-dative-alternation-reanalysis}{\texttt{BrettRey/bresnan-dative-alternation-reanalysis}}.
-A submission release should archive the exact commit or digital object
-identifier.
+The exact submitted version will be archived as a tagged release or
+identifier-bearing repository snapshot.
 \fi
 The analysis scripts fetch public datasets to temporary locations
-and validate downloaded files by checksum.
+and validate downloaded files by their MD5 (message-digest~5) checksums.
 
 \begin{center}
 \small
@@ -104,8 +104,9 @@ information is written to a derived text file. Raw DAIS files aren't committed.
 
 \section*{Acknowledgements}
 
-Drafting, coding, and review used Codex/GPT 5.5 and Claude
-Opus 4.8. All analysis decisions, source checks, and final text remain the
+OpenAI Codex and Anthropic Claude assisted with drafting, coding, and review.
+They weren't used to create or manipulate submitted figures, images, or
+research data. All analysis decisions, source checks, and final text remain the
 author's responsibility.
 
 \clearpage

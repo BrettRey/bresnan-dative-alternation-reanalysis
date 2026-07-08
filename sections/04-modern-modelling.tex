@@ -1,30 +1,41 @@
 \section{Modern modelling update}
 
-The \texttt{languageR} result is a robustness result. The central question is
-whether modern modelling changes Bresnan et al.'s linguistic conclusion or
-mainly repackages it statistically. The answer, so far, is the latter.
-The table reports log loss, area under the receiver operating characteristic
-curve (AUC), and a compact parameter count.
+Does modern modelling change Bresnan et al.'s linguistic conclusion, or only
+repackage it statistically? Here, only the statistical packaging changes. The
+table reports log
+loss, area under the receiver operating characteristic curve (AUC), and a count
+of fixed-effect terms.
 
-The non-verb \texttt{languageR} formula uses modality, semantic class,
+Two scores carry the paper, so it's worth fixing what they measure. Log loss is
+a proper scoring rule: it rewards probabilities that are both confident and
+correct, penalizes confident mistakes, is lower-is-better, and reaches zero only
+for perfect probabilistic prediction. AUC is the probability that a randomly
+chosen NP token is scored above a randomly chosen PP token; 0.5 is chance and 1
+is perfect ranking. The two see different things. AUC sees only the ranking,
+whereas log loss is also sensitive to calibration, whether the predicted
+probabilities match observed rates, which is why both are reported.
+
+Three models share a non-verb core of modality, semantic class,
 recipient length, recipient animacy, recipient definiteness, recipient
 pronominality, theme length, theme animacy, theme definiteness, theme
 pronominality, and recipient/theme accessibility. The fixed-verb model adds
 verb as a fixed effect. The hierarchical model uses the same non-verb fixed
-effects and a varying verb intercept. All are logistic models for NP versus PP
-realization with R treatment contrasts and no interactions.
+effects and a varying verb intercept, with partial pooling pulling each
+verb's estimate toward the overall rate so that rare verbs borrow strength
+rather than over-fit. All are logistic models for NP versus PP realization with
+R treatment contrasts and no interactions.
 
 \begin{table}[htbp]
 \centering
 \small
 \begin{tabular}{lrrr}
 \toprule
-Model & Test log loss & Test AUC & Param. \\
+Model & Test log loss & Test AUC & Fixed terms \\
 \midrule
 Marginal null & 0.554 & 0.500 & 1 \\
 Non-verb main model & 0.271 & 0.932 & 18 \\
 Fixed-verb full model & 0.234 & 0.951 & 92 \\
-Hierarchical verb-intercept model & 0.233 & 0.952 & 19 \\
+Hierarchical verb-intercept model & 0.233 & 0.952 & 18 \\
 \bottomrule
 \end{tabular}
 \caption{Held-out \texttt{languageR::dative} results for the main model sequence.}
@@ -33,26 +44,25 @@ Hierarchical verb-intercept model & 0.233 & 0.952 & 19 \\
 
 The non-verb model already predicts held-out production choices well. Adding
 fixed verb effects improves test log loss from 0.271 to 0.234 and raises AUC
-from 0.932 to 0.951. The improvement confirms that lexical conditioning is not
+from 0.932 to 0.951. The improvement confirms that lexical conditioning isn't
 a minor residue after length, animacy, definiteness, pronominality, and
 accessibility are included.
 
-The hierarchical verb-intercept model reaches almost the same held-out
-performance with a smaller fixed-effect parameterization. Its test log loss is
-0.233 and its AUC is 0.952. The table's parameter count for this model is the
-18 fixed-effect coefficients plus the verb-intercept variance parameter; it is
-not an effective degrees-of-freedom estimate for the 75 partially pooled verb
-effects. The estimated verb random-intercept standard deviation is 2.106, so
-the lexical signal remains large under partial pooling.
+Partial pooling reaches almost the same held-out performance for far less: the
+hierarchical model's test log loss is 0.233 and its AUC is 0.952. It carries 18
+fixed-effect terms plus a single verb-intercept variance, not a separate
+coefficient for each of the 75 verbs; the estimated verb random-intercept
+standard deviation is 2.106, so the lexical signal remains large under partial
+pooling.
 
-The negative-control and simulation checks behave as they should.
+Negative-control and simulation checks behave as they should.
 Scrambled-label fits lose predictive value. Fake-data fits without a verb
 signal collapse toward singular zero-variance random-effects models, while a
 fake verb-effect check recovers a nonzero verb standard deviation. These checks
-make the production result more credible, but they do not change its
+make the production result more credible, but they don't change its
 explanatory level.
 
-The result supports Bresnan et al.'s production-choice conclusion. It does not
+The result supports Bresnan et al.'s production-choice conclusion. It doesn't
 create a new grammatical conclusion on its own. The same-data analysis shows
 that the classic profile is reproducible and statistically stable. The paper's
 new empirical pressure has to come from transport.

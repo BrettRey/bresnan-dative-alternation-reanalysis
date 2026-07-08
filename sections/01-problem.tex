@@ -1,18 +1,18 @@
 \section{The problem}
 
 A corpus-based probabilistic grammar can predict held-out observations from its
-own source corpus and still fail when it is moved to another corpus. External
-validation therefore needs more than a single discrimination statistic. It needs
+own source corpus and still fail when it's moved to another corpus. External
+validation needs more than a single discrimination statistic. It needs
 probability scoring, calibration, comparison with target-native predictions on
 the same observations, an account of which predictors carry the transport, and a
 specification of the opportunity set over which the predictions are defined. This
 paper assembles that regime and runs it on a canonical case. Throughout,
-\enquote{probabilistic grammar} names the fitted production model, not a claim
+\term{probabilistic grammar} names the fitted production model, not a claim
 about speakers' competence or a community's licensing of forms; external
 validation bears on the model's predictive transport, not directly on either.
 
-The English dative alternation is that case. Speakers can say \enquote{give Kim
-the book} or \enquote{give the book to Kim}, and the choice is uneven: it varies
+The English dative alternation is that case. Speakers can say \mention{give Kim
+the book} or \mention{give the book to Kim}, and the choice is uneven: it varies
 with verb, length, animacy, definiteness, pronominality, discourse status,
 corpus, and register. The unevenness is easy to misread, because a rare pattern
 can be lexically restricted, strongly dispreferred, or tied to a discourse
@@ -20,12 +20,21 @@ context without falling outside the grammar. \textcite{bresnan2007} modelled tha
 conditioning and argued that corpus probabilities can reveal grammatical
 possibilities informal judgements miss.
 
-The model has since been shown to travel: trained on one variety and applied to
+The model has since been shown to travel: trained on one variety and scored on
 another, it keeps much of its accuracy
 \citep{BresnanHay2008,KendallBresnanVanHerk2011,EngelEtAl2025}. The open question
-is not whether it travels but how well it travels once transport is treated as a
-full predictive-evaluation problem, and what a fitted production probability can
-and cannot say about grammar. That is a question of \term{projectibility}: what
-observing a conditioning profile in one setting licenses us to predict about
-another \citep{Goodman1955}. The paper's discipline is to keep the settings, and
-the quantities they estimate, apart.
+isn't whether it travels but how well, once transport is treated as a full
+predictive-evaluation problem, and what a fitted production probability can and
+can't say about grammar. That last is a question of \term{projectibility}, what
+observing a profile in one setting licenses about another \citep{Goodman1955}.
+
+The argument proceeds by separating validation claims that are often collapsed.
+Reproducing the source model asks whether the classic production profile is
+stable in its original data. Scoring frozen predictions in BNC2014 asks whether
+that profile carries predictive information out of domain. Comparing those
+predictions with a target-native model on the same rows asks how much local
+structure the source model misses. Calibration and ablation then ask whether the
+transport is a matter of ranking, probability level, lexical base rates, or
+non-lexical conditioning. Finally, an acceptability bridge asks where a
+production probability is licensed, and where it isn't, when carried into a
+judgement channel.
