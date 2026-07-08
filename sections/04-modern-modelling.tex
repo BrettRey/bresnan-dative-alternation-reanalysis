@@ -2,28 +2,36 @@
 
 Does modern modelling change Bresnan et al.'s linguistic conclusion, or only
 repackage it statistically? Here, only the statistical packaging changes. The
-table reports log
-loss, area under the receiver operating characteristic curve (AUC), and a count
-of fixed-effect terms.
+table uses three diagnostics to make that answer visible: log loss, area under
+the receiver operating characteristic curve (AUC), and a count of fixed-effect
+terms.
 
-Two scores carry the paper, so it's worth fixing what they measure. Log loss is
-a proper scoring rule: it rewards probabilities that are both confident and
-correct, penalizes confident mistakes, is lower-is-better, and reaches zero only
-for perfect probabilistic prediction. AUC is the probability that a randomly
-chosen NP token is scored above a randomly chosen PP token; 0.5 is chance and 1
-is perfect ranking. The two see different things. AUC sees only the ranking,
-whereas log loss is also sensitive to calibration, whether the predicted
-probabilities match observed rates, which is why both are reported.
+Two scores carry the paper, so it's worth fixing what they measure. Log loss
+rewards probabilities that are both confident and correct and punishes confident
+mistakes; it's lower-is-better and reaches zero only for perfect prediction. AUC
+is the probability that a randomly chosen NP token is scored above a randomly
+chosen PP token, so 0.5 is chance and 1 is perfect ranking. It's the measure
+earlier dative-transport studies report as a concordance index or \(C\); the two
+names denote one quantity. AUC captures only \term{discrimination}, the ranking
+of tokens; log loss also responds to \term{calibration}, whether the predicted
+probabilities match observed rates. Those are separate achievements, which is
+why both are reported.
 
-Three models share a non-verb core of modality, semantic class,
-recipient length, recipient animacy, recipient definiteness, recipient
-pronominality, theme length, theme animacy, theme definiteness, theme
-pronominality, and recipient/theme accessibility. The fixed-verb model adds
-verb as a fixed effect. The hierarchical model uses the same non-verb fixed
-effects and a varying verb intercept, with partial pooling pulling each
-verb's estimate toward the overall rate so that rare verbs borrow strength
-rather than over-fit. All are logistic models for NP versus PP realization with
-R treatment contrasts and no interactions.
+All models predict whether the recipient is realized as NP rather than PP. They
+are logistic models with R treatment contrasts and no interactions. The
+marginal null uses only the training-set NP rate, so it's the base-rate
+benchmark. The non-verb model adds modality, semantic class, length, animacy,
+definiteness, pronominality, and accessibility, but omits verb identity. It asks
+whether the classic non-lexical profile predicts realization without lexical
+information.
+
+Two lexical models then ask whether verb-specific biases add anything. The
+fixed-verb model gives each verb its own coefficient, so each verb can have a
+different baseline preference for NP versus PP. The hierarchical model gives
+each verb a varying intercept drawn from a common verb distribution. That's
+partial pooling: rare verbs are pulled toward the overall verb mean, while
+better-attested verbs can differ more. If this model matches fixed verb effects,
+the lexical signal survives regularization.
 
 \begin{table}[htbp]
 \centering
@@ -44,25 +52,25 @@ Hierarchical verb-intercept model & 0.233 & 0.952 & 18 \\
 
 The non-verb model already predicts held-out production choices well. Adding
 fixed verb effects improves test log loss from 0.271 to 0.234 and raises AUC
-from 0.932 to 0.951. The improvement confirms that lexical conditioning isn't
-a minor residue after length, animacy, definiteness, pronominality, and
+from 0.932 to 0.951. The improvement confirms that lexical conditioning is % Full form intentional; see DECISIONS.md 2026-07-08.
+not a minor residue after length, animacy, definiteness, pronominality, and
 accessibility are included.
 
-Partial pooling reaches almost the same held-out performance for far less: the
-hierarchical model's test log loss is 0.233 and its AUC is 0.952. It carries 18
-fixed-effect terms plus a single verb-intercept variance, not a separate
-coefficient for each of the 75 verbs; the estimated verb random-intercept
-standard deviation is 2.106, so the lexical signal remains large under partial
-pooling.
+Partial pooling reaches almost the same held-out performance with far fewer
+fixed-effect terms: the hierarchical model's test log loss is 0.233 and its AUC
+is 0.952. It estimates 18 fixed-effect terms plus a single verb-intercept
+variance, instead of one coefficient for each of the 75 verbs. The estimated verb
+random-intercept standard deviation is 2.106, so the lexical signal remains
+large under partial pooling.
 
 Negative-control and simulation checks behave as they should.
-Scrambled-label fits lose predictive value. Fake-data fits without a verb
-signal collapse toward singular zero-variance random-effects models, while a
-fake verb-effect check recovers a nonzero verb standard deviation. These checks
+Scrambled-label fits lose predictive value. Fake-data fits with no verb
+signal drive the estimated verb variance to zero, while a fake verb-effect check
+recovers a nonzero one. These checks
 make the production result more credible, but they don't change its
 explanatory level.
 
-The result supports Bresnan et al.'s production-choice conclusion. It doesn't
-create a new grammatical conclusion on its own. The same-data analysis shows
-that the classic profile is reproducible and statistically stable. The paper's
-new empirical pressure has to come from transport.
+The result supports Bresnan et al.'s production-choice conclusion. By itself,
+the same-data analysis shows reproducibility and statistical stability. What it
+can't show is whether the pattern helps once the model leaves the corpus that
+produced it.

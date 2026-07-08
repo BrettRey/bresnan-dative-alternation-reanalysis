@@ -1,42 +1,36 @@
 \section{Conclusion}
 
-External validation of a probabilistic grammar is a ladder, and the dative shows
-what each rung reports. The first rung holds: the \texttt{languageR} profile
-survives baselines, negative controls, simulation checks, and partial pooling,
-and the hierarchical model matches the fixed-verb model with a smaller
-fixed-effect parameterization. Modern modelling confirms the classic
-production-choice conclusion rather than revising it.
+The dative result is mixed in an informative way. A model trained on the
+\texttt{languageR} version of Bresnan et al.'s data still helps predict
+BNC2014 choices, especially through length, animacy, definiteness, and
+pronominality. Verb base rates travel less cleanly, and a model trained inside
+BNC2014 still gives better probabilities on the same rows.
 
-The profile then partly transports. On the BNC2014 complete-case rows, the
-spoken six-verb \texttt{languageR} model beats a marginal baseline when it's
-scored against a target-native out-of-fold benchmark on the same observations.
-The portable signal is mainly non-lexical rather than verb base rates: the
-source non-verb model nearly matches the source full model. But the
-target-native model is better calibrated, and an intercept-and-slope
-recalibration doesn't close the gap, which a global rescaling of the source
-predictions would have done were it only a prevalence shift.
+The same-data checks remain important. The \texttt{languageR} profile survives
+baselines, negative controls, simulation checks, and partial pooling, and the
+hierarchical model matches the fixed-verb model with fewer fixed-effect terms.
+Modern modelling confirms the classic production-choice conclusion rather than
+revising it.
 
 The coefficient comparison points the same way while exposing limits: length
 and pronominality travel more cleanly than every verb effect or definiteness
-proxy. The verdict is bounded. Transport survives the null comparisons in the
+proxy. The verdict is bounded. The source model beats null comparisons in the
 high-frequency core, while variety, period, register, annotation, extraction
 protocol, and missingness stay bundled.
 
-That contrast is visible only because the evaluation goes beyond concordance.
-Earlier transport studies report discrimination or accuracy; proper scoring,
-calibration, a native benchmark on the same rows, predictor-group ablation, and
-missing-data sensitivity distinguish a model that ranks new tokens from one
-calibrated to them. The regime, not the finding that the dative travels, is the
-contribution. Its forward payoff is a template for other alternations under the
-preconditions set out above, not a demonstration that all alternations behave
-the same way.
+That contrast is visible because the evaluation goes beyond concordance. Earlier
+transport studies report discrimination or accuracy; probability scoring,
+calibration, a BNC2014-trained comparison on the same rows, predictor-group
+ablation, and missing-data sensitivity distinguish ranking new tokens from
+assigning calibrated probabilities to them. The contribution is a template for
+other alternations under the preconditions set out above, with no assumption that
+all alternations behave the same way.
 
-The estimand keeps the claim honest. The fitted probability is a conditional
-production choice inside an annotated alternation sample, not a probability of
-grammaticality. A validated production model forecasts realization within a
-stated target domain and stays silent, by construction, about the
-grammatical-but-unattested region; no quantity of further positive tokens under
-the same design reaches it. Crossing that boundary needs a broader opportunity
-set or another evidence channel. The DAIS supplement gives one compact
-illustration: the production profile and judgement preference are related, but
-the relation is target-relative rather than automatic.
+The denominator keeps the grammatical claim honest. The fitted probability is a
+conditional production choice inside an annotated alternation sample, not a
+probability of grammaticality. A validated production model forecasts NP/PP
+realization in the tested corpus slice and stays silent, by construction, about
+the grammatical-but-unattested region. Crossing that boundary needs a broader
+opportunity set or another evidence channel. The DAIS supplement gives one
+compact illustration: production probability and paired judgement preference are
+related, but the relation is target-relative rather than automatic.

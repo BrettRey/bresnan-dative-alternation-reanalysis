@@ -25,18 +25,17 @@ For the first model sequence, the response stays binary: NP is coded as 1 and PP
 (\texttt{20260623}), so every verb observed in the test set is also represented
 in training. That split gives 2,637 training rows and 626 test rows.
 
-The denominator is narrow. These rows are already tokens in which a
-dative recipient was realized as NP or PP. They aren't all contexts in which a
-transfer event could have been expressed, omitted, paraphrased, or packaged in
-some other construction. The models estimate conditional choice within an
-attested alternation frame: given that a token enters the dative-alternation
-sample, which realization appears?
+The denominator is narrow. These rows begin after extraction has already found a
+dative token with an NP or PP recipient. Transfer events expressed through some
+other construction, omitted, paraphrased, or left implicit are outside the
+sample. The models estimate conditional choice within an attested alternation
+frame: given that a token enters the dative-alternation sample, which realization
+appears?
 
-Initial analyses are deliberately plain. A marginal model sets the baseline.
-Structured models then add modality, length, verb, and the non-verb predictors.
-Negative-control and simulation checks accompany them: a scrambled-label check
-and fake-data checks. These tests ask whether the fitted structure beats chance,
-not whether it proves a grammatical theory.
+Initial analyses are deliberately plain. A marginal model gives the base rate;
+structured models then ask how much modality, length, verb, and the non-verb
+predictors add. Negative-control and simulation checks ask whether the fitted
+structure behaves like a real production signal rather than chance patterning.
 
 A second empirical source is the Spoken British National Corpus 2014 (BNC2014)
 dative dataset
@@ -49,10 +48,10 @@ The BNC2014 dative file comes from the Early-Access Subset of the Spoken
 BNC2014, whose spontaneous conversations were recorded in 2012--2014 and
 contain speaker and context metadata.
 
-BNC2014 serves as a transport target rather than a second copy of
-\texttt{languageR::dative}. Its outcome field is \texttt{Pattern}, where the
-verb--noun--noun code \texttt{VNN} maps to NP realization and the
-verb--noun--prepositional-phrase code \texttt{VNPP} maps to PP realization.
-The six shared verbs are \mention{give}, \mention{send}, \mention{show},
-\mention{sell}, \mention{offer}, and \mention{lend}. All six occur in the
-packaged \texttt{languageR} dataset.
+BNC2014 is the later corpus on which the American source model is tested, not a
+second copy of \texttt{languageR::dative}. Its outcome field is
+\texttt{Pattern}, where the verb--noun--noun code \texttt{VNN} maps to NP
+realization and the verb--noun--prepositional-phrase code \texttt{VNPP} maps to
+PP realization. The six verbs shared by the two datasets are \mention{give},
+\mention{send}, \mention{show}, \mention{sell}, \mention{offer}, and
+\mention{lend}.

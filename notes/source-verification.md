@@ -139,14 +139,15 @@ been checked against authoritative records.
   log-likelihood ratios. The cleaned individual-judgement ZIP has MD5
   `e7b3ac6f2dd8e85bc93e6e20fc0f6ec1` and contains 50,136 retained judgement
   rows from 1,011 participants after the authors' exclusions.
-- Use in paper: one compact acceptability/preference bridge. The project script
+- Use in paper: one compact comparative-preference bridge. The project script
   fetches the item-level DAIS CSV and cleaned individual-judgement ZIP to
   temporary files, validates the MD5 hashes, and writes derived summaries for
   the 150 DAIS items whose verbs overlap the six-verb `languageR`/BNC2014 core.
   When `lme4` is available, it also fits a participant-level mixed bridge model
-  with fixed verb effects and crossed participant/item intercepts. DAIS is not
-  production-token evidence and should not be merged with `languageR` or
-  BNC2014 as if it measured the same outcome.
+  with fixed verb effects and crossed participant/item intercepts. DAIS is a
+  paired DO-vs-PO preference measure, not absolute acceptability and not
+  production-token evidence. Interpret rank correspondence and calibrated
+  residuals, not raw production-minus-slider-level differences.
 - Sources: <https://aclanthology.org/2020.emnlp-main.376/>,
   <https://github.com/taka-yamakoshi/neural_constructions>
 
@@ -188,7 +189,7 @@ been checked against authoritative records.
 | Bresnan et al. 2007 | Conceptual + production modelling | Anchor claim about usage data and grammatical possibility | Treating intuition, production, and acceptability as equivalent |
 | `languageR::dative` | Production-token choice | First reproducible reanalysis | Raw-corpus provenance claims beyond package documentation |
 | Spoken BNC2014 dative data | Production-token choice in a later spoken British corpus | Cross-corpus transport/generalization | Direct replication without harmonization |
-| DAIS | Human preference/acceptability over sentence pairs | Production/acceptability bridge and LM comparison | Production-token frequency |
+| DAIS | Human paired DO-vs-PO preference over sentence pairs | Production/preference bridge and LM comparison | Production-token frequency or absolute acceptability |
 | Bard et al. 1996 | Acceptability-methods theory | Measurement framing | Dative-specific empirical evidence |
 | CoLA/BLiMP/MegaAcceptability/SAD | General acceptability/LM benchmarks | Background only | Main empirical target |
 

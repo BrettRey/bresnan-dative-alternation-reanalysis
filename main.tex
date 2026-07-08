@@ -28,25 +28,25 @@
 \maketitle
 
 \begin{abstract}
-This paper treats the external validation of a corpus-based probabilistic
-grammar as a full predictive-evaluation problem, with the English dative
-alternation as a worked case. Earlier studies have already trained dative models
-on one variety and applied them to another, reporting the transport as
-discrimination or classification accuracy. I freeze a production model fit to the
-\texttt{languageR} dative data of \textcite{bresnan2007} and evaluate its move
-to the later Spoken British National Corpus 2014 (BNC2014) conversational data with
-proper scoring, calibration, a paired target-native benchmark scored on the same
-observations, predictor-group ablation, missing-data sensitivity, and an
-explicit opportunity-set denominator. The source-trained profile retains
-substantial discrimination in the new corpus domain, and the portable part is
-mainly non-lexical conditioning rather than lexical base rates; but calibration,
-coefficient checks, and the paired native benchmark expose target-specific
-structure that discrimination alone hides. The fitted quantity is a conditional
-production probability among annotated alternation tokens, not a probability
-of grammaticality, so the validated model projects within a stated target domain
-while staying silent, by construction, about the grammatical-but-unattested
-region. The result is a validation ladder for probabilistic grammar and an
-account of what each rung licenses.
+This paper asks how far a corpus-based model of the English dative alternation
+can be carried beyond the corpus that produced it. If a model learned from
+the American data analysed by \textcite{bresnan2007} predicts whether speakers
+choose \mention{give Kim the book} or \mention{give the book to Kim}, does it
+also help with later British conversation, for instance in the Spoken British
+National Corpus 2014 (BNC2014)? Earlier studies show that dative models trained on one variety
+can rank or classify tokens in another. I ask the stricter question: whether the
+probabilities remain reliable, which parts of the conditioning carry over, and
+what that production probability can say about grammar. I freeze a
+\texttt{languageR} model and score it on BNC2014 with probability scoring,
+calibration, a BNC2014-trained comparison on the same rows, predictor-group
+ablation, missing-data sensitivity, and an explicit denominator. The source
+model ranks BNC2014 choices well, mainly because length, animacy, definiteness,
+and pronominality carry over better than verb base rates. But calibration,
+coefficient checks, and the BNC2014-trained comparison expose patterns that
+ranking alone hides. The model's probability is a conditional production
+probability among annotated alternation tokens, not a probability of
+grammaticality. It supports prediction for the shared high-frequency dative core
+while leaving grammatical but unattested forms to other evidence.
 \end{abstract}
 
 \noindent\textbf{Keywords:} dative alternation; probabilistic grammar; external validation; cross-corpus transport; calibration; projectibility; corpus linguistics

@@ -2,7 +2,7 @@
 Target: _Linguistics Vanguard_ (De Gruyter Brill)
 Portal: <https://mc.manuscriptcentral.com/lingvan>
 Prepared: 2026-07-08
-Status: **reviewer PDF verified; submission not yet ready to click**
+Status: **current build verified; named submission copies stale after later edits; submission not yet ready to click**
 ## Review Resolution
 - [x]
 
@@ -84,7 +84,7 @@ Status: **reviewer PDF verified; submission not yet ready to click**
 
 - [ ]
 
-  Length risk remains: venue target is 3,000-4,000 words plus references and ancillary material; `texcount` reports 4,560 main-text words before references/supplement.
+  Length risk remains: _Linguistics Vanguard_ gives a target length of 3,000--4,000 words. The current journal page says "plus references and ancillary material"; the 2026-05-19 Instructions for Authors PDF says the target excludes title, abstract, references, appendices, and supplementary material. By that body-only convention, `texcount` reports about 4,196 words after the final opening edits.
 
 ## Manuscript Correctness
 - [x]
@@ -101,7 +101,7 @@ Status: **reviewer PDF verified; submission not yet ready to click**
 
 - [x]
 
-  DAIS is subordinated as supplementary bridge material, not the paper's main empirical claim.
+  DAIS is subordinated as supplementary paired-preference bridge material, not the paper's main empirical claim.
 
 - [x]
 
@@ -155,7 +155,7 @@ Status: **reviewer PDF verified; submission not yet ready to click**
 
 - [x]
 
-  Channel/bridge language checked. The prose repeatedly marks production, acceptability, and grammaticality as distinct evidence targets.
+  Channel/bridge language checked. The prose marks production, paired judgement preference, and grammaticality as distinct evidence targets.
 
 - [x]
 
@@ -181,7 +181,7 @@ Status: **reviewer PDF verified; submission not yet ready to click**
 ## Level, Category, And Terminology Pass
 - [x]
 
-  Level/category audit passed: the paper consistently separates production probability, predictive transport, acceptability preference, and grammaticality/licensing.
+  Level/category audit passed: the paper consistently separates production probability, predictive transport, paired judgement preference, and grammaticality/licensing.
 
 - [x]
 
@@ -307,7 +307,7 @@ Status: **reviewer PDF verified; submission not yet ready to click**
 ## Stop Conditions Before Submission
 - [ ]
 
-  Decide whether to trim to <= 4,000 main-text words or explicitly accept the _Linguistics Vanguard_ target-length risk.
+  Decide whether to trim roughly 200 body words or explicitly accept the _Linguistics Vanguard_ target-length risk.
 
 - [ ]
 

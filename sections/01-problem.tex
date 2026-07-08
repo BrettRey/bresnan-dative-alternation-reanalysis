@@ -1,40 +1,41 @@
 \section{The problem}
 
-A corpus-based probabilistic grammar can predict held-out observations from its
-own source corpus and still fail when it's moved to another corpus. External
-validation needs more than a single discrimination statistic. It needs
-probability scoring, calibration, comparison with target-native predictions on
-the same observations, an account of which predictors carry the transport, and a
-specification of the opportunity set over which the predictions are defined. This
-paper assembles that regime and runs it on a canonical case. Throughout,
-\term{probabilistic grammar} names the fitted production model, not a claim
-about speakers' competence or a community's licensing of forms; external
-validation bears on the model's predictive transport, not directly on either.
+A corpus-based probabilistic grammar should be tested outside the corpus that
+produced it. For the English dative alternation, the practical question is
+simple: if a model learned from earlier American data predicts whether speakers
+choose \mention{give Kim the book} rather than \mention{give the book to Kim},
+does the same pattern help in later British conversation, for instance in
+BNC2014? Ranking tokens by their predicted probability of an NP recipient is
+only a start: it doesn't show whether the probabilities are reliable, whether
+the same predictors matter in the same way, or what the production probabilities
+can support about grammar. This paper tests those distinctions by moving a
+fitted dative production model to BNC2014.
 
-The English dative alternation is that case. Speakers can say \mention{give Kim
-the book} or \mention{give the book to Kim}, and the choice is uneven: it varies
-with verb, length, animacy, definiteness, pronominality, discourse status,
-corpus, and register. The unevenness is easy to misread, because a rare pattern
-can be lexically restricted, strongly dispreferred, or tied to a discourse
-context without falling outside the grammar. \textcite{bresnan2007} modelled that
-conditioning and argued that corpus probabilities can reveal grammatical
-possibilities informal judgements miss.
+Here, \term{probabilistic grammar} names that fitted production model, not a
+direct model of speakers' competence or of which forms a community licenses. The
+alternation itself is uneven. Speakers can say \mention{give Kim the book} or
+\mention{give the book to Kim}, and the choice varies with verb, length, animacy,
+definiteness, pronominality, discourse status, corpus, and register. The
+unevenness is easy to misread, because a rare pattern can be lexically
+restricted, strongly dispreferred, or tied to a discourse context without
+falling outside the grammar. \textcite{bresnan2007} modelled that conditioning
+and argued that corpus probabilities can reveal grammatical possibilities
+informal judgements miss.
 
-The model has since been shown to travel: trained on one variety and scored on
+Later work shows that the model travels: trained on one variety and scored on
 another, it keeps much of its accuracy
-\citep{BresnanHay2008,KendallBresnanVanHerk2011,EngelEtAl2025}. The open question
-isn't whether it travels but how well, once transport is treated as a full
-predictive-evaluation problem, and what a fitted production probability can and
-can't say about grammar. That last is a question of \term{projectibility}, what
-observing a profile in one setting licenses about another \citep{Goodman1955}.
+\citep{BresnanHay2008,KendallBresnanVanHerk2011,EngelEtAl2025}. The question is
+how well it travels under full predictive evaluation, and what a fitted
+production probability can and can't say about grammar. That's
+\term{projectibility}: what a profile observed in one setting licenses about
+another \citep{Goodman1955}.
 
-The argument proceeds by separating validation claims that are often collapsed.
-Reproducing the source model asks whether the classic production profile is
-stable in its original data. Scoring frozen predictions in BNC2014 asks whether
-that profile carries predictive information out of domain. Comparing those
-predictions with a target-native model on the same rows asks how much local
-structure the source model misses. Calibration and ablation then ask whether the
-transport is a matter of ranking, probability level, lexical base rates, or
-non-lexical conditioning. Finally, an acceptability bridge asks where a
-production probability is licensed, and where it isn't, when carried into a
-judgement channel.
+The paper separates questions that a single success score would merge. First,
+can the classic production profile be reproduced in its original data? Second,
+when that fitted model is frozen and used in BNC2014, does it help predict the
+NP/PP choice? Third, does a model trained inside BNC2014 do better on the same
+rows? Calibration and predictor-group tests then ask what carries over: the
+ranking, the probability levels, verb-specific base rates, or the broader
+length, animacy, definiteness, and pronominality effects. Finally, a
+comparative-preference bridge asks whether production probabilities and paired
+judgements order the same verbs in the same way.

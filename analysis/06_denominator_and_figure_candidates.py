@@ -10,6 +10,7 @@ import sys
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+from matplotlib.lines import Line2D
 import numpy as np
 import pandas as pd
 
@@ -109,6 +110,73 @@ def make_transport_metrics(metrics: pd.DataFrame) -> None:
             ax.text(value + xmax * 0.015, ypos, f"{value:.3f}",
                     va="center", color=COLORS["dark"], fontsize=8)
     save(fig, "bnc2014_transport_metrics_core")
+
+
+def make_coefficient_transport(coefs: pd.DataFrame) -> None:
+    """Dumbbell: source vs BNC2014-trained coefficient for each shared term.
+
+    Each term joins its American-source estimate (circle) to its BNC2014-trained
+    estimate (diamond) on the log-odds scale. Terms whose sign reverses cross the
+    zero line and are drawn in the contrast colour; the source offer penalty
+    collapses toward zero.
+    """
+    # (raw term, readable label, is_verb) in a fixed display grouping.
+    label_map = {
+        "rec_pronyes": ("recipient pronoun", False),
+        "theme_len_words": ("theme length", False),
+        "rec_animyes": ("recipient animate", False),
+        "theme_defyes": ("theme definite", False),
+        "rec_len_words": ("recipient length", False),
+        "theme_animyes": ("theme animate", False),
+        "theme_pronyes": ("theme pronoun", False),
+        "Verbshow": ("show", True),
+        "Verblend": ("lend", True),
+        "Verbsell": ("sell", True),
+        "Verbsend": ("send", True),
+        "Verboffer": ("offer", True),
+    }
+    data = coefs[coefs["term"].isin(label_map)].copy()
+    # Most-negative source estimate at the bottom, most-positive at the top.
+    data = data.sort_values("source_estimate").reset_index(drop=True)
+    y = list(range(len(data)))
+
+    fig, ax = plt.subplots(figsize=(6.4, 4.7))
+    ax.axvline(0, color=COLORS["dark"], linewidth=0.8, zorder=1)
+
+    for ypos, row in zip(y, data.itertuples()):
+        stable = bool(row.same_direction)
+        link = "#9A9A9A" if stable else TEXT_COLORS["secondary"]
+        ax.plot([row.source_estimate, row.native_estimate], [ypos, ypos],
+                color=link, linewidth=1.0 if stable else 1.8, zorder=2)
+    ax.scatter(data["source_estimate"], y, s=46, marker="o",
+               color=COLORS["primary"], edgecolor="white", linewidth=0.4, zorder=3)
+    ax.scatter(data["native_estimate"], y, s=46, marker="D",
+               color=TEXT_COLORS["quaternary"], edgecolor="white", linewidth=0.4,
+               zorder=3)
+
+    tick_labels = [
+        mention(label_map[row.term][0]) if label_map[row.term][1]
+        else label_map[row.term][0]
+        for row in data.itertuples()
+    ]
+    ax.set_yticks(y, tick_labels)
+    for tick, row in zip(ax.get_yticklabels(), data.itertuples()):
+        if not bool(row.same_direction):
+            tick.set_color(TEXT_COLORS["secondary"])
+
+    ax.set_ylim(-0.6, len(data) - 0.4)
+    ax.set_xlabel("Coefficient (log-odds of NP recipient)")
+    add_grid(ax, axis="x")
+    handles = [
+        Line2D([0], [0], marker="o", linestyle="none", markersize=7,
+               markerfacecolor=COLORS["primary"], markeredgecolor="white",
+               label="American source"),
+        Line2D([0], [0], marker="D", linestyle="none", markersize=7,
+               markerfacecolor=TEXT_COLORS["quaternary"], markeredgecolor="white",
+               label="BNC2014-trained"),
+    ]
+    ax.legend(handles=handles, loc="lower right", frameon=False)
+    save(fig, "bnc2014_coefficient_transport")
 
 
 def make_observed_np_rate(verb_counts: pd.DataFrame) -> None:
@@ -375,8 +443,6 @@ def make_dais_bridge(scored_items: pd.DataFrame) -> None:
     }
 
     fig, ax = plt.subplots(figsize=(5.9, 4.2))
-    ax.plot([0, 1], [0, 1], color="#9A9A9A", linewidth=0.9,
-            linestyle="--", zorder=1)
 
     for verb in verb_order:
         rows = data[data["Verb"] == verb]
@@ -395,7 +461,7 @@ def make_dais_bridge(scored_items: pd.DataFrame) -> None:
     ax.set_xlim(-0.02, 1.02)
     ax.set_ylim(-0.02, 1.02)
     ax.set_xlabel("Production model NP probability")
-    ax.set_ylabel("DAIS double-object preference")
+    ax.set_ylabel("DAIS paired double-object preference")
     add_grid(ax, axis="both")
     ax.legend(
         title="Verb",
@@ -470,6 +536,8 @@ def main() -> None:
         "mathtext.bf": "serif:bold",
     })
     make_transport_metrics(read_derived("bnc2014_paired_transport_cv_metrics.csv"))
+    make_coefficient_transport(
+        read_derived("bnc2014_source_native_coefficient_comparison.csv"))
     make_observed_np_rate(read_derived("bnc2014_dative_verb_pattern_counts.csv"))
     calibration = read_derived("bnc2014_paired_transport_cv_calibration_by_verb.csv")
     make_calibration(calibration)
