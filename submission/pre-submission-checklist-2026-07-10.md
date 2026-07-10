@@ -111,11 +111,11 @@ is blocked on a LaTeX→Word conversion and Corpora's reference restyle.
 
 ## 9. After Submission
 
-- [ ] Save the sent email, any acknowledgement, and the exact submitted files under `submission/`.
-- [ ] Record target/date/version in `STATUS.md`; add a `DECISIONS.md` entry.
-- [ ] Update PORTFOLIO/CV/website/publications when the status is public.
-- [ ] Commit and push.
-- [ ] Record submitted-vs-working divergence if the draft keeps changing.
+- [x] Sent email saved (`notes/email-corpora-submission-2026-07-10.md`, status sent); the exact submitted `.docx` is in `submission/`. (The EUP AI-disclosure and copyright forms were Brett's browser downloads, not committed.)
+- [x] Recorded in `STATUS.md` and `DECISIONS.md` (submitted to Corpora 2026-07-10; no manuscript ID).
+- [x] Public surfaces updated to "Under review at Corpora": PORTFOLIO (moved to Active Submissions), publications.html, llms.txt, the `paper.md`/`index.html` mirror, the PM dashboard, and the CV (rebuilt; website `cv.pdf` refreshed).
+- [x] Website committed and pushed (`aa6c0df`); paper repo committed.
+- [ ] Submitted-vs-working divergence: the submitted version is `submission/beyond-concordance-corpora-anonymised-draft-2026-07-10.docx`; the working LaTeX may drift, treat that docx as the submitted-version source of truth.
 
 ## Active Stop Conditions
 
