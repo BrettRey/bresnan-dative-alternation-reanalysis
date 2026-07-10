@@ -51,6 +51,12 @@ Recent comparable venue articles or signals:
 2. Community-informed AI policy requiring declaration of substantial AI use — the best fit for a truthful "substantially assisted" disclosure.
 3. Fewer concrete methods-venue signals surveyed; fit for a methods paper needs a theory-forward reframe.
 
+**Corpora (Edinburgh UP)** — the chosen venue; recent methods articles this paper joins (from the live TOC, 2026-07-10):
+1. Larsson & Hancock (2026, Vol 21.1), "Equivalence testing techniques for corpus linguistics" — inferential-methods register, current issue.
+2. Sönning (2025, Vol 20.1), "Advancing our understanding of dispersion measures in corpus research" — quantitative methodology.
+3. Egbert & Biber (2023, Vol 18.1), "Key feature analysis: a simple, yet powerful method for comparing text varieties" — a method for comparing varieties, resonant with cross-corpus transport.
+Landmark precedent: Gries (2015, Vol 10.1), "The most under-used statistical method in corpus linguistics: multi-level (and mixed-effects) models" — the modelling tradition this paper extends. Together these confirm Corpora's stated precedence for methodology papers with actual articles in this paper's exact register.
+
 Editorial/reviewer fit:
 - Vanguard: broad language-sciences desk plus alternations special-issue editors; reviewer pool includes probabilistic-grammar/variationist scholars.
 - IJCL: corpus-methods desk and reproducibility-SI editors; the most assignable reviewer pool for an external-validation methods paper. **A concurrent Reynolds submission (the DiD paper) is already under review here.**
@@ -86,8 +92,8 @@ Resolution:
 ## Package Authorization
 
 - [x] Venue decision approved before target-specific package work — Brett approved Corpora, 2026-07-10.
-- [x] Corpora author instructions verified 2026-07-10 from the live EUP page (details in `pre-deployment-checklist-corpora-2026-07-10.md`): email/.doc submission (not PDF/LaTeX), 6,000–10,000-word band (we fit at 6,890), bespoke reference style, anonymised review, EUP AI-disclosure form, and a stated precedence for methodology papers (strong fit).
-- [ ] Still open: pin 3 recent Corpora articles this paper joins (EUP blocks automated fetch; pull titles from the live TOC or Google Scholar).
+- [x] Corpora author instructions verified 2026-07-10 from the live EUP page (details in `pre-submission-checklist-2026-07-10.md`): email/.doc submission (not PDF/LaTeX), 6,000–10,000-word band (we fit at 6,890), bespoke reference style, anonymised review, EUP AI-disclosure form, and a stated precedence for methodology papers (strong fit).
+- [x] Done 2026-07-10: 3 recent Corpora fit articles pinned (Larsson & Hancock 2026; Sönning 2025; Egbert & Biber 2023), plus Gries 2015 as the modelling precedent — see Fit Evidence. The recent-issue register (equivalence testing, dispersion, method evaluation) is this paper's lane, confirming the fit.
 - [x] This record requests Brett's approval of the recommended target or his explicit delegation of the choice.
 - [ ] Unresolved risks copied into the pre-submission checklist — to do once the venue is fixed.
 - [ ] Linked from `DECISIONS.md` and `STATUS.md` if submission proceeds — to do on approval.
