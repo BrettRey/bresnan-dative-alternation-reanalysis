@@ -1,10 +1,13 @@
-\section{Modern modelling update}
+\section{Re-evaluating the classic profile}
 
-Does modern modelling change Bresnan et al.'s linguistic conclusion, or only
-repackage it statistically? Here, only the statistical packaging changes. The
-table uses three diagnostics to make that answer visible: log loss, area under
-the receiver operating characteristic curve (AUC), and a count of fixed-effect
-terms.
+Before the model moves to a new corpus, I re-fit the classic profile under the
+evaluation the transport test will use: held-out probabilistic scoring, and a
+hierarchical alternative to one coefficient per verb. That's a stricter test than
+in-sample evaluation, not a route to a different answer, so the question is
+whether it changes Bresnan et al.'s conclusion or only repackages it. Only the
+packaging changes. The table uses three diagnostics to make that visible: log
+loss, area under the receiver operating characteristic curve (AUC), and a count
+of fixed-effect terms.
 
 Two scores carry the paper, so it's worth fixing what they measure. Log loss
 rewards probabilities that are both confident and correct and punishes confident
@@ -18,7 +21,7 @@ probabilities match observed rates. Those are separate achievements, which is
 why both are reported.
 
 All models predict whether the recipient is realized as NP rather than PP. They
-are logistic models with R treatment contrasts and no interactions. The
+are logistic regressions with no interactions. The
 marginal null uses only the training-set NP rate, so it's the base-rate
 benchmark. The non-verb model adds modality, semantic class, length, animacy,
 definiteness, pronominality, and accessibility, but omits verb identity. It asks
@@ -72,5 +75,5 @@ explanatory level.
 
 The result supports Bresnan et al.'s production-choice conclusion. By itself,
 the same-data analysis shows reproducibility and statistical stability. What it
-can't show is whether the pattern helps once the model leaves the corpus that
+can't show is whether the pattern holds once the model leaves the corpus that
 produced it.

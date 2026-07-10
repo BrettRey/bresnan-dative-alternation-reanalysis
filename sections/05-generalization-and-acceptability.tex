@@ -1,8 +1,8 @@
 \section{Cross-corpus transport}
 
-The BNC2014 analysis tests the practical question introduced above: does the
-pattern learned from earlier American data help with later British
-conversation? I train the model on spoken \texttt{languageR} rows for the six
+The BNC2014 analysis takes up the question from the outset: does the fitted
+model, learned from earlier American data, still predict the NP/PP choice in
+later British conversation? I train the model on spoken \texttt{languageR} rows for the six
 verbs that also appear in BNC2014, then score it on the BNC2014 rows where the
 shared predictors can be reconstructed. The restriction to those complete rows
 matters because it defines exactly which BNC2014 tokens the prediction claim is
@@ -174,8 +174,8 @@ same sign for ten of the twelve non-intercept terms: recipient and theme length,
 and recipient and theme pronominality, keep both their direction and roughly
 their size. Only two signs reverse, recipient animacy and theme definiteness, and
 they are among the weaker terms. The sharpest lexical shift is \mention{offer}:
-its strong source penalty against the NP recipient nearly disappears in BNC2014,
-the one verb whose behaviour clearly fails to carry over. So the transport claim
+its strong source penalty against the NP recipient nearly disappears in BNC2014.
+So the transport claim
 is bounded but real: length and pronominality, and much of animacy, stay
 predictively useful under a substantial corpus shift.
 

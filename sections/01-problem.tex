@@ -1,12 +1,12 @@
 \section{The problem}
 
 A corpus-based probabilistic grammar should be tested outside the corpus that
-produced it. For the English dative alternation, the practical question is
-simple: if a model learned from earlier American data predicts whether speakers
-choose \mention{give Kim the book} rather than \mention{give the book to Kim},
-does the same pattern help in later British conversation, for instance in
-BNC2014? Ranking tokens by their predicted probability of an NP recipient is
-only a start: it doesn't show whether the probabilities are reliable, whether
+produced it. For the English dative alternation, a model learned from earlier American data
+predicts whether speakers choose \mention{give Kim the book} rather than
+\mention{give the book to Kim}. Does the same fitted model still predict the
+choice in other settings, for example in later British conversation, as in
+BNC2014? Ranking tokens by
+their predicted probability of an NP recipient is only a start: it doesn't show whether the probabilities are reliable, whether
 the same predictors matter in the same way, or what the production probabilities
 can support about grammar. This paper tests those distinctions by moving a
 fitted dative production model to BNC2014.
@@ -32,7 +32,7 @@ another \citep{Goodman1955}.
 
 The paper separates questions that a single success score would merge. First,
 can the classic production profile be reproduced in its original data? Second,
-when that fitted model is frozen and used in BNC2014, does it help predict the
+when that fitted model is frozen and used in BNC2014, does it predict the
 NP/PP choice? Third, does a model trained inside BNC2014 do better on the same
 rows? Calibration and predictor-group tests then ask what carries over: the
 ranking, the probability levels, verb-specific base rates, or the broader
